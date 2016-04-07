@@ -1,0 +1,28 @@
+
+
+
+<%= form_for profile,  url: user_profiles_path(user) do |f| %>
+  <%= f.label :cleanliness %>
+  <%= f.text_field :cleanliness %>
+  <br/>
+  <%= f.label :schedule %>
+  <%= f.text_field :schedule %>
+  <br/>
+  <%= f.label :social_habits %>
+  <%= f.text_field :social_habits %>
+  <br/>
+  <%= f.label :substance_habits %>
+  <%= f.text_field :substance_habits %>
+  <br/>
+  <%= f.label :pets %>
+  <%= f.text_field :pets %>
+  <br/>
+  <%= f.submit %>
+<% end %>
+
+
+<!-- cleanliness      :string
+#  schedule         :string
+#  social_habits    :string
+#  substance_habits :string
+#  pets  -->         
