@@ -5,16 +5,15 @@ class CleanlinessesController < ApplicationController
     @cleanliness = @profile.build_cleanliness
     @preference = @user.preference
     @desired_cleanliness = @preference.build_desired_cleanliness
-    render :new
+    
   end
 
   def create
     @user = User.find(params[:user_id])
-    @profile = @user.profile
     
-    @cleanliness = Cleanliness.new(cleanliness_params[:cleanliness])
-    @desired_cleanliness = DesiredCleanliness.new(desired_cleanliness_params[:desired_cleanliness])
-    
+    @cleanliness = @user.profile.build_cleanliness(cleanliness_params[:cleanliness])
+    @desired_cleanliness = @user.preference.build_desired_cleanliness(desired_cleanliness_params[:desired_cleanliness])
+       binding.pry
     if @cleanliness.save && @desired_cleanliness.save
       redirect_to @user
     else
@@ -23,9 +22,11 @@ class CleanlinessesController < ApplicationController
   end
 
   def edit
+    @user = User.find(params[:user_id])
   end
 
   def update
+    binding.pry
   end
 
   def show

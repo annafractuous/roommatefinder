@@ -1,4 +1,8 @@
-<h1><%= user.name %></h1>
-<p>Age: <%= user.age %></p>
+<h1><%= @user.name %></h1>
+<p>Age: <%= @user.age %></p>
 
+<%= link_to "Fill Out or Edit Your Cleanliness Preferences",new_user_cleanliness_path(@user)%> <br>
 
+<%= link_to "Fill Out or Edit Your Habits Preferences",new_user_habit_path(@user)%><br>
+
+<%= link_to "Fill Out or Edit Your Schedule Preferences",new_user_schedule_path(@user)%><br>

@@ -2,13 +2,13 @@
 #
 # Table name: desired_cleanlinesses
 #
-#  id           :integer          not null, primary key
-#  profile_id   :integer
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  kitchen      :string
-#  bathroom     :string
-#  common_space :string
+#  id            :integer          not null, primary key
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  kitchen       :string
+#  bathroom      :string
+#  common_space  :string
+#  preference_id :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
