@@ -1,7 +1,7 @@
 
 <%= form_for user,  url: action, method: method do |f| %>
   <h3>My Habits</h3>
-  <%= f.fields_for :habits do |habits_form| %>
+  <%= f.fields_for :habit do |habits_form| %>
     <%= habits_form.label :drinking %>
     <%= habits_form.text_field :drinking %>
     <%= habits_form.label :four_twenty %>
@@ -14,7 +14,7 @@
     <%= habits_form.text_field :music %>
   <% end %><br>
   <h3>Desired Habits</h3>
-  <%= f.fields_for :desired_habits do |desired_habits_form| %>
+  <%= f.fields_for :desired_habit do |desired_habits_form| %>
     <%= desired_habits_form.label :drinking %>
     <%= desired_habits_form.text_field :drinking %>
     <%= desired_habits_form.label :four_twenty %>

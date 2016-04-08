@@ -10,8 +10,8 @@ class CleanlinessesController < ApplicationController
   def create
     @user = User.find(params[:user_id])
     
-    @cleanliness = @user.build_cleanliness(cleanliness_params[:cleanliness])
-    @desired_cleanliness = @user.build_desired_cleanliness(desired_cleanliness_params[:desired_cleanliness])
+    @cleanliness = @user.build_cleanliness(cleanliness_params[:cleanliness_attributes])
+    @desired_cleanliness = @user.build_desired_cleanliness(desired_cleanliness_params[:desired_cleanliness_attributes])
     if @cleanliness.save && @desired_cleanliness.save
       redirect_to @user
     else
@@ -27,8 +27,9 @@ class CleanlinessesController < ApplicationController
 
   def update
     @user = User.find(params[:user_id])
-    @user.cleanliness.update(cleanliness_params[:cleanliness])
-    @user.desired_cleanliness.update(desired_cleanliness_params[:desired_cleanliness])
+    @user.cleanliness.update(cleanliness_params[:cleanliness_attributes])
+    @user.desired_cleanliness.update(desired_cleanliness_params[:desired_cleanliness_attributes])
+    binding.pry
     redirect_to @user
   end
 
@@ -38,11 +39,11 @@ class CleanlinessesController < ApplicationController
   private
 
   def cleanliness_params
-    params.require(:user).permit(:cleanliness =>[:kitchen, :bathroom, :common_space])
+    params.require(:user).permit(:cleanliness_attributes =>[:kitchen, :bathroom, :common_space])
   end
 
   def desired_cleanliness_params
-    params.require(:user).permit(:desired_cleanliness =>[:kitchen, :bathroom, :common_space])
+    params.require(:user).permit(:desired_cleanliness_attributes =>[:kitchen, :bathroom, :common_space])
   end
 
  #  "user"=>

@@ -20,5 +20,8 @@ class User < ActiveRecord::Base
  has_one :desired_schedule
  has_one :habit
  has_one :desired_habit
- accepts_nested_attributes_for :cleanliness, :desired_cleanliness, :schedule, :desired_schedule, :habit, :desired_habit
+ accepts_nested_attributes_for :habit, :desired_habit
+ accepts_nested_attributes_for :cleanliness, :desired_cleanliness
+ accepts_nested_attributes_for :schedule, :desired_schedule
+ # accepts_nested_attributes_for :habit, :desired_habit
 end

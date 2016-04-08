@@ -10,7 +10,7 @@
 #  partying           :string
 #  overnight_visitors :string
 #  music              :string
-#  preference_id      :integer
+#  user_id            :integer
 #
 
 class DesiredHabit < ActiveRecord::Base

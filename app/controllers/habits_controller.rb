@@ -21,17 +21,16 @@ class HabitsController < ApplicationController
   end
 
   def edit
-    binding.pry
     @user = User.find(params[:user_id])
     @action = user_habit_path(@user, @user.habit)
     @method = "PATCH"
   end
 
   def update
-    binding.pry
     @user = User.find(params[:user_id])
     @user.habit.update(habit_params[:habits])
     @user.desired_habit.update(desired_habit_params[:desired_habits])
+    binding.pry
     redirect_to @user
   end
   
