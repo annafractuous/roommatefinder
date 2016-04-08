@@ -1,0 +1,22 @@
+
+<%= form_for user,  url: action, method: method do |f| %>
+  <h3>My Cleanliness</h3>
+  <%= f.fields_for :cleanliness do |cleanliness_form| %>
+    <%= cleanliness_form.label :kitchen %>
+    <%= cleanliness_form.text_field :kitchen %>
+    <%= cleanliness_form.label :bathroom %>
+    <%= cleanliness_form.text_field :bathroom %>
+    <%= cleanliness_form.label :common_space %>
+    <%= cleanliness_form.text_field :common_space %>
+  <% end %><br>
+  <h3>Desired Cleanliness</h3>
+  <%= f.fields_for :desired_cleanliness do |desired_cleanliness_form| %>
+    <%= desired_cleanliness_form.label :kitchen %>
+    <%= desired_cleanliness_form.text_field :kitchen %>
+    <%= desired_cleanliness_form.label :bathroom %>
+    <%= desired_cleanliness_form.text_field :bathroom %>
+    <%= desired_cleanliness_form.label :common_space %>
+    <%= desired_cleanliness_form.text_field :common_space %>
+  <% end %><br>
+  <%= f.submit %>
+<% end %>

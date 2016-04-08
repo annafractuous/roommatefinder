@@ -5,7 +5,8 @@ class CleanlinessesController < ApplicationController
     @cleanliness = @profile.build_cleanliness
     @preference = @user.preference
     @desired_cleanliness = @preference.build_desired_cleanliness
-    
+    @method = "POST"
+    @action = user_cleanlinesses_path(@user)
   end
 
   def create
@@ -13,7 +14,6 @@ class CleanlinessesController < ApplicationController
     
     @cleanliness = @user.profile.build_cleanliness(cleanliness_params[:cleanliness])
     @desired_cleanliness = @user.preference.build_desired_cleanliness(desired_cleanliness_params[:desired_cleanliness])
-       binding.pry
     if @cleanliness.save && @desired_cleanliness.save
       redirect_to @user
     else
@@ -23,10 +23,16 @@ class CleanlinessesController < ApplicationController
 
   def edit
     @user = User.find(params[:user_id])
+    @action = user_cleanliness_path(@user, @user.cleanliness)
+    @method = "PATCH"
   end
 
   def update
+    @user = User.find(params[:user_id])
+    @user.cleanliness.update(cleanliness_params[:cleanliness])
+    @user.desired_cleanliness.update(desired_cleanliness_params[:desired_cleanliness])
     binding.pry
+    redirect_to @user
   end
 
   def show

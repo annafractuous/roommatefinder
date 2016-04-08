@@ -1,7 +1,11 @@
 <h1><%= @user.name %></h1>
 <p>Age: <%= @user.age %></p>
 
-<%= link_to "Fill Out or Edit Your Cleanliness Preferences",new_user_cleanliness_path(@user)%> <br>
+<% if !@user.cleanliness %>
+  <%= link_to "Enter your Cleanliness Information",new_user_cleanliness_path(@user)%> <br>
+<% else %>
+  <%= link_to "Edit Cleanliness Information",edit_user_cleanliness_path(@user, @user.cleanliness)%> <br>
+<% end %>
 
 <%= link_to "Fill Out or Edit Your Habits Preferences",new_user_habit_path(@user)%><br>
 
