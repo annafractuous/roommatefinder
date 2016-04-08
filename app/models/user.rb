@@ -16,4 +16,10 @@
 class User < ActiveRecord::Base
  has_one :preference
  has_one :profile
+ has_one :cleanliness, through: :profile
+ has_one :desired_cleanliness, through: :preference
+ has_one :schedule, through: :profile
+ has_one :desired_schedule, through: :preference
+ has_one :habit, through: :profile
+ has_one :desired_habit, through: :preference
 end

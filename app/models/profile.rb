@@ -15,4 +15,7 @@
 
 class Profile < ActiveRecord::Base
   belongs_to :user
+  has_one :cleanliness
+  has_one :schedule
+  has_one :habit
 end

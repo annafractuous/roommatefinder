@@ -11,28 +11,66 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160407221324) do
+ActiveRecord::Schema.define(version: 20160408150348) do
+
+  create_table "cleanlinesses", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.string   "question"
+    t.string   "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "desired_cleanlinesses", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.string   "question"
+    t.string   "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "desired_habits", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.string   "question"
+    t.string   "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "desired_schedules", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.string   "question"
+    t.string   "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "habits", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.string   "question"
+    t.string   "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "preferences", force: :cascade do |t|
     t.integer  "user_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.string   "cleanliness"
-    t.string   "schedule"
-    t.string   "social_habits"
-    t.string   "substance_habits"
-    t.string   "pets"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "profiles", force: :cascade do |t|
     t.integer  "user_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.string   "cleanliness"
-    t.string   "schedule"
-    t.string   "social_habits"
-    t.string   "substance_habits"
-    t.string   "pets"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.string   "question"
+    t.string   "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

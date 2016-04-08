@@ -15,4 +15,7 @@
 
 class Preference < ActiveRecord::Base
   belongs_to :user
+  has_one :desired_cleanliness
+  has_one :desired_schedule
+  has_one :desired_habit
 end
