@@ -14,5 +14,5 @@
 #
 
 class DesiredHabit < ActiveRecord::Base
-  belongs_to :preference
+  belongs_to :user
 end

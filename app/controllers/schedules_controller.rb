@@ -1,0 +1,43 @@
+class SchedulesController < ApplicationController
+ def new
+    @user = User.find(params[:user_id])
+    @schedules = @user.build_schedule
+    @desired_schedules = @user.build_desired_schedule
+    @method = "POST"
+    @action = user_schedules_path(@user)
+  end
+
+  def create
+    @user = User.find(params[:user_id])
+    
+    @schedule = @user.build_schedule(schedule_params[:schedule])
+    @desired_schedule = @user.build_desired_schedule(desired_schedule_params[:desired_schedule])
+    if @schedule.save && @desired_schedule.save
+      redirect_to @user
+    else
+      render :new
+    end
+  end
+
+  def edit
+    @user = User.find(params[:user_id])
+    @action = user_schedule_path(@user, @user.schedule)
+    @method = "PATCH"
+  end
+
+  def update
+    @user = User.find(params[:user_id])
+    @user.schedule.update(schedule_params[:schedule])
+    @user.desired_schedule.update(desired_schedule_params[:desired_schedule])
+    redirect_to @user
+  end
+  
+  private
+
+  def schedule_params
+    params.require(:user).permit(:schedule =>[:work, :sleep, :bathroom, :kitchen])
+  end
+
+  def desired_schedule_params
+    params.require(:user).permit(:desired_schedule =>[:work, :sleep, :bathroom, :kitchen])
+  end

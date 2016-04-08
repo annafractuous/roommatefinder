@@ -1,12 +1,25 @@
 <h1><%= @user.name %></h1>
 <p>Age: <%= @user.age %></p>
 
+<!-- Cleanliness -->
 <% if !@user.cleanliness %>
   <%= link_to "Enter your Cleanliness Information",new_user_cleanliness_path(@user)%> <br>
 <% else %>
   <%= link_to "Edit Cleanliness Information",edit_user_cleanliness_path(@user, @user.cleanliness)%> <br>
 <% end %>
 
-<%= link_to "Fill Out or Edit Your Habits Preferences",new_user_habit_path(@user)%><br>
 
-<%= link_to "Fill Out or Edit Your Schedule Preferences",new_user_schedule_path(@user)%><br>
+<!-- Habit -->
+<% if !@user.habit %>
+  <%= link_to "Enter your Habit Information",new_user_habit_path(@user)%> <br>
+<% else %>
+  <%= link_to "Edit Habit Information",edit_user_habit_path(@user, @user.habit)%> <br>
+<% end %>
+
+
+<!-- Schedule -->
+<% if !@user.schedule %>
+  <%= link_to "Enter your Schedule Information",new_user_schedule_path(@user)%> <br>
+<% else %>
+  <%= link_to "Edit Schedule Information",edit_user_schedule_path(@user, @user.schedule)%> <br>
+<% end %>

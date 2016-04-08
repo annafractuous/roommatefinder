@@ -14,13 +14,11 @@
 #
 
 class User < ActiveRecord::Base
- has_one :preference
- has_one :profile
- has_one :cleanliness, through: :profile
- has_one :desired_cleanliness, through: :preference
- has_one :schedule, through: :profile
- has_one :desired_schedule, through: :preference
- has_one :habit, through: :profile
- has_one :desired_habit, through: :preference
- #accepts_nested_attributes_for :cleanliness, :desired_cleanliness
+ has_one :cleanliness
+ has_one :desired_cleanliness
+ has_one :schedule
+ has_one :desired_schedule
+ has_one :habit
+ has_one :desired_habit
+ accepts_nested_attributes_for :cleanliness, :desired_cleanliness, :schedule, :desired_schedule, :habit, :desired_habit
 end

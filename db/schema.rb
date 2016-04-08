@@ -11,24 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160408180736) do
+ActiveRecord::Schema.define(version: 20160408220353) do
 
   create_table "cleanlinesses", force: :cascade do |t|
-    t.integer  "profile_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.string   "kitchen"
     t.string   "bathroom"
     t.string   "common_space"
+    t.integer  "user_id"
   end
 
   create_table "desired_cleanlinesses", force: :cascade do |t|
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "kitchen"
     t.string   "bathroom"
     t.string   "common_space"
-    t.integer  "preference_id"
+    t.integer  "user_id"
   end
 
   create_table "desired_habits", force: :cascade do |t|
@@ -39,21 +39,20 @@ ActiveRecord::Schema.define(version: 20160408180736) do
     t.string   "partying"
     t.string   "overnight_visitors"
     t.string   "music"
-    t.integer  "preference_id"
+    t.integer  "user_id"
   end
 
   create_table "desired_schedules", force: :cascade do |t|
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string   "work"
     t.string   "sleep"
     t.string   "bathroom"
     t.string   "kitchen"
-    t.integer  "preference_id"
+    t.integer  "user_id"
   end
 
   create_table "habits", force: :cascade do |t|
-    t.integer  "profile_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "drinking"
@@ -61,28 +60,17 @@ ActiveRecord::Schema.define(version: 20160408180736) do
     t.string   "partying"
     t.string   "overnight_visitors"
     t.string   "music"
-  end
-
-  create_table "preferences", force: :cascade do |t|
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "profiles", force: :cascade do |t|
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "schedules", force: :cascade do |t|
-    t.integer  "profile_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "work"
     t.string   "sleep"
     t.string   "bathroom"
     t.string   "kitchen"
+    t.integer  "user_id"
   end
 
   create_table "users", force: :cascade do |t|

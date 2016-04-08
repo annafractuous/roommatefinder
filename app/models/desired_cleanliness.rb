@@ -12,5 +12,5 @@
 #
 
 class DesiredCleanliness < ActiveRecord::Base
-  belongs_to :preference
+  belongs_to :user
 end

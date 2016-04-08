@@ -1,10 +1,8 @@
 class CleanlinessesController < ApplicationController
   def new
     @user = User.find(params[:user_id])
-    @profile = @user.profile
-    @cleanliness = @profile.build_cleanliness
-    @preference = @user.preference
-    @desired_cleanliness = @preference.build_desired_cleanliness
+    @cleanliness = @user.build_cleanliness
+    @desired_cleanliness = @user.build_desired_cleanliness
     @method = "POST"
     @action = user_cleanlinesses_path(@user)
   end
@@ -12,12 +10,12 @@ class CleanlinessesController < ApplicationController
   def create
     @user = User.find(params[:user_id])
     
-    @cleanliness = @user.profile.build_cleanliness(cleanliness_params[:cleanliness])
-    @desired_cleanliness = @user.preference.build_desired_cleanliness(desired_cleanliness_params[:desired_cleanliness])
+    @cleanliness = @user.build_cleanliness(cleanliness_params[:cleanliness])
+    @desired_cleanliness = @user.build_desired_cleanliness(desired_cleanliness_params[:desired_cleanliness])
     if @cleanliness.save && @desired_cleanliness.save
       redirect_to @user
     else
-      render :new
+      render :ne
     end
   end
 
@@ -31,7 +29,6 @@ class CleanlinessesController < ApplicationController
     @user = User.find(params[:user_id])
     @user.cleanliness.update(cleanliness_params[:cleanliness])
     @user.desired_cleanliness.update(desired_cleanliness_params[:desired_cleanliness])
-    binding.pry
     redirect_to @user
   end
 

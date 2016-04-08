@@ -1,0 +1,30 @@
+
+<%= form_for user,  url: action, method: method do |f| %>
+  <h3>My Habits</h3>
+  <%= f.fields_for :habits do |habits_form| %>
+    <%= habits_form.label :drinking %>
+    <%= habits_form.text_field :drinking %>
+    <%= habits_form.label :four_twenty %>
+    <%= habits_form.text_field :four_twenty %>
+    <%= habits_form.label :overnight_visitors %>
+    <%= habits_form.text_field :overnight_visitors %>
+    <%= habits_form.label :partying %>
+    <%= habits_form.text_field :partying %>
+    <%= habits_form.label :music %>
+    <%= habits_form.text_field :music %>
+  <% end %><br>
+  <h3>Desired Habits</h3>
+  <%= f.fields_for :desired_habits do |desired_habits_form| %>
+    <%= desired_habits_form.label :drinking %>
+    <%= desired_habits_form.text_field :drinking %>
+    <%= desired_habits_form.label :four_twenty %>
+    <%= desired_habits_form.text_field :four_twenty %>
+    <%= desired_habits_form.label :overnight_visitors %>
+    <%= desired_habits_form.text_field :overnight_visitors %>
+    <%= desired_habits_form.label :partying %>
+    <%= desired_habits_form.text_field :partying %>
+    <%= desired_habits_form.label :music %>
+    <%= desired_habits_form.text_field :music %>
+  <% end %><br>
+  <%= f.submit %>
+<% end %>

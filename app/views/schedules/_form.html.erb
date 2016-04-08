@@ -1,0 +1,26 @@
+
+<%= form_for user,  url: action, method: method do |f| %>
+  <h3>My Schedule</h3>
+  <%= f.fields_for :schedule do |schedule_form| %>
+    <%= schedule_form.label :work %>
+    <%= schedule_form.text_field :work %>
+    <%= schedule_form.label :sleep %>
+    <%= schedule_form.text_field :sleep %>
+    <%= schedule_form.label :bathroom %>
+    <%= schedule_form.text_field :bathroom %>
+    <%= schedule_form.label :kitchen %>
+    <%= schedule_form.text_field :kitchen %>
+  <% end %><br>
+  <h3>Desired Schedule</h3>
+  <%= f.fields_for :desired_schedule do |desired_schedule_form| %>
+    <%= desired_schedule_form.label :work %>
+    <%= desired_schedule_form.text_field :work %>
+    <%= desired_schedule_form.label :sleep %>
+    <%= desired_schedule_form.text_field :sleep %>
+    <%= desired_schedule_form.label :bathroom %>
+    <%= desired_schedule_form.text_field :bathroom %>
+    <%= desired_schedule_form.label :kitchen %>
+    <%= desired_schedule_form.text_field :kitchen %>
+  <% end %><br>
+  <%= f.submit %>
+<% end %>
