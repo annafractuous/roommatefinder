@@ -2,14 +2,15 @@ class ProfilesController < ApplicationController
 
   def new
     # TODO: make this current_user
+    # not currently using this action
     @user = User.find(params[:user_id])
-    @profile = @user.build_profile
-    @cleanliness = @profile.build_cleanliness
-    @schedule = @profile.build_schedule
-    @habit = @profile.build_habit
+    # @cleanliness = @profile.build_cleanliness
+    # @schedule = @profile.build_schedule
+    # @habit = @profile.build_habit
     render 'new'
   end
 
+  # not currently using this action, either
   def create
     binding.pry
     @user = User.find(params[:user_id])

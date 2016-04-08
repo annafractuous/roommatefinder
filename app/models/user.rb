@@ -22,4 +22,5 @@ class User < ActiveRecord::Base
  has_one :desired_schedule, through: :preference
  has_one :habit, through: :profile
  has_one :desired_habit, through: :preference
+ #accepts_nested_attributes_for :cleanliness, :desired_cleanliness
 end

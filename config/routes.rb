@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   resources :users do
-    resources :preferences
-    resources :profiles
+    resources :cleanlinesses
+    resources :habits
+    resources :schedules
+    # resources :preferences
+    # resources :profiles
   end
 
  
