@@ -23,12 +23,13 @@ class SchedulesController < ApplicationController
 
   def create
     @user = User.find(params[:user_id])
-    
-    @schedule = @user.build_schedule(schedule_params[:schedule_attributes])
-    @desired_schedule = @user.build_desired_schedule(desired_schedule_params[:desired_schedule_attributes])
-    if @schedule.save && @desired_schedule.save
+    schedule = @user.build_schedule(schedule_params)
+    desired_schedule = @user.build_desired_schedule(desired_schedule_params)
+
+    if schedule.save && desired_schedule.save
       redirect_to @user
     else
+      # flash[:error] = desired_schedule.errors.to_a
       render :new
     end
   end
@@ -41,19 +42,25 @@ class SchedulesController < ApplicationController
 
   def update
     @user = User.find(params[:user_id])
-    @user.schedule.update(schedule_params[:schedule_attributes])
-    @user.desired_schedule.update(desired_schedule_params[:desired_schedule_attributes])
-    redirect_to @user
+    schedule = @user.schedule
+    desired_schedule = @user.desired_schedule
+
+    if schedule.update(schedule_params) && desired_schedule.update(desired_schedule_params)
+      redirect_to @user
+    else
+      flash[:error] = desired_schedule.errors.to_a
+      render :edit
+    end
   end
-  
+
   private
 
   def schedule_params
-    params.require(:user).permit(:schedule_attributes =>[:work, :sleep, :bathroom, :kitchen])
+    params.require(:user).permit(:schedule_attributes =>[:work, :sleep, :bathroom, :kitchen])[:schedule_attributes]
   end
 
   def desired_schedule_params
-    params.require(:user).permit(:desired_schedule_attributes =>[:work, :work_importance, :sleep, :sleep_importance, :bathroom, :bathroom_importance, :kitchen, :kitchen_importance])
+    params.require(:user).permit(:desired_schedule_attributes =>[:work, :work_importance, :sleep, :sleep_importance, :bathroom, :bathroom_importance, :kitchen, :kitchen_importance])[:desired_schedule_attributes]
   end
 
 end

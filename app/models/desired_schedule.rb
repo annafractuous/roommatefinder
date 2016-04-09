@@ -20,5 +20,9 @@ include ChoicesQuantifiable::Cleanliness
 class DesiredSchedule < ActiveRecord::Base
   include HowImportantToYouAble
   include ChoicesQuantifiable::Schedule
+  include Validatable
   belongs_to :user
+
+  validate :preference_and_importance_entered?
+  
 end

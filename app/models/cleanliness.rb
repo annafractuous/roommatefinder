@@ -13,6 +13,7 @@
 
 class Cleanliness < ActiveRecord::Base
   include ChoicesQuantifiable::Cleanliness
+  include Validatable
   belongs_to :user
 end
 

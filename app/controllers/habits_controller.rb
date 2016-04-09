@@ -24,11 +24,13 @@ class HabitsController < ApplicationController
 
   def create
     @user = User.find(params[:user_id])
-    @habit = @user.build_habit(habit_params[:habit_attributes])
-    @desired_habit = @user.build_desired_habit(desired_habit_params[:desired_habit_attributes])
-    if @habit.save && @desired_habit.save
+    habit = @user.build_habit(habit_params)
+    desired_habit = @user.build_desired_habit(desired_habit_params)
+
+    if habit.save && desired_habit.save
       redirect_to @user
     else
+      # flash[:error] = desired_habit.errors.to_a
       render :new
     end
   end
@@ -41,19 +43,25 @@ class HabitsController < ApplicationController
 
   def update
     @user = User.find(params[:user_id])
-    @user.habit.update(habit_params[:habit_attributes])
-    @user.desired_habit.update(desired_habit_params[:desired_habit_attributes])
-    redirect_to @user
+    habit = @user.habit
+    desired_habit = @user.desired_habit
+
+    if habit.update(habit_params) && desired_habit.update(desired_habit_params)
+      redirect_to @user
+    else
+      flash[:error] = desired_habit.errors.to_a
+      render :edit
+    end
   end
-  
+
   private
 
   def habit_params
-    params.require(:user).permit(:habit_attributes =>[:drinking, :four_twenty, :partying, :overnight_visitors, :music])
+    params.require(:user).permit(:habit_attributes =>[:drinking, :four_twenty, :partying, :overnight_visitors, :music])[:habit_attributes]
   end
 
   def desired_habit_params
-    params.require(:user).permit(:desired_habit_attributes =>[:drinking, :drinking_importance, :four_twenty, :four_twenty_importance, :partying, :partying_importance, :overnight_visitors, :overnight_visitors_importance, :music, :music_importance])
+    params.require(:user).permit(:desired_habit_attributes =>[:drinking, :drinking_importance, :four_twenty, :four_twenty_importance, :partying, :partying_importance, :overnight_visitors, :overnight_visitors_importance, :music, :music_importance])[:desired_habit_attributes]
   end
 
  # Table name: habits
@@ -68,5 +76,5 @@ class HabitsController < ApplicationController
 #  overnight_visitors :string
 #  music              :string
 #
- 
+
 end
