@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160409170940) do
+ActiveRecord::Schema.define(version: 20160409184159) do
 
   create_table "cleanlinesses", force: :cascade do |t|
     t.datetime "created_at",   null: false
@@ -99,10 +99,10 @@ ActiveRecord::Schema.define(version: 20160409170940) do
     t.string   "gender"
     t.text     "dealbreakers"
     t.boolean  "has_apartment"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.string   "password"
-    t.string   "password_salt"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "password_digest"
+    t.string   "username"
   end
 
 end

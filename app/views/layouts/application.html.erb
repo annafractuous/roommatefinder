@@ -5,12 +5,29 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  <stylesheet_link_tag "/../lib/assets/bootstrap.min.css">
-  <stylesheet_link_tag "style">
+  <%= stylesheet_link_tag "/../lib/assets/bootstrap.min.css" %>
+  <%= stylesheet_link_tag "style.css" %>
 </head>
 <body>
 
+<div class="navbar navbar-default">
+  <% if current_user %>
+    <%= link_to "Profile", user_path(current_user) %>
+    <%= link_to "Your Matches", match_connections_path %>
+    <%= link_to "Logout", logout_path %>
+  <% else %>
+    <%= link_to "Sign Up", signup_path %> or <%= link_to "Log In", login_path %>
+  <% end %>
+</div>
+
 <!-- form to show flash messages -->
+<% if flash.present? %>
+  <% flash.each do |type, message| %>
+    <div class="alert alert-<%=type%> alert-dismissable" role="alert">
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
 
 <%= yield %>
 

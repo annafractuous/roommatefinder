@@ -2,23 +2,29 @@
 #
 # Table name: users
 #
-#  id            :integer          not null, primary key
-#  name          :string
-#  email         :string
-#  age           :integer
-#  gender        :string
-#  dealbreakers  :text
-#  has_apartment :boolean
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id              :integer          not null, primary key
+#  name            :string
+#  email           :string
+#  age             :integer
+#  gender          :string
+#  dealbreakers    :text
+#  has_apartment   :boolean
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  password_digest :string
+#  username        :string
 #
 
 class UsersController < ApplicationController
 
   def new
-    @user = User.new(user_params)
+    @user = User.new
+  end
 
+  def create
+    @user = User.new(user_params)
     if @user.save
+      session[:user_id] = @user.id
       render :show, notice: "Welcome to Roommater!"
     else
       render :new
@@ -31,8 +37,8 @@ class UsersController < ApplicationController
 
   private
 
-  def user_params
-
-  end
+   def user_params
+     params.require(:user).permit(:email, :password, :password_confirmation, :username, :name, :age, :gender)
+   end
 
 end
