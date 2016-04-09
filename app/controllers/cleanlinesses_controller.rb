@@ -29,7 +29,6 @@ class CleanlinessesController < ApplicationController
     @user = User.find(params[:user_id])
     @user.cleanliness.update(cleanliness_params[:cleanliness_attributes])
     @user.desired_cleanliness.update(desired_cleanliness_params[:desired_cleanliness_attributes])
-    binding.pry
     redirect_to @user
   end
 
@@ -43,7 +42,7 @@ class CleanlinessesController < ApplicationController
   end
 
   def desired_cleanliness_params
-    params.require(:user).permit(:desired_cleanliness_attributes =>[:kitchen, :bathroom, :common_space])
+    params.require(:user).permit(:desired_cleanliness_attributes =>[:kitchen, :kitchen_importance, :bathroom, :bathroom_importance, :common_space, :common_space_importance])
   end
 
  #  "user"=>

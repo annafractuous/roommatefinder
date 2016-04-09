@@ -15,12 +15,16 @@
   <%= f.fields_for :desired_schedule do |desired_schedule_form| %>
     <%= desired_schedule_form.label :work %>
     <%= desired_schedule_form.text_field :work %>
+    <%= render "importance", user: user, method: :work_importance, f: desired_schedule_form %>
     <%= desired_schedule_form.label :sleep %>
     <%= desired_schedule_form.text_field :sleep %>
+    <%= render "importance", user: user, method: :sleep_importance, f: desired_schedule_form %>
     <%= desired_schedule_form.label :bathroom %>
     <%= desired_schedule_form.text_field :bathroom %>
+    <%= render "importance", user: user, method: :bathroom_importance, f: desired_schedule_form %>
     <%= desired_schedule_form.label :kitchen %>
     <%= desired_schedule_form.text_field :kitchen %>
+    <%= render "importance", user: user, method: :kitchen_importance, f: desired_schedule_form %>
   <% end %><br>
   <%= f.submit %>
 <% end %>

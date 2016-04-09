@@ -13,10 +13,13 @@
   <%= f.fields_for :desired_cleanliness do |desired_cleanliness_form| %>
     <%= desired_cleanliness_form.label :kitchen %>
     <%= desired_cleanliness_form.text_field :kitchen %>
+    <%= render "importance", user: user, method: :kitchen_importance, f: desired_cleanliness_form %>
     <%= desired_cleanliness_form.label :bathroom %>
     <%= desired_cleanliness_form.text_field :bathroom %>
+    <%= render "importance", user: user, method: :bathroom_importance, f: desired_cleanliness_form %>
     <%= desired_cleanliness_form.label :common_space %>
     <%= desired_cleanliness_form.text_field :common_space %>
+    <%= render "importance", user: user, method: :common_space_importance, f: desired_cleanliness_form %>
   <% end %><br>
   <%= f.submit %>
 <% end %>

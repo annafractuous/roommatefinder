@@ -14,17 +14,22 @@
     <%= habits_form.text_field :music %>
   <% end %><br>
   <h3>Desired Habits</h3>
-  <%= f.fields_for :desired_habit do |desired_habits_form| %>
-    <%= desired_habits_form.label :drinking %>
-    <%= desired_habits_form.text_field :drinking %>
-    <%= desired_habits_form.label :four_twenty %>
-    <%= desired_habits_form.text_field :four_twenty %>
-    <%= desired_habits_form.label :overnight_visitors %>
-    <%= desired_habits_form.text_field :overnight_visitors %>
-    <%= desired_habits_form.label :partying %>
-    <%= desired_habits_form.text_field :partying %>
-    <%= desired_habits_form.label :music %>
-    <%= desired_habits_form.text_field :music %>
+  <%= f.fields_for :desired_habit do |desired_habit_form| %>
+    <%= desired_habit_form.label :drinking %>
+    <%= desired_habit_form.text_field :drinking %>
+    <%= render "importance", user: user, method: :drinking_importance, f: desired_habit_form %>
+    <%= desired_habit_form.label :four_twenty %>
+    <%= desired_habit_form.text_field :four_twenty %>
+    <%= render "importance", user: user, method: :four_twenty_importance, f: desired_habit_form %>
+    <%= desired_habit_form.label :overnight_visitors %>
+    <%= desired_habit_form.text_field :overnight_visitors %>
+    <%= render "importance", user: user, method: :overnight_visitors_importance, f: desired_habit_form %>
+    <%= desired_habit_form.label :partying %>
+    <%= desired_habit_form.text_field :partying %>
+    <%= render "importance", user: user, method: :partying_importance, f: desired_habit_form %>
+    <%= desired_habit_form.label :music %>
+    <%= desired_habit_form.text_field :music %>
+    <%= render "importance", user: user, method: :music_importance, f: desired_habit_form %>
   <% end %><br>
   <%= f.submit %>
 <% end %>

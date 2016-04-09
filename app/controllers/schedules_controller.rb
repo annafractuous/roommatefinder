@@ -39,7 +39,7 @@ class SchedulesController < ApplicationController
   end
 
   def desired_schedule_params
-    params.require(:user).permit(:desired_schedule_attributes =>[:work, :sleep, :bathroom, :kitchen])
+    params.require(:user).permit(:desired_schedule_attributes =>[:work, :work_importance, :sleep, :sleep_importance, :bathroom, :bathroom_importance, :kitchen, :kitchen_importance])
   end
 
 end

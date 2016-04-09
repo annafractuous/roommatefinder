@@ -1,0 +1,4 @@
+<% user.desired_habit.how_important_options.each do |k,v| %>
+  <%= f.radio_button method, k %>
+  <%= f.label method, v %>
+<% end%><br>

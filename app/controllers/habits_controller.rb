@@ -8,11 +8,9 @@ class HabitsController < ApplicationController
   end
 
   def create
-    binding.pry
     @user = User.find(params[:user_id])
-    
-    @habit = @user.build_habit(habit_params[:habits])
-    @desired_habit = @user.build_desired_habit(desired_habit_params[:desired_habits])
+    @habit = @user.build_habit(habit_params[:habit_attributes])
+    @desired_habit = @user.build_desired_habit(desired_habit_params[:desired_habit_attributes])
     if @habit.save && @desired_habit.save
       redirect_to @user
     else
@@ -28,20 +26,19 @@ class HabitsController < ApplicationController
 
   def update
     @user = User.find(params[:user_id])
-    @user.habit.update(habit_params[:habits])
-    @user.desired_habit.update(desired_habit_params[:desired_habits])
-    binding.pry
+    @user.habit.update(habit_params[:habit_attributes])
+    @user.desired_habit.update(desired_habit_params[:desired_habit_attributes])
     redirect_to @user
   end
   
   private
 
   def habit_params
-    params.require(:user).permit(:habits =>[:drinking, :four_twenty, :partying, :overnight_visitors, :music])
+    params.require(:user).permit(:habit_attributes =>[:drinking, :four_twenty, :partying, :overnight_visitors, :music])
   end
 
   def desired_habit_params
-    params.require(:user).permit(:desired_habits =>[:drinking, :four_twenty, :partying, :overnight_visitors, :music])
+    params.require(:user).permit(:desired_habit_attributes =>[:drinking, :drinking_importance, :four_twenty, :four_twenty_importance, :partying, :partying_importance, :overnight_visitors, :overnight_visitors_importance, :music, :music_importance])
   end
 
  # Table name: habits
