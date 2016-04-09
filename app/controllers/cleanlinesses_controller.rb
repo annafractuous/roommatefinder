@@ -45,13 +45,6 @@ class CleanlinessesController < ApplicationController
     params.require(:user).permit(:desired_cleanliness_attributes =>[:kitchen, :kitchen_importance, :bathroom, :bathroom_importance, :common_space, :common_space_importance])
   end
 
- #  "user"=>
- #  {"cleanliness"=>{"kitchen"=>"aw", "bathroom"=>"ga", "common_space"=>"ju"},
- #   "desired_cleanliness"=>
- #    {"kitchen"=>"gu", "bathroom"=>"jew", "common_space"=>"ku"}},
- # "commit"=>"Update User",
- # "controller"=>"cleanlinesses",
- # "action"=>"create",
- # "user_id"=>"1"}
+
  
 end

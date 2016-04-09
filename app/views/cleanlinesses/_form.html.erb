@@ -1,6 +1,7 @@
 
 <%= form_for user,  url: action, method: method do |f| %>
-  <h3>My Cleanliness</h3>
+  <h3>How do you describe yourself</h3>
+  <h4>How Clean are you in the</h4>
   <%= f.fields_for :cleanliness do |cleanliness_form| %>
     <%= cleanliness_form.label :kitchen %>
     <%= cleanliness_form.text_field :kitchen %>
@@ -9,7 +10,8 @@
     <%= cleanliness_form.label :common_space %>
     <%= cleanliness_form.text_field :common_space %>
   <% end %><br>
-  <h3>Desired Cleanliness</h3>
+  <h3>How do you want someone else to answer</h3>
+  <h4>and how important is their response to you</h4>
   <%= f.fields_for :desired_cleanliness do |desired_cleanliness_form| %>
     <%= desired_cleanliness_form.label :kitchen %>
     <%= desired_cleanliness_form.text_field :kitchen %>

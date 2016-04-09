@@ -1,6 +1,7 @@
 
 <%= form_for user,  url: action, method: method do |f| %>
-  <h3>My Schedule</h3>
+  <h3>How do you describe yourself</h3>
+  <h4>What is your schedule usually like for</h4>
   <%= f.fields_for :schedule do |schedule_form| %>
     <%= schedule_form.label :work %>
     <%= schedule_form.text_field :work %>
@@ -11,7 +12,8 @@
     <%= schedule_form.label :kitchen %>
     <%= schedule_form.text_field :kitchen %>
   <% end %><br>
-  <h3>Desired Schedule</h3>
+  <h3>How do you want someone else to answer</h3>
+  <h4>and how important is their response to you</h4>
   <%= f.fields_for :desired_schedule do |desired_schedule_form| %>
     <%= desired_schedule_form.label :work %>
     <%= desired_schedule_form.text_field :work %>

@@ -1,6 +1,7 @@
 
 <%= form_for user,  url: action, method: method do |f| %>
-  <h3>My Habits</h3>
+  <h3>How do you describe yourself</h3>
+  <h4>What are your habits</h4>
   <%= f.fields_for :habit do |habits_form| %>
     <%= habits_form.label :drinking %>
     <%= habits_form.text_field :drinking %>
@@ -13,7 +14,8 @@
     <%= habits_form.label :music %>
     <%= habits_form.text_field :music %>
   <% end %><br>
-  <h3>Desired Habits</h3>
+  <h3>How do you want someone else to answer</h3>
+  <h4>and how important is their response to you</h4>
   <%= f.fields_for :desired_habit do |desired_habit_form| %>
     <%= desired_habit_form.label :drinking %>
     <%= desired_habit_form.text_field :drinking %>
