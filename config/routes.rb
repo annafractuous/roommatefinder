@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :match_connections
   resources :users do
     resources :cleanlinesses
     resources :habits

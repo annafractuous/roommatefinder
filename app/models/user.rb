@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
  has_one :desired_schedule
  has_one :habit
  has_one :desired_habit
+ has_many :match_connections
+ has_many :matches, through: :match_connections
  accepts_nested_attributes_for :habit, :desired_habit
  accepts_nested_attributes_for :cleanliness, :desired_cleanliness
  accepts_nested_attributes_for :schedule, :desired_schedule
