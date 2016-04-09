@@ -1,5 +1,5 @@
 module HowImportantToYouAble
   def how_important_options
-    {0 => "i dont really care", 1 => "a little important", 2 => "somewhat important", 3 => "very important"}
+    {1 => "i dont really care", 0 => "a little important", 3 => "somewhat important", 4 => "very important"}
   end
 end

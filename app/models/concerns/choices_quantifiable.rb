@@ -15,7 +15,7 @@ module ChoicesQuantifiable
     def work_schedule_quantified
       {1 => "Unemployed", 2=> "Remote/Freelance", 3 => "9-5", 4 => "Graveyard Shift", 5 => "Workaholic"}
     end
-
+    
     def sleep_schedule_quantified
       {1 => "Responsible Adult", 2 => "Late Riser", 3 => "Nocturnal", 4 => "Daytime Sleeper", 5 => "Never Sleep"}
     end
