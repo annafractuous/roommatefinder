@@ -11,6 +11,8 @@
 #  has_apartment :boolean
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  password      :string
+#  password_salt :string
 #
 
 class User < ActiveRecord::Base
