@@ -38,9 +38,10 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'rspec'
   gem 'better_errors'
-  gem 'factory_girl'
+  gem 'factory_girl_rails'
   gem 'faker'
   gem 'annotate'
+  gem 'database_cleaner'
 end
 
 group :development do
