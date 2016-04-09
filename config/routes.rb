@@ -1,13 +1,16 @@
 Rails.application.routes.draw do
+  get 'login' => 'sessions#new'
+  post 'login' => 'sessions#create'
+  delete 'logout' => 'sessions#destroy'
+
+
   resources :users do
     resources :cleanlinesses
     resources :habits
     resources :schedules
-    # resources :preferences
-    # resources :profiles
   end
 
- 
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -4,9 +4,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      @user.build_profile
-      @user.build_preference
-      render :show
+      render :show, notice: "Welcome to Roommater!"
     else
       render :new
     end

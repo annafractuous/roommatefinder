@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Roommatefinder</title>
+  <title>Roommater</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <stylesheet_link_tag "/../lib/assets/bootstrap.min.css">
+  <stylesheet_link_tag "style">
 </head>
 <body>
 
+<!-- form to show flash messages -->
+
 <%= yield %>
 
+<javascript_include_tag "/../lib/assets/bootstrap.min.js">
+<javascript_include_tag "/../lib/assets/jquery-2.1.1.min.js">
 </body>
 </html>
