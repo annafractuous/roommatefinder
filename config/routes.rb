@@ -3,12 +3,12 @@ Rails.application.routes.draw do
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
 
-
   resources :users do
     resources :cleanlinesses
     resources :habits
     resources :schedules
   end
+  resources :match_connections
 
 
 
