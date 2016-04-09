@@ -14,5 +14,6 @@
 
 class Schedule < ActiveRecord::Base
   include ChoicesQuantifiable::Schedule
+  include Validatable
   belongs_to :user
 end

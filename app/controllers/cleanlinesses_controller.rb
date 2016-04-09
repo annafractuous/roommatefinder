@@ -22,13 +22,14 @@ class CleanlinessesController < ApplicationController
 
   def create
     @user = User.find(params[:user_id])
-    
-    @cleanliness = @user.build_cleanliness(cleanliness_params[:cleanliness_attributes])
-    @desired_cleanliness = @user.build_desired_cleanliness(desired_cleanliness_params[:desired_cleanliness_attributes])
-    if @cleanliness.save && @desired_cleanliness.save
+    cleanliness = @user.build_cleanliness(cleanliness_params)
+    desired_cleanliness = @user.build_desired_cleanliness(desired_cleanliness_params)
+
+    if cleanliness.save && desired_cleanliness.save
       redirect_to @user
     else
-      render :ne
+      # flash[:error] = desired_cleanliness.errors.to_a
+      render :new
     end
   end
 
@@ -40,9 +41,15 @@ class CleanlinessesController < ApplicationController
 
   def update
     @user = User.find(params[:user_id])
-    @user.cleanliness.update(cleanliness_params[:cleanliness_attributes])
-    @user.desired_cleanliness.update(desired_cleanliness_params[:desired_cleanliness_attributes])
-    redirect_to @user
+    cleanliness = @user.cleanliness
+    desired_cleanliness = @user.desired_cleanliness
+
+    if cleanliness.update(cleanliness_params) && desired_cleanliness.update(desired_cleanliness_params)
+      redirect_to @user
+    else
+      flash[:error] = desired_cleanliness.errors.to_a
+      render :edit
+    end
   end
 
   def show
@@ -51,13 +58,10 @@ class CleanlinessesController < ApplicationController
   private
 
   def cleanliness_params
-    params.require(:user).permit(:cleanliness_attributes =>[:kitchen, :bathroom, :common_space])
+    params.require(:user).permit(:cleanliness_attributes =>[:kitchen, :bathroom, :common_space])[:cleanliness_attributes]
   end
 
   def desired_cleanliness_params
-    params.require(:user).permit(:desired_cleanliness_attributes =>[:kitchen, :kitchen_importance, :bathroom, :bathroom_importance, :common_space, :common_space_importance])
+    params.require(:user).permit(:desired_cleanliness_attributes =>[:kitchen, :kitchen_importance, :bathroom, :bathroom_importance, :common_space, :common_space_importance])[:desired_cleanliness_attributes]
   end
-
-
- 
 end

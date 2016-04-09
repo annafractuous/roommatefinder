@@ -14,7 +14,7 @@
   <h4>and how important is their response to you</h4>
   <%= f.fields_for :desired_cleanliness do |desired_cleanliness_form| %>
     <%= desired_cleanliness_form.label :kitchen %>
-        <%= desired_cleanliness_form.select :kitchen, options_for_select([["Pick One", ""], "Hoarder", "Controlled Mess", "Average", "Presentable", "Museum"], :selected => user.desired_cleanliness.kitchen) %>
+    <%= desired_cleanliness_form.select :kitchen, options_for_select([["Pick One", ""], "Hoarder", "Controlled Mess", "Average", "Presentable", "Museum"], :selected => user.desired_cleanliness.kitchen) %>
     <%= render "importance", user: user, method: :kitchen_importance, f: desired_cleanliness_form %>
     <%= desired_cleanliness_form.label :bathroom %>
     <%= desired_cleanliness_form.select :bathroom, options_for_select([["Pick One", ""], "Hoarder", "Controlled Mess", "Average", "Presentable", "Museum"], :selected => user.desired_cleanliness.bathroom) %>

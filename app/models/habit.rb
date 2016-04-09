@@ -15,5 +15,6 @@
 
 class Habit < ActiveRecord::Base
   include ChoicesQuantifiable::Habit
+  include Validatable
   belongs_to :user
 end
