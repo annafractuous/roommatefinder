@@ -4,8 +4,10 @@ Rails.application.routes.draw do
     resources :cleanlinesses
     resources :habits
     resources :schedules
+    resources :match_connections
     # resources :preferences
     # resources :profiles
+
   end
 
  
