@@ -6,4 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# creates 200 users with random data filled out 
+# for all 3 forms (cleanliness, schedule, habit)
 
+200.times do 
+  FactoryGirl.create :complete_user
+end
