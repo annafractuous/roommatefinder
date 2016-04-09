@@ -4,33 +4,33 @@
   <h4>What are your habits</h4>
   <%= f.fields_for :habit do |habits_form| %>
     <%= habits_form.label :drinking %>
-    <%= habits_form.text_field :drinking %>
+    <%= habits_form.select :drinking, options_for_select([["Pick One", ""], "Teetotaler", "Rarely", "Socially", "Regularly Tipsy", "Gary Busey"], :selected => user.habit.drinking) %>
     <%= habits_form.label :four_twenty %>
-    <%= habits_form.text_field :four_twenty %>
+    <%= habits_form.select :four_twenty, options_for_select([["Pick One", ""], "Never", "Rarely", "Socially", "Regularly", "Snoop Dogg"], :selected => user.habit.four_twenty) %>
     <%= habits_form.label :overnight_visitors %>
-    <%= habits_form.text_field :overnight_visitors %>
+    <%= habits_form.select :overnight_visitors, options_for_select([["Pick One", ""], "Never", "Rarely", "Sometimes", "Partner", "Live-in partner"], :selected => user.habit.overnight_visitors) %>
     <%= habits_form.label :partying %>
-    <%= habits_form.text_field :partying %>
+    <%= habits_form.select :partying, options_for_select([["Pick One", ""], "Never", "Rarely", "Socially", "Regularly", "Andrew W.K."], :selected => user.habit.partying) %>
     <%= habits_form.label :music %>
-    <%= habits_form.text_field :music %>
+    <%= habits_form.select :music, options_for_select([["Pick One", ""], "Headphones", "Softly", "Average", "Loudly", "Live Band"], :selected => user.habit.music) %>
   <% end %><br>
   <h3>How do you want someone else to answer</h3>
   <h4>and how important is their response to you</h4>
   <%= f.fields_for :desired_habit do |desired_habit_form| %>
     <%= desired_habit_form.label :drinking %>
-    <%= desired_habit_form.text_field :drinking %>
+    <%= desired_habit_form.select :drinking, options_for_select([["Pick One", ""], "Teetotaler", "Rarely", "Socially", "Regularly Tipsy", "Gary Busey"], :selected => user.desired_habit.drinking) %>
     <%= render "importance", user: user, method: :drinking_importance, f: desired_habit_form %>
     <%= desired_habit_form.label :four_twenty %>
-    <%= desired_habit_form.text_field :four_twenty %>
+    <%= desired_habit_form.select :four_twenty, options_for_select([["Pick One", ""], "Never", "Rarely", "Socially", "Regularly", "Snoop Dogg"], :selected => user.desired_habit.four_twenty) %>
     <%= render "importance", user: user, method: :four_twenty_importance, f: desired_habit_form %>
     <%= desired_habit_form.label :overnight_visitors %>
-    <%= desired_habit_form.text_field :overnight_visitors %>
+    <%= desired_habit_form.select :overnight_visitors, options_for_select([["Pick One", ""], "Never", "Rarely", "Sometimes", "Partner", "Live-in partner"], :selected => user.desired_habit.overnight_visitors) %>
     <%= render "importance", user: user, method: :overnight_visitors_importance, f: desired_habit_form %>
     <%= desired_habit_form.label :partying %>
-    <%= desired_habit_form.text_field :partying %>
+    <%= desired_habit_form.select :partying, options_for_select([["Pick One", ""], "Never", "Rarely", "Socially", "Regularly", "Andrew W.K."], :selected => user.desired_habit.partying) %>
     <%= render "importance", user: user, method: :partying_importance, f: desired_habit_form %>
     <%= desired_habit_form.label :music %>
-    <%= desired_habit_form.text_field :music %>
+    <%= desired_habit_form.select :music, options_for_select([["Pick One", ""], "Headphones", "Softly", "Average", "Loudly", "Live Band"], :selected => user.desired_habit.music) %>
     <%= render "importance", user: user, method: :music_importance, f: desired_habit_form %>
   <% end %><br>
   <%= f.submit %>

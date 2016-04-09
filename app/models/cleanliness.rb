@@ -14,3 +14,9 @@
 class Cleanliness < ActiveRecord::Base
   belongs_to :user
 end
+
+#Hoarder
+#Controlled Mess
+#Average
+#Above Average
+#Pristine
