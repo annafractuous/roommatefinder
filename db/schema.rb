@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20160409184159) do
-=======
 ActiveRecord::Schema.define(version: 20160409191947) do
->>>>>>> ac2db9d199b38e545bbb8d5afd7e0354e07a7455
 
   create_table "cleanlinesses", force: :cascade do |t|
     t.datetime "created_at",   null: false

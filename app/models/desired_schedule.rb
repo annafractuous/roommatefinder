@@ -1,3 +1,4 @@
+include ChoicesQuantifiable::Cleanliness
 # == Schema Information
 #
 # Table name: desired_schedules
@@ -17,6 +18,7 @@
 #
 
 class DesiredSchedule < ActiveRecord::Base
-  belongs_to :user
   include HowImportantToYouAble
+  include ChoicesQuantifiable::Schedule
+  belongs_to :user
 end

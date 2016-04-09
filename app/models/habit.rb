@@ -14,7 +14,6 @@
 #
 
 class Habit < ActiveRecord::Base
+  include ChoicesQuantifiable::Habit
   belongs_to :user
-  include ChoicesQuantifiable
-  
 end

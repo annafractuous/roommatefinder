@@ -23,9 +23,17 @@
 <!-- form to show flash messages -->
 <% if flash.present? %>
   <% flash.each do |type, message| %>
-    <div class="alert alert-<%=type%> alert-dismissable" role="alert">
-      <%= message %>
-    </div>
+    <% if message.kind_of?(Array) %>
+      <% message.uniq.each do |msg| %>
+        <div class="alert alert-<%=type%> alert-dismissable" role="alert">
+          <%= msg %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="alert alert-<%=type%> alert-dismissable" role="alert">
+        <%= message %>
+      </div>
+    <% end %>
   <% end %>
 <% end %>
 

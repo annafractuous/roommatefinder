@@ -12,8 +12,8 @@
 #
 
 class Cleanliness < ActiveRecord::Base
+  include ChoicesQuantifiable::Cleanliness
   belongs_to :user
-  include ChoicesQuantifiable
 end
 
 #Hoarder

@@ -13,6 +13,6 @@
 #
 
 class Schedule < ActiveRecord::Base
+  include ChoicesQuantifiable::Schedule
   belongs_to :user
-  include ChoicesQuantifiable
 end

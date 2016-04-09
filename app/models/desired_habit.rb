@@ -19,6 +19,7 @@
 #
 
 class DesiredHabit < ActiveRecord::Base
-  belongs_to :user
   include HowImportantToYouAble
+  include ChoicesQuantifiable::Habit
+  belongs_to :user
 end

@@ -15,7 +15,7 @@
 #
 
 class DesiredCleanliness < ActiveRecord::Base
-  belongs_to :user
   include HowImportantToYouAble
-  include ChoicesQuantifiable
+  include ChoicesQuantifiable::Cleanliness
+  belongs_to :user
 end
