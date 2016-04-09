@@ -4,23 +4,23 @@
   <h4>How Clean are you in the</h4>
   <%= f.fields_for :cleanliness do |cleanliness_form| %>
     <%= cleanliness_form.label :kitchen %>
-    <%= cleanliness_form.text_field :kitchen %>
+    <%= cleanliness_form.select :kitchen, options_for_select([["Pick One", ""], "Hoarder", "Controlled Mess", "Average", "Presentable", "Museum"], :selected => user.cleanliness.kitchen) %>
     <%= cleanliness_form.label :bathroom %>
-    <%= cleanliness_form.text_field :bathroom %>
+     <%= cleanliness_form.select :bathroom, options_for_select([["Pick One", ""], "Hoarder", "Controlled Mess", "Average", "Presentable", "Museum"], :selected => user.cleanliness.bathroom) %>
     <%= cleanliness_form.label :common_space %>
-    <%= cleanliness_form.text_field :common_space %>
+        <%= cleanliness_form.select :common_space, options_for_select([["Pick One", ""], "Hoarder", "Controlled Mess", "Average", "Presentable", "Museum"], :selected => user.cleanliness.common_space) %>
   <% end %><br>
   <h3>How do you want someone else to answer</h3>
   <h4>and how important is their response to you</h4>
   <%= f.fields_for :desired_cleanliness do |desired_cleanliness_form| %>
     <%= desired_cleanliness_form.label :kitchen %>
-    <%= desired_cleanliness_form.text_field :kitchen %>
+        <%= desired_cleanliness_form.select :kitchen, options_for_select([["Pick One", ""], "Hoarder", "Controlled Mess", "Average", "Presentable", "Museum"], :selected => user.desired_cleanliness.kitchen) %>
     <%= render "importance", user: user, method: :kitchen_importance, f: desired_cleanliness_form %>
     <%= desired_cleanliness_form.label :bathroom %>
-    <%= desired_cleanliness_form.text_field :bathroom %>
+    <%= desired_cleanliness_form.select :bathroom, options_for_select([["Pick One", ""], "Hoarder", "Controlled Mess", "Average", "Presentable", "Museum"], :selected => user.desired_cleanliness.bathroom) %>
     <%= render "importance", user: user, method: :bathroom_importance, f: desired_cleanliness_form %>
     <%= desired_cleanliness_form.label :common_space %>
-    <%= desired_cleanliness_form.text_field :common_space %>
+    <%= desired_cleanliness_form.select :common_space, options_for_select([["Pick One", ""], "Hoarder", "Controlled Mess", "Average", "Presentable", "Museum"], :selected => user.desired_cleanliness.common_space) %>
     <%= render "importance", user: user, method: :common_space_importance, f: desired_cleanliness_form %>
   <% end %><br>
   <%= f.submit %>

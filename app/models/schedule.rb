@@ -5,13 +5,14 @@
 #  id         :integer          not null, primary key
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  work       :string
-#  sleep      :string
-#  bathroom   :string
-#  kitchen    :string
+#  work       :integer
+#  sleep      :integer
+#  bathroom   :integer
+#  kitchen    :integer
 #  user_id    :integer
 #
 
 class Schedule < ActiveRecord::Base
   belongs_to :user
+  include ChoicesQuantifiable
 end

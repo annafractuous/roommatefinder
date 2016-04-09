@@ -30,5 +30,5 @@ class User < ActiveRecord::Base
  accepts_nested_attributes_for :cleanliness, :desired_cleanliness
  accepts_nested_attributes_for :schedule, :desired_schedule
 
-
+ 
 end

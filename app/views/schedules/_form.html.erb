@@ -4,28 +4,28 @@
   <h4>What is your schedule usually like for</h4>
   <%= f.fields_for :schedule do |schedule_form| %>
     <%= schedule_form.label :work %>
-    <%= schedule_form.text_field :work %>
+    <%= schedule_form.select :work, options_for_select([["Pick One", ""], "Unemployed", "Remote/Freelance", "9-5", "Graveyard Shift", "Workaholic"], :selected => user.schedule.work) %>
     <%= schedule_form.label :sleep %>
-    <%= schedule_form.text_field :sleep %>
+    <%= schedule_form.select :sleep, options_for_select([["Pick One", ""], "Normal", "Nocturnal", "Long","Short", "Never Sleep"], :selected => user.schedule.sleep) %>
     <%= schedule_form.label :bathroom %>
-    <%= schedule_form.text_field :bathroom %>
+    <%= schedule_form.select :bathroom, options_for_select([["Pick One", ""], "5-8", "8-10", "10-Noon", "Night Shower", "Daily Shaver"], :selected => user.schedule.bathroom) %>
     <%= schedule_form.label :kitchen %>
-    <%= schedule_form.text_field :kitchen %>
+    <%= schedule_form.select :kitchen, options_for_select([["Pick One", ""], "Never Cook", "Prepared Foods", "Sometimes", "Most Nights", "Anthony Bourdain"], :selected => user.schedule.kitchen) %>
   <% end %><br>
   <h3>How do you want someone else to answer</h3>
   <h4>and how important is their response to you</h4>
   <%= f.fields_for :desired_schedule do |desired_schedule_form| %>
     <%= desired_schedule_form.label :work %>
-    <%= desired_schedule_form.text_field :work %>
+    <%= desired_schedule_form.select :work, options_for_select([["Pick One", ""], "Unemployed", "Remote/Freelance", "9-5", "Graveyard Shift", "Workaholic"], :selected => user.desired_schedule.work) %>
     <%= render "importance", user: user, method: :work_importance, f: desired_schedule_form %>
     <%= desired_schedule_form.label :sleep %>
-    <%= desired_schedule_form.text_field :sleep %>
+    <%= desired_schedule_form.select :sleep, options_for_select([["Pick One", ""], "Normal", "Nocturnal", "Long","Short",  "Never Sleep"], :selected => user.desired_schedule.sleep) %>
     <%= render "importance", user: user, method: :sleep_importance, f: desired_schedule_form %>
     <%= desired_schedule_form.label :bathroom %>
-    <%= desired_schedule_form.text_field :bathroom %>
+    <%= desired_schedule_form.select :bathroom, options_for_select([["Pick One", ""], "5-8", "8-10", "10-Noon", "Night Shower", "Daily Shaver"], :selected => user.desired_schedule.bathroom) %>
     <%= render "importance", user: user, method: :bathroom_importance, f: desired_schedule_form %>
     <%= desired_schedule_form.label :kitchen %>
-    <%= desired_schedule_form.text_field :kitchen %>
+    <%= desired_schedule_form.select :kitchen, options_for_select([["Pick One", ""], "Never Cook", "Prepared Foods", "Sometimes", "Most Nights", "Anthony Bourdain"], :selected => user.desired_schedule.kitchen) %>
     <%= render "importance", user: user, method: :kitchen_importance, f: desired_schedule_form %>
   <% end %><br>
   <%= f.submit %>
