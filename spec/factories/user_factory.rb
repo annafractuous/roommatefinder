@@ -32,6 +32,16 @@ FactoryGirl.define do
       desired_habit factory: :desired_habit
     end
 
+    trait :is_clean_and_wants_clean do
+      cleanliness factory: :is_clean
+      desired_cleanliness factory: :wants_clean
+    end
+
+    trait :is_dirty_and_doesnt_care do
+      cleanliness factory: :is_dirty
+      desired_cleanliness factory: :doesnt_care
+    end
+
 
   end
 
@@ -40,6 +50,18 @@ FactoryGirl.define do
     kitchen { rand(1..5)}
     bathroom { rand(1..5)}
     common_space { rand(1..5)}
+
+    factory :is_clean do
+      kitchen { rand(4..5)}
+      bathroom { rand(4..5)}
+      common_space { rand(4..5)}
+    end
+
+    factory :is_dirty do
+      kitchen { rand(1..2)}
+      bathroom { rand(1..2)}
+      common_space { rand(1..2)}
+    end
   end
 
   factory :desired_cleanliness do
@@ -49,6 +71,21 @@ FactoryGirl.define do
     bathroom_importance { rand(1..4)}
     common_space { rand(1..5)}
     common_space_importance  { rand(1..4)}
+
+    factory :wants_clean do
+      kitchen { rand(4..5)}
+      kitchen_importance { rand(3..4)}
+      bathroom { rand(4..5)}
+      bathroom_importance { rand(3..4)}
+      common_space { rand(4..5)}
+      common_space_importance  { rand(3..4)}
+    end
+
+    factory :doesnt_care do
+      kitchen_importance 1
+      bathroom_importance 1
+      common_space_importance 1
+    end
   end
 
 
