@@ -22,7 +22,6 @@
     <%= render "importance", user: user, method: :drinking_importance, f: desired_habit_form %>
     <%= desired_habit_form.label :four_twenty %>
     <%= desired_habit_form.select :four_twenty, options_for_select([["Pick One", ""], "Never", "Rarely", "Occasionally", "Regularly", "Fear and Loathing"], :selected => user.desired_habit.four_twenty) %>
-    <%= desired_habit_form.select :four_twenty, options_for_select([["Pick One", ""], "Never", "Rarely", "Occasionally", "Regularly", "Fear and Loathing" ], :selected => user.desired_habit.four_twenty) %>
     <%= render "importance", user: user, method: :four_twenty_importance, f: desired_habit_form %>
     <%= desired_habit_form.label :overnight_visitors %>
     <%= desired_habit_form.select :overnight_visitors, options_for_select([["Pick One", ""],  "Never", "Rarely", "Occasionally", "Regularly", "Fear and Loathing"], :selected => user.desired_habit.overnight_visitors) %>
