@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new', as: 'login'
   post 'login' => 'sessions#create'
   get 'logout' => 'sessions#destroy', as: 'logout'
-  get '/', to: 'pages#home', as: 'home'
+  get '/', to: 'pages#home', as: 'root'
   resources :users do
     resources :cleanlinesses
     resources :habits
