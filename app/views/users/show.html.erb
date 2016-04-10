@@ -25,12 +25,10 @@
 <% end %>
 
 
-<h4>Your profile is XX% completed</h4>
+<h4>Your profile is <%= @user.profile_percent_complete %>% complete</h4>
 
 
 
 <br><br>
 <h4>If you are happy with the information you have provided, continue to see roommates we think could be a good match for you </h4>
 <%= link_to "Show me my matches", user_path(@user)%>
-
-
