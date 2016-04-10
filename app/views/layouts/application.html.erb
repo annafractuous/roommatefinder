@@ -5,8 +5,6 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  <%= stylesheet_link_tag "/../lib/assets/bootstrap.min.css" %>
-  <%= stylesheet_link_tag "application.css" %>
 </head>
 <body>
 
@@ -20,26 +18,27 @@
   <% end %>
 </div>
 
-<!-- form to show flash messages -->
-<% if flash.present? %>
-  <% flash.each do |type, message| %>
-    <% if message.kind_of?(Array) %>
-      <% message.uniq.each do |msg| %>
+<div class="container">
+  <!-- form to show flash messages -->
+  <% if flash.present? %>
+    <% flash.each do |type, message| %>
+      <% if message.kind_of?(Array) %>
+        <% message.uniq.each do |msg| %>
+          <div class="alert alert-<%=type%> alert-dismissable" role="alert">
+            <%= msg %>
+          </div>
+        <% end %>
+      <% else %>
         <div class="alert alert-<%=type%> alert-dismissable" role="alert">
-          <%= msg %>
+          <%= message %>
         </div>
       <% end %>
-    <% else %>
-      <div class="alert alert-<%=type%> alert-dismissable" role="alert">
-        <%= message %>
-      </div>
     <% end %>
   <% end %>
-<% end %>
 
-<%= yield %>
+  <%= yield %>
 
-<javascript_include_tag "/../lib/assets/bootstrap.min.js">
-<javascript_include_tag "/../lib/assets/jquery-2.1.1.min.js">
+</div>
+
 </body>
 </html>
