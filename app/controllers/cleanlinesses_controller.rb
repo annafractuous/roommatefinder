@@ -26,10 +26,12 @@ class CleanlinessesController < ApplicationController
     desired_cleanliness = @user.build_desired_cleanliness(desired_cleanliness_params)
 
     if cleanliness.save && desired_cleanliness.save
-      redirect_to @user
+
+      redirect_to user_path(@user)
     else
+
       # flash[:error] = desired_cleanliness.errors.to_a
-      render :new
+      render user
     end
   end
 
@@ -45,9 +47,11 @@ class CleanlinessesController < ApplicationController
     desired_cleanliness = @user.desired_cleanliness
 
     if cleanliness.update(cleanliness_params) && desired_cleanliness.update(desired_cleanliness_params)
-      redirect_to @user
+
+      redirect_to user_path(@user)
     else
-      flash[:error] = desired_cleanliness.errors.to_a
+      # flash[:error] = desired_cleanliness.errors.to_a
+
       render :edit
     end
   end

@@ -34,4 +34,29 @@ class User < ActiveRecord::Base
  validates_uniqueness_of :email, :username
  validates_presence_of :password, on: :create
  validates_confirmation_of :password
+
+
+ def completed_profile_percentage
+ 
+  classes=[Cleanliness, DesiredCleanliness, Schedule, DesiredSchedule, Habit, DesiredHabit]
+
+  completion_hash=classes.each_with_object({total: 0, completed: 0}) do |class_name, completion_hash|
+    class_name.user_input_columns.each do |col_name| 
+      # need an extra if-statement here to guard for an object
+      # that is not created, i.e. the first time the user logs in
+      # self.cleanliness = nil
+      if self.send(class_name.name.underscore)
+        if self.send(class_name.name.underscore).send(col_name)
+          completion_hash[:completed] += 1
+        end
+      end
+      completion_hash[:total] += 1
+    end
+  end
+
+  (completion_hash[:completed].to_f / completion_hash[:total] * 100).round(2)
+ end
+
 end
+
+

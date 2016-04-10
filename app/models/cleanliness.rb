@@ -14,6 +14,7 @@
 class Cleanliness < ActiveRecord::Base
   include ChoicesQuantifiable::Cleanliness
   include Validatable
+  extend InputColumnable
   belongs_to :user
 end
 

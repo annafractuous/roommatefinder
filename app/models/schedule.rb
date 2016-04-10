@@ -15,5 +15,6 @@
 class Schedule < ActiveRecord::Base
   include ChoicesQuantifiable::Schedule
   include Validatable
+  extend InputColumnable
   belongs_to :user
 end

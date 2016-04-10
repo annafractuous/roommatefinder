@@ -22,6 +22,7 @@ class DesiredHabit < ActiveRecord::Base
   include HowImportantToYouAble
   include ChoicesQuantifiable::Habit
   include Validatable
+  extend InputColumnable
   belongs_to :user
 
   validate :preference_and_importance_entered?

@@ -18,7 +18,7 @@ FactoryGirl.define do
       desired_schedule factory: :desired_schedule
     end
 
-    trait :habit do
+    trait :with_habit do
       habit factory: :habit
       desired_habit factory: :desired_habit
     end
@@ -57,6 +57,10 @@ FactoryGirl.define do
 
 
   factory :cleanliness do
+
+    kitchen { rand(1..5)}
+    bathroom { rand(1..5)}
+    common_space { rand(1..5)}
 
     factory :is_clean do
       kitchen { rand(4..5)}
