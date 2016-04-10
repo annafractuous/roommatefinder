@@ -24,13 +24,8 @@
   <%= link_to "Edit Schedule Information",edit_user_schedule_path(@user, @user.schedule)%> <br>
 <% end %>
 
-
-<p>Your profile is <strong><%= @user.completed_profile_percentage %></strong> completed</p>
-
-
+<h4>Your profile is <%= @user.profile_percent_complete %>% complete</h4>
 
 <br><br>
 <h4>If you are happy with the information you have provided, continue to see roommates we think could be a good match for you </h4>
 <%= link_to "Show me my matches", user_path(@user)%>
-
-

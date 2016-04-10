@@ -36,27 +36,42 @@ class User < ActiveRecord::Base
  validates_confirmation_of :password
 
 
- def completed_profile_percentage
- 
-  classes=[Cleanliness, DesiredCleanliness, Schedule, DesiredSchedule, Habit, DesiredHabit]
+ def profile_percent_complete
+   total_questions = 0
+   questions_answered = 0
 
-  completion_hash=classes.each_with_object({total: 0, completed: 0}) do |class_name, completion_hash|
-    class_name.user_input_columns.each do |col_name| 
-      # need an extra if-statement here to guard for an object
-      # that is not created, i.e. the first time the user logs in
-      # self.cleanliness = nil
-      if self.send(class_name.name.underscore)
-        if self.send(class_name.name.underscore).send(col_name)
-          completion_hash[:completed] += 1
-        end
-      end
-      completion_hash[:total] += 1
-    end
-  end
+   User.user_columns.each do |col|
+     total_questions += 1
+     questions_answered += 1 if self.send(col) != nil
+   end
 
-  (completion_hash[:completed].to_f / completion_hash[:total] * 100).round(2)
+   User.question_tables.each do |category|
+     if self.send(category.singularize)
+       User.question_columns(category).each do |col|
+         total_questions += 1
+         questions_answered += 1 if self.send(category.singularize).send(col) != nil
+       end
+     else
+       total_questions += User.question_columns(category).size
+     end
+   end
+
+   ((questions_answered/total_questions.to_f) * 100).to_i
  end
 
+ private
+
+   def self.question_tables
+     ActiveRecord::Base.connection.tables.reject { |t| ["users", "match_connections", "schema_migrations"].include?(t) }
+   end
+
+   def self.user_columns
+     self.column_names.reject { |col| ["id", "name", "username", "email", "password_digest", "created_at", "updated_at"].include?(col) }
+   end
+
+   def self.question_columns(table)
+     table = Object.const_get(table.classify)
+     table.column_names.reject { |col| ["id", "user_id", "created_at", "updated_at"].include?(col) }
+   end
+
 end
-
-
