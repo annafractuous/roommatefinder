@@ -1,4 +1,5 @@
+<div class= "importance" id="<%method.to_s%>" >
 <% user.desired_schedule.how_important_options.each do |k,v| %>
   <%= f.radio_button method, k %>
-  <%= f.label method, v %>
-<% end%><br>
+  <%= f.label method, v %><br>
+<% end%></div><br>

@@ -1,13 +1,25 @@
 module ChoicesQuantifiable
   module Cleanliness
+    # use for all cleanliness methods
     def cleanliness_quantified
       {1 => "Hoarder", 2 => "Controlled Mess", 3 => "Average", 4 => "Presentable", 5 => "Museum"}
     end
   end
 
   module Habit
-    def habits_quantified
+    # use for drinking, four_twenty, and partying
+    def wildness_quantified
       {1 => "Never", 2 => "Rarely", 3 => "Occasionally", 4 => "Regularly", 5 => "Fear and Loathing"}
+    end
+
+    # use for music
+    def music_quantified
+       {1 => "What's Music", 2 => "Strictly Headphones", 3 => "I Like Music about as Much as the Average Person", 4 => "Rock Out Regularly", 5 => "I'm in a Band"}
+    end
+
+    # use for overnight_visitors
+    def visitors_quantified
+       {1 => "Never", 2 => "Rarely", 3 => "Occasionally", 4 => "Regularly", 5 => "Never Alone"}
     end
   end
 

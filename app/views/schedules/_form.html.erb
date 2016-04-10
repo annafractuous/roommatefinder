@@ -3,30 +3,50 @@
   <h3>How do you describe yourself</h3>
   <h4>What is your schedule usually like for</h4>
   <%= f.fields_for :schedule do |schedule_form| %>
+
+    <!-- dropdown -->
     <%= schedule_form.label :work %>
-    <%= schedule_form.select :work, options_for_select([["Pick One", ""], "Unemployed", "Remote/Freelance", "9-5", "Graveyard Shift", "Workaholic"], :selected => user.schedule.work) %>
+    <%= render "dropdown", method: :work, object: user.schedule, quantified_method: :work_schedule_quantified, f: schedule_form %>
+     
+    <!-- dropdown --> 
     <%= schedule_form.label :sleep %>
-    <%= schedule_form.select :sleep, options_for_select([["Pick One", ""], "Responsible Adult", "Late Riser", "Nocturnal", "Daytime Sleeper", "Never Sleep"], :selected => user.schedule.sleep) %>
+    <%= render "dropdown", method: :sleep, object: user.schedule, quantified_method: :sleep_schedule_quantified, f: schedule_form %>
+    
+    <!-- dropdown -->
     <%= schedule_form.label :bathroom %>
-    <%= schedule_form.select :bathroom, options_for_select([["Pick One", ""], "Before 6am", "6-7", "7-8", "8-10", "Evening Showerer"], :selected => user.schedule.bathroom) %>
+    <%= render "dropdown", method: :bathroom, object: user.schedule, quantified_method: :bathroom_schedule_quantified, f: schedule_form %>
+    
+    <!-- dropdown -->
     <%= schedule_form.label :kitchen %>
-    <%= schedule_form.select :kitchen, options_for_select([["Pick One", ""], "Never Cook", "Prepared Foods", "Sometimes", "Most Nights", "Anthony Bourdain"], :selected => user.schedule.kitchen) %>
+    <%= render "dropdown", method: :kitchen, object: user.schedule, quantified_method: :kitchen_schedule_quantified, f: schedule_form %>
   <% end %><br>
+  
   <h3>How do you want someone else to answer</h3>
   <h4>and how important is their response to you</h4>
   <%= f.fields_for :desired_schedule do |desired_schedule_form| %>
+    
+    <!-- dropdown -->
     <%= desired_schedule_form.label :work %>
-    <%= desired_schedule_form.select :work, options_for_select([["Pick One", ""], "Unemployed", "Remote/Freelance", "9-5", "Graveyard Shift", "Workaholic"], :selected => user.desired_schedule.work) %>
+    <%= render "dropdown", method: :work, object: user.desired_schedule, quantified_method: :work_schedule_quantified, f: desired_schedule_form %>
+    <!-- radio buttons -->
     <%= render "importance", user: user, method: :work_importance, f: desired_schedule_form %>
+    
+    <!-- dropdown -->
     <%= desired_schedule_form.label :sleep %>
-    <%= desired_schedule_form.select :sleep, options_for_select([["Pick One", ""], "Responsible Adult", "Late Riser", "Nocturnal", "Daytime Sleeper", "Never Sleep"], :selected => user.desired_schedule.sleep) %>
+    <%= render "dropdown", method: :sleep, object: user.desired_schedule, quantified_method: :sleep_schedule_quantified, f: desired_schedule_form %>
+    <!-- radio buttons -->
     <%= render "importance", user: user, method: :sleep_importance, f: desired_schedule_form %>
+    
+    <!-- dropdown -->
     <%= desired_schedule_form.label :bathroom %>
-    <%= desired_schedule_form.select :bathroom, options_for_select([["Pick One", ""], "Before 6am", "6-7", "7-8", "8-10", "Evening Showerer"], :selected => user.desired_schedule.bathroom) %>
+    <%= render "dropdown", method: :bathroom, object: user.desired_schedule, quantified_method: :bathroom_schedule_quantified, f: desired_schedule_form %>
     <%= render "importance", user: user, method: :bathroom_importance, f: desired_schedule_form %>
+    
+    <!-- dropdown -->
     <%= desired_schedule_form.label :kitchen %>
-    <%= desired_schedule_form.select :kitchen, options_for_select([["Pick One", ""], "Never Cook", "Prepared Foods", "Sometimes", "Most Nights", "Anthony Bourdain"], :selected => user.desired_schedule.kitchen) %>
+    <%= render "dropdown", method: :kitchen, object: user.desired_schedule, quantified_method: :kitchen_schedule_quantified, f: desired_schedule_form %>
+    <!-- radio buttons -->
     <%= render "importance", user: user, method: :kitchen_importance, f: desired_schedule_form %>
   <% end %><br>
-  <%= f.submit %>
+  <%= f.submit "All Set" %>
 <% end %>

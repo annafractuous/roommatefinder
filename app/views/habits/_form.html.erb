@@ -2,36 +2,62 @@
 <%= form_for user,  url: action, method: method do |f| %>
   <h3>How do you describe yourself</h3>
   <h4>What are your habits</h4>
-  <%= f.fields_for :habit do |habits_form| %>
-    <%= habits_form.label :drinking %>
-    <%= habits_form.select :drinking, options_for_select([["Pick One", ""], "Never", "Rarely", "Occasionally", "Regularly", "Fear and Loathing"], :selected => user.habit.drinking) %>
-    <%= habits_form.label :four_twenty %>
-    <%= habits_form.select :four_twenty, options_for_select([["Pick One", ""], "Never", "Rarely", "Occasionally", "Regularly", "Fear and Loathing"], :selected => user.habit.four_twenty) %>
-    <%= habits_form.label :overnight_visitors %>
-    <%= habits_form.select :overnight_visitors, options_for_select([["Pick One", ""], "Never", "Rarely", "Occasionally", "Regularly", "Fear and Loathing"], :selected => user.habit.overnight_visitors) %>
-    <%= habits_form.label :partying %>
-    <%= habits_form.select :partying, options_for_select([["Pick One", ""], "Never", "Rarely", "Occasionally", "Regularly", "Fear and Loathing"], :selected => user.habit.partying) %>
-    <%= habits_form.label :music %>
-    <%= habits_form.select :music, options_for_select([["Pick One", ""], "Never", "Rarely", "Occasionally", "Regularly", "Fear and Loathing"], :selected => user.habit.music) %>
+  <%= f.fields_for :habit do |habit_form| %>
+    
+    <!-- dropdown -->
+    <%= habit_form.label :drinking %>
+    <%= render "dropdown", method: :drinking, object: user.habit, quantified_method: :wildness_quantified, f: habit_form %>
+
+    <!-- dropdown -->
+    <%= habit_form.label :four_twenty %>
+    <%= render "dropdown", method: :four_twenty, object: user.habit, quantified_method: :wildness_quantified, f: habit_form %>
+    
+    <!-- dropdown -->
+    <%= habit_form.label :overnight_visitors %>
+    <%= render "dropdown", method: :overnight_visitors, object: user.habit, quantified_method: :visitors_quantified, f: habit_form %>
+    
+    <!-- dropdown -->
+    <%= habit_form.label :partying %>
+    <%= render "dropdown", method: :partying, object: user.habit, quantified_method: :wildness_quantified, f: habit_form %>
+    
+    <!-- dropdown -->
+    <%= habit_form.label :music %>
+    <%= render "dropdown", method: :music, object: user.habit, quantified_method: :music_quantified, f: habit_form %>
   <% end %><br>
+  
   <h3>How do you want someone else to answer</h3>
   <h4>and how important is their response to you</h4>
   <%= f.fields_for :desired_habit do |desired_habit_form| %>
+    
+    <!-- dropdown -->
     <%= desired_habit_form.label :drinking %>
-    <%= desired_habit_form.select :drinking, options_for_select([["Pick One", ""], "Never", "Rarely", "Occasionally", "Regularly", "Fear and Loathing"], :selected => user.desired_habit.drinking) %>
+    <%= render "dropdown", method: :drinking, object: user.desired_habit, quantified_method: :wildness_quantified, f: desired_habit_form %>
+    <!-- radio buttons -->
     <%= render "importance", user: user, method: :drinking_importance, f: desired_habit_form %>
+    
+    <!-- dropdown -->
     <%= desired_habit_form.label :four_twenty %>
-    <%= desired_habit_form.select :four_twenty, options_for_select([["Pick One", ""], "Never", "Rarely", "Occasionally", "Regularly", "Fear and Loathing"], :selected => user.desired_habit.four_twenty) %>
+    <%= render "dropdown", method: :four_twenty, object: user.desired_habit, quantified_method: :wildness_quantified, f: desired_habit_form %>
+    <!-- radio buttons -->
     <%= render "importance", user: user, method: :four_twenty_importance, f: desired_habit_form %>
+    
+    <!-- dropdown -->
     <%= desired_habit_form.label :overnight_visitors %>
-    <%= desired_habit_form.select :overnight_visitors, options_for_select([["Pick One", ""],  "Never", "Rarely", "Occasionally", "Regularly", "Fear and Loathing"], :selected => user.desired_habit.overnight_visitors) %>
+    <%= render "dropdown", method: :overnight_visitors, object: user.desired_habit, quantified_method: :visitors_quantified, f: desired_habit_form %>
+    <!-- radio buttons -->
     <%= render "importance", user: user, method: :overnight_visitors_importance, f: desired_habit_form %>
+    
+    <!-- dropdown -->
     <%= desired_habit_form.label :partying %>
-    <%= desired_habit_form.select :partying, options_for_select([["Pick One", ""],  "Never", "Rarely", "Occasionally", "Regularly", "Fear and Loathing"], :selected => user.desired_habit.partying) %>
+    <%= render "dropdown", method: :partying, object: user.desired_habit, quantified_method: :wildness_quantified, f: desired_habit_form %>
+    <!-- radio buttons -->
     <%= render "importance", user: user, method: :partying_importance, f: desired_habit_form %>
+    
+    <!-- dropdown -->
     <%= desired_habit_form.label :music %>
-    <%= desired_habit_form.select :music, options_for_select([["Pick One", ""],  "Never", "Rarely", "Occasionally", "Regularly", "Fear and Loathing"], :selected => user.desired_habit.music) %>
+    <%= render "dropdown", method: :music, object: user.desired_habit, quantified_method: :music_quantified, f: desired_habit_form %>
+    <!-- radio buttons -->
     <%= render "importance", user: user, method: :music_importance, f: desired_habit_form %>
   <% end %><br>
-  <%= f.submit %>
+  <%= f.submit "All Set"%>
 <% end %>
