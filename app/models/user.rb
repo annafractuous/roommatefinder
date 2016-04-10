@@ -34,5 +34,4 @@ class User < ActiveRecord::Base
  validates_uniqueness_of :email, :username
  validates_presence_of :password, on: :create
  validates_confirmation_of :password
-
 end
