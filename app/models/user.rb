@@ -51,26 +51,21 @@ class User < ActiveRecord::Base
 end
 
  def profile_percent_complete
-   total_questions = 0
-   questions_answered = 0
+ 
 
-   User.user_columns.each do |col|
-     total_questions += 1
-     questions_answered += 1 if self.send(col) != nil
+   completion_hash = User.user_columns.each_with_object({completed: 0, total: 0}) do |col, num_questions|
+     num_questions[:total] += 1
+     num_questions[:completed] += 1 if self.send(col)
    end
 
-   User.question_tables.each do |category|
-     if self.send(category.singularize)
-       Object.const_get(category.classify).user_input_columns.each do |col|
-         total_questions += 1
-         questions_answered += 1 if self.send(category.singularize).send(col) != nil
-       end
-     else
-       total_questions += Object.const_get(category.classify).user_input_columns.size
-     end
+   completion_hash = User.question_tables.each_with_object(completion_hash) do |category, num_questions|
+      Object.const_get(category.classify).user_input_columns.each do |col|
+        num_questions[:total] += 1
+        num_questions[:completed] += 1 if self.send(category.singularize).send(col)
+      end
    end
 
-   ((questions_answered/total_questions.to_f) * 100).to_i
+   ((completion_hash[:completed]/completion_hash[:total].to_f) * 100).to_i
  end
 
  def create_category_objects
