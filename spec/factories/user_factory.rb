@@ -25,7 +25,7 @@ FactoryGirl.define do
     sequence (:email) {|n| "user#{n}@example.com" }
     sequence (:username) { |n| "user#{n}" }
     password { "123" }
-    max_rent 100
+    max_rent { rand(100..3000) }
 
     trait :with_cleanliness do
       cleanliness factory: :cleanliness
@@ -166,4 +166,3 @@ FactoryGirl.define do
   end
 
 end
-
