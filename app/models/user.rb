@@ -31,17 +31,19 @@ class User < ActiveRecord::Base
  has_one :desired_match_trait
  has_many :match_connections
  has_many :matches, through: :match_connections
+ 
  accepts_nested_attributes_for :habit, :desired_habit
  accepts_nested_attributes_for :cleanliness, :desired_cleanliness
  accepts_nested_attributes_for :schedule, :desired_schedule
  accepts_nested_attributes_for :desired_match_trait
 
  validates_presence_of :email, :username, :name, :age, :gender
+
  #validates_uniqueness_of :email, :username
+
  validates_presence_of :password, on: :create
  validates_confirmation_of :password
  validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
- after_create :create_category_objects
  validates_inclusion_of :gender, :in => %w( M F )
  validates_presence_of :age
  validates :max_rent, {:numericality => { :greater_than_or_equal_to => 0 }, :on => :update, :if => Proc.new {|c| not c.max_rent.blank?}}
@@ -50,6 +52,14 @@ class User < ActiveRecord::Base
     now = Time.now.utc.to_date
     now.year - self.age.year - (self.age.to_date.change(:year => now.year) > now ? 1 : 0)
   end
+
+
+after_create :create_category_objects
+
+
+
+ 
+
 
   def profile_percent_complete
    completion_hash = User.user_columns.each_with_object({completed: 0, total: 0}) do |col, num_questions|

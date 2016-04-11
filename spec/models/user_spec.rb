@@ -97,6 +97,123 @@ describe "User" do
     result = user1.match_by_has_and_wants_attribute("cleanliness",user2)
     expect(result).to be false
   end
+
+  
+
+  describe '#find_matches' do
+    
+    describe 'it builds the basic associations' do
+
+      let (:user) { FactoryGirl.build :user }
+      let (:match_for_user) { FactoryGirl.build :user }
+
+      it 'returns an AR associations collection proxy of users' do
+        expect(user.find_matches.first).to be_a(User)
+      end
+  
+      it 'associates a user and match through a MatchConnection' do
+        user.find_matches
+        expect(user.match_connections.last.user).to eq(user)
+        expect(user.match_connections.last.match).to eq(match_for_user)
+      end
+  
+      it 'adds the match to the user\'s matches' do
+        expect(user.matches).to include(match_for_user)
+      end
+
+   end
+
+  describe 'matches basic compatibilty on user attributes' do
+
+    describe '#max_rent' do
+      let (:user) {FactoryGirl.create(:user, max_rent: 850 }
+      let (:seeking_too_high_rent) {FactoryGirl.create(:user, max_rent: 1100)}
+      let (:seeking_acceptable_rent) {FactoryGirl.create(:user, max_rent: 800)}
+      let (:slightly_over_limit) {FactoryGirl.create(:user, max_rent: 900)}
+
+      it 'doesnt match to users who are seeking a higher rent' do
+        user.find_matches
+        expect(user.matches).not_to include(:seeking_too_high_rent)
+      end
+
+      it 'does match to users who are seeking a rent below the limit' do
+        user.find_matches
+        expect(user.matches).to include(:seeking_acceptable_rent)
+      end
+
+      it 'allows a rent over the limit but within reasonable limit' do
+        user.find_matches
+        expect(user.matches).to include(:slightly_over_limit)
+      end
+
+    end
+
+    describe '#gender' do
+      let (:female_user) {FactoryGirl.create(:user, gender: "F")}
+      let (:male_user)  {FactoryGirl.create(:user, gender: "M")}
+      let (:female_match) {FactoryGirl.create(:user, gender: "F")}
+      let (:male_match)  {FactoryGirl.create(:user, gender: "M")}
+
+      it 'matches a female seeking female to females' do
+        female_user.desired_match_trait.gender = "F"
+        female_user.find_matches
+        expect(female_user.matches).to include(female_match)
+        expect(female_user.matches).to_not include(male_match)
+      end
+
+      it 'matches a female seeking a male to males' do
+        female_user.desired_match_trait.gender = "M"
+        female_user.find_matches
+        expect(female_user.matches).to include(male_match)
+        expect(female_user.matches).to_not include(female_match)
+      end
+
+      it 'matches a male seeking a female to females' do
+        male_user.desired_match_trait.gender = "F"
+        male_user.find_matches
+        expect(male_user.matches).to include(female_match)
+        expect(male_user.matches).to_not include(male_match)
+      end
+
+      it 'matches a male seeking a male to males' do
+        male_user.desired_match_trait.gender = "M"
+        male_user.find_matches
+        expect(male_user.matches).to include(male_match)
+        expect(male_user.matches).to_not include(female_match)
+      end
+
+      it 'matches a user of either gender seeking either gender to all appropriate matches' do
+        male_user.desired_match_trait.gender = "Any"
+        male_user.find_matches
+        expect(male_user.matches).to include(female_match)
+        expect(male_user.matches).to include(male_match)
+
+        female_user.desired_match_trait.gender = "Any"
+        female_user.find_matches
+        expect(female_user.matches).to include(female_match)
+        expect(female_user.matches).to include(male_match)
+      end
+
+
+    end
+
+    describe '#age' do
+      let (:younger_user) {FactoryGirl.create :user, age: }
+      let (:older_user) {FactoryGirl.create :user, age: }
+      let (:younger_match) {FactoryGirl.create :user, age: }
+      let (:older_match) {FactoryGirl.create :user, age: }
+
+
+    end
+
+    describe '#city' do
+
+    end
+
+  end
+
+  
+  end
 end
 
 

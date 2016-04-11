@@ -20,11 +20,12 @@ FactoryGirl.define do
 
  factory :user do
     name { Faker::Name.name }
-    age { rand(18..65)}
-    gender { ["Male", "Female"].sample }
+    age { Faker::Date.between(60.years.ago, 18.years.ago)}
+    gender { ["M", "F"].sample }
     sequence (:email) {|n| "user#{n}@example.com" }
     sequence (:username) { |n| "user#{n}" }
     password { "123" }
+    max_rent 100
 
     trait :with_cleanliness do
       cleanliness factory: :cleanliness
