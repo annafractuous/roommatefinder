@@ -17,6 +17,9 @@
 #
 
 class User < ActiveRecord::Base
+  
+  include UserMatchifiable::MatchQuantifiable
+  include UserMatchifiable::MatchBy
  has_secure_password
 
  has_one :cleanliness
@@ -35,6 +38,7 @@ class User < ActiveRecord::Base
  validates_uniqueness_of :email, :username
  validates_presence_of :password, on: :create
  validates_confirmation_of :password
+ validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
 
 
  def profile_percent_complete
@@ -74,5 +78,7 @@ class User < ActiveRecord::Base
      table = Object.const_get(table.classify)
      table.column_names.reject { |col| ["id", "user_id", "created_at", "updated_at"].include?(col) }
    end
+
+
 
 end
