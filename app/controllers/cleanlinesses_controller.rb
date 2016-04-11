@@ -12,46 +12,44 @@
 #
 
 class CleanlinessesController < ApplicationController
-  def new
+  def new    
     @user = User.find(params[:user_id])
     @cleanliness = @user.build_cleanliness
     @desired_cleanliness = @user.build_desired_cleanliness
     @method = "POST"
-    @action = user_cleanlinesses_path(@user)
-  end
+    @action = user_cleanlinesses_path(@user)  end
 
-  def create
+  def create    
     @user = User.find(params[:user_id])
     cleanliness = @user.build_cleanliness(cleanliness_params)
     desired_cleanliness = @user.build_desired_cleanliness(desired_cleanliness_params)
 
     if cleanliness.save && desired_cleanliness.save
-
       redirect_to user_path(@user)
     else
-
+      @method = "POST"
+      @action = user_cleanlinesses_path(@user)
       # flash[:error] = desired_cleanliness.errors.to_a
-      render user
+      render :new
     end
   end
 
-  def edit
+  def edit    
     @user = User.find(params[:user_id])
     @action = user_cleanliness_path(@user, @user.cleanliness)
-    @method = "PATCH"
+    @method = "PATCH"  
   end
 
-  def update
+  def update    
     @user = User.find(params[:user_id])
     cleanliness = @user.cleanliness
     desired_cleanliness = @user.desired_cleanliness
 
     if cleanliness.update(cleanliness_params) && desired_cleanliness.update(desired_cleanliness_params)
-
       redirect_to user_path(@user)
     else
-      # flash[:error] = desired_cleanliness.errors.to_a
-
+      @action = user_cleanliness_path(@user, @user.cleanliness)
+      @method = "PATCH"
       render :edit
     end
   end
