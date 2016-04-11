@@ -1,18 +1,25 @@
+# == Schema Information
+#
+# Table name: desired_match_traits
+#
+#  id           :integer          not null, primary key
+#  gender       :string
+#  move_in_date :datetime
+#  min_age      :integer
+#  max_age      :integer
+#  city         :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  user_id      :integer
+#
 
-<h1>Additional Details</h1>
-
-<%= form_for @user do |f| %>
-  <%= f.label :has_apartment, "Has Apartment?" %>
-  <%=f.check_box :has_apartment, {}, true, false  %> <br>
-  <%= f.label :max_rent, "Maximum Rent" %>
-  <%= f.text_field :max_rent %><br>
-  <%= f.label :dealbreakers%><br>
-  <%= f.text_area :dealbreakers, placeholder:  "Don't just  list- be specific!" %><br>
+<%= form_for @user,  url: action, method: method do |f| %>
   <h3>How do you describe your ideal match</h3>
   <%= f.fields_for :desired_match_trait do |trait| %>
     
+
    <%= trait.label :gender, "Desired Gender" %>
-   <%= trait.select :gender, ['M', 'F', "Other"]%><br>
+    <%= trait.select :gender, ['M', 'F', "Other"]%><br>
 
   
     <%= trait.label :move_in_date %>
@@ -30,5 +37,4 @@
     <% end %>
   <%= f.submit %>
 <% end %>
-
 

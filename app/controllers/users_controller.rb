@@ -5,7 +5,7 @@
 #  id              :integer          not null, primary key
 #  name            :string
 #  email           :string
-#  age             :integer
+#  age             :datetime
 #  gender          :string
 #  dealbreakers    :text
 #  has_apartment   :boolean
@@ -59,5 +59,10 @@ class UsersController < ApplicationController
 
    def extra_params
     params.require(:user).permit(:dealbreakers, :max_rent, :has_apartment)
+  end
+
+
+  def desired_match_params
+    params.require(:user).permit(:desired_cleanliness_attributes => [:gender, :move_in_date, :min_age, :max_age, :city])
   end
 end

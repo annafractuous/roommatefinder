@@ -5,7 +5,7 @@
 #  id              :integer          not null, primary key
 #  name            :string
 #  email           :string
-#  age             :integer
+#  age             :datetime
 #  gender          :string
 #  dealbreakers    :text
 #  has_apartment   :boolean
@@ -28,14 +28,16 @@ class User < ActiveRecord::Base
  has_one :desired_schedule
  has_one :habit
  has_one :desired_habit
+ has_one :desired_match_trait
  has_many :match_connections
  has_many :matches, through: :match_connections
  accepts_nested_attributes_for :habit, :desired_habit
  accepts_nested_attributes_for :cleanliness, :desired_cleanliness
  accepts_nested_attributes_for :schedule, :desired_schedule
+ accepts_nested_attributes_for :desired_match_trait
 
  validates_presence_of :email, :username, :name, :age, :gender
- validates_uniqueness_of :email, :username
+ #validates_uniqueness_of :email, :username
  validates_presence_of :password, on: :create
  validates_confirmation_of :password
  validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
@@ -44,19 +46,16 @@ class User < ActiveRecord::Base
  validates_presence_of :age
  validates :max_rent, {:numericality => { :greater_than_or_equal_to => 0 }, :on => :update, :if => Proc.new {|c| not c.max_rent.blank?}}
 
- def convert_age
-  now = Time.now.utc.to_date
-   now.year - self.age.year - (self.age.to_date.change(:year => now.year) > now ? 1 : 0)
+  def convert_age
+    now = Time.now.utc.to_date
+    now.year - self.age.year - (self.age.to_date.change(:year => now.year) > now ? 1 : 0)
+  end
 
-end
-
- def profile_percent_complete
- 
-
+  def profile_percent_complete
    completion_hash = User.user_columns.each_with_object({completed: 0, total: 0}) do |col, num_questions|
      num_questions[:total] += 1
      num_questions[:completed] += 1 if self.send(col)
-   end
+  end
 
    completion_hash = User.question_tables.each_with_object(completion_hash) do |category, num_questions|
       Object.const_get(category.classify).user_input_columns.each do |col|
