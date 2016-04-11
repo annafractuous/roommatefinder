@@ -8,7 +8,7 @@
 
 <!-- Cleanliness -->
 <% if @user.cleanliness.all_input_columns_nil?%>
-  <%= link_to "Enter your Cleanliness Information",new_user_cleanliness_path(@user)%> <br>
+  <%= link_to "Enter your Cleanliness Information",edit_user_habit_path(@user, @user.cleanliness)%> <br>
 <% else %>
   <%= link_to "Edit Cleanliness Information",edit_user_cleanliness_path(@user, @user.cleanliness)%> <br>
 <% end %>
@@ -16,7 +16,7 @@
 
 <!-- Habit -->
 <% if @user.habit.all_input_columns_nil? %>
-  <%= link_to "Enter your Habit Information",new_user_habit_path(@user)%> <br>
+  <%= link_to "Enter your Habit Information",edit_user_habit_path(@user, @user.habit)%> <br>
 <% else %>
   <%= link_to "Edit Habit Information",edit_user_habit_path(@user, @user.habit)%> <br>
 <% end %>
@@ -24,7 +24,7 @@
 
 <!-- Schedule -->
 <% if @user.schedule.all_input_columns_nil? %>
-  <%= link_to "Enter your Schedule Information",new_user_schedule_path(@user)%> <br>
+  <%= link_to "Enter your Schedule Information",edit_user_habit_path(@user, @user.schedule)%> <br>
 <% else %>
   <%= link_to "Edit Schedule Information",edit_user_schedule_path(@user, @user.schedule)%> <br>
 <% end %>
