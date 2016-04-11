@@ -51,12 +51,12 @@ class UsersController < ApplicationController
     end
   end
 
-
   private
 
    def user_params
      params.require(:user).permit(:email, :password, :password_confirmation, :username, :name, :age, :gender)
    end
+
    def extra_params
     params.require(:user).permit(:dealbreakers, :max_rent, :has_apartment)
   end

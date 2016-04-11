@@ -12,37 +12,14 @@
 #
 
 class CleanlinessesController < ApplicationController
-  def new    
-    @user = User.find(params[:user_id])
-    cleanliness = @user.build_cleanliness
-    desired_cleanliness = @user.build_desired_cleanliness
-    @method = "POST"
-    @action = user_cleanlinesses_path(@user)  
-  end
 
-  def create    
-    @user = User.find(params[:user_id])
-    cleanliness = @user.build_cleanliness(cleanliness_params)
-    desired_cleanliness = @user.build_desired_cleanliness(desired_cleanliness_params)
-
-    if cleanliness.save && desired_cleanliness.save
-      redirect_to user_path(@user)
-    else
-      flash[:error] = cleanliness.errors.to_a + desired_cleanliness.errors.to_a
-      @method = "POST"
-      @action = user_cleanlinesses_path(@user)
-
-      render :new
-    end
-  end
-
-  def edit    
+  def edit
     @user = User.find(params[:user_id])
     @action = user_cleanliness_path(@user, @user.cleanliness)
-    @method = "PATCH"  
+    @method = "PATCH"
   end
 
-  def update    
+  def update
     @user = User.find(params[:user_id])
     cleanliness = @user.cleanliness
     desired_cleanliness = @user.desired_cleanliness
@@ -53,7 +30,6 @@ class CleanlinessesController < ApplicationController
       flash[:error] = cleanliness.errors.to_a + desired_cleanliness.errors.to_a
       @action = user_cleanliness_path(@user, @user.cleanliness)
       @method = "PATCH"
-
       render :edit
     end
   end
@@ -63,11 +39,12 @@ class CleanlinessesController < ApplicationController
 
   private
 
-  def cleanliness_params
-    params.require(:user).permit(:cleanliness_attributes =>[:kitchen, :bathroom, :common_space])[:cleanliness_attributes]
-  end
+    def cleanliness_params
+      params.require(:user).permit(:cleanliness_attributes =>[:kitchen, :bathroom, :common_space])[:cleanliness_attributes]
+    end
 
-  def desired_cleanliness_params
-    params.require(:user).permit(:desired_cleanliness_attributes =>[:kitchen, :kitchen_importance, :bathroom, :bathroom_importance, :common_space, :common_space_importance])[:desired_cleanliness_attributes]
-  end
+    def desired_cleanliness_params
+      params.require(:user).permit(:desired_cleanliness_attributes =>[:kitchen, :kitchen_importance, :bathroom, :bathroom_importance, :common_space, :common_space_importance])[:desired_cleanliness_attributes]
+    end
+
 end

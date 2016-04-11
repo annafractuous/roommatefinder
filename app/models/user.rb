@@ -17,9 +17,8 @@
 #
 
 class User < ActiveRecord::Base
-  
-  include UserMatchifiable::MatchQuantifiable
-  include UserMatchifiable::MatchBy
+ include UserMatchifiable::MatchQuantifiable
+ include UserMatchifiable::MatchBy
  has_secure_password
 
  has_one :cleanliness
@@ -39,6 +38,7 @@ class User < ActiveRecord::Base
  validates_presence_of :password, on: :create
  validates_confirmation_of :password
  validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
+ after_create :create_category_objects
 
 
  def profile_percent_complete
@@ -64,6 +64,10 @@ class User < ActiveRecord::Base
    ((questions_answered/total_questions.to_f) * 100).to_i
  end
 
+ def create_category_objects
+   User.question_tables.each { |table| self.send("create_#{table.singularize}") }
+ end
+
  private
 
    def self.question_tables
@@ -73,7 +77,5 @@ class User < ActiveRecord::Base
    def self.user_columns
      self.column_names.reject { |col| ["id", "name", "username", "email", "password_digest", "created_at", "updated_at"].include?(col) }
    end
-
-
 
 end
