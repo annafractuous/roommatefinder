@@ -15,8 +15,8 @@
 class SchedulesController < ApplicationController
  def new
     @user = User.find(params[:user_id])
-    @schedules = @user.build_schedule
-    @desired_schedules = @user.build_desired_schedule
+    schedules = @user.build_schedule
+    desired_schedules = @user.build_desired_schedule
     @method = "POST"
     @action = user_schedules_path(@user)
   end
@@ -29,7 +29,7 @@ class SchedulesController < ApplicationController
     if schedule.save && desired_schedule.save
       redirect_to @user
     else
-      flash[:error] = desired_schedule.errors.to_a
+      flash[:error] = schedule.errors.to_a + desired_schedule.errors.to_a
       @method = "POST"
       @action = user_schedules_path(@user)
       render :new
@@ -50,7 +50,7 @@ class SchedulesController < ApplicationController
     if schedule.update(schedule_params) && desired_schedule.update(desired_schedule_params)
       redirect_to @user
     else
-      flash[:error] = desired_schedule.errors.to_a
+      flash[:error] = schedule.errors.to_a + desired_schedule.errors.to_a
       @action = user_schedule_path(@user, @user.schedule)
       @method = "PATCH"
       render :edit
