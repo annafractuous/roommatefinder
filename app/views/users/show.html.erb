@@ -1,7 +1,13 @@
 <h1><%= @user.name %></h1>
-<p><strong>Age:</strong> <%= @user.age %></p>
-<p><strong>Has Apartment?: </strong><%= @user.has_apartment ? "Yes" : "No" %></p>
-<p><strong>Max Rent: </strong> <%=@user.max_rent %> </p>
+
+<p><strong>Age:</strong> <%= @user.convert_age %></p>
+
+<p><strong>Has Apartment?</strong>
+  <%= @user.has_apartment ? "Yes" : "No" %> </p>
+
+<p><strong>Max Rent: </strong> 
+<%=@user.max_rent%> </p>
+
 <p><strong>DealBreakers</strong></p>
 <p><%= @user.dealbreakers %></p>
 
