@@ -16,7 +16,7 @@
 
   
     <%= trait.label :move_in_date %>
-    <%= f.date_select :move_in_date, {order: [:month, :day, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: Date.today.year - 18, end_year: Date.today.year - 100}, {required: true} %><br>
+    <%= trait.date_select :move_in_date, {order: [:month, :day, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: Date.today.year, end_year: Date.today.year + 1}, {required: true} %><br>
 
     <!-- dropdown -->
     <%= trait.label :min_age %>

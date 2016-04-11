@@ -15,7 +15,7 @@
   <%= f.date_select :age, {order: [:month, :day, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: Date.today.year - 18, end_year: Date.today.year - 100}, {required: true} %><br>
   
   <%= f.label :gender %>
-  <%= f.select :gender, ['M', 'F']%><br>
+  <%= f.select :gender, ['M', 'F', "Other"]%><br>
  
   <%= f.submit %>
 <% end %>
