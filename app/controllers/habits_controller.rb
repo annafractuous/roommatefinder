@@ -30,7 +30,7 @@ class HabitsController < ApplicationController
     if habit.save && desired_habit.save
       redirect_to @user
     else
-      # flash[:error] = desired_habit.errors.to_a
+      flash[:error] = desired_habit.errors.to_a
       @method = "POST"
       @action = user_habits_path(@user)
       render :new

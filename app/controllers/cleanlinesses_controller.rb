@@ -30,7 +30,7 @@ class CleanlinessesController < ApplicationController
     else
       @method = "POST"
       @action = user_cleanlinesses_path(@user)
-      # flash[:error] = desired_cleanliness.errors.to_a
+      flash[:error] = desired_cleanliness.errors.to_a + cleanliness.errors.to_a
 
       render :new
     end
@@ -52,6 +52,9 @@ class CleanlinessesController < ApplicationController
     else
       @action = user_cleanliness_path(@user, @user.cleanliness)
       @method = "PATCH"
+      binding.pry
+      flash[:error] = desired_cleanliness.errors.to_a + cleanliness.errors.to_a
+
       render :edit
     end
   end

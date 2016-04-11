@@ -52,12 +52,12 @@ class User < ActiveRecord::Base
 
    User.question_tables.each do |category|
      if self.send(category.singularize)
-       User.question_columns(category).each do |col|
+       Object.const_get(category.classify).user_input_columns.each do |col|
          total_questions += 1
          questions_answered += 1 if self.send(category.singularize).send(col) != nil
        end
      else
-       total_questions += User.question_columns(category).size
+       total_questions += Object.const_get(category.classify).user_input_columns.size
      end
    end
 
@@ -72,12 +72,6 @@ class User < ActiveRecord::Base
 
    def self.user_columns
      self.column_names.reject { |col| ["id", "name", "username", "email", "password_digest", "created_at", "updated_at"].include?(col) }
-   end
-
-   def self.question_columns(table)
-     # binding.pry
-     table = Object.const_get(table.classify)
-     table.column_names.reject { |col| ["id", "user_id", "created_at", "updated_at"].include?(col) }
    end
 
 
