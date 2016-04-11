@@ -5,7 +5,7 @@
 #  id              :integer          not null, primary key
 #  name            :string
 #  email           :string
-#  age             :datetime
+#  birthdate       :datetime
 #  gender          :string
 #  dealbreakers    :text
 #  has_apartment   :boolean
@@ -198,10 +198,16 @@ describe "User" do
     end
 
     describe '#age' do
-      let (:younger_user) {FactoryGirl.create :user, age: }
-      let (:older_user) {FactoryGirl.create :user, age: }
-      let (:younger_match) {FactoryGirl.create :user, age: }
-      let (:older_match) {FactoryGirl.create :user, age: }
+      let (:younger_user) {FactoryGirl.create :user, age: 22}
+      let (:older_user) {FactoryGirl.create :user, age: 38}
+      let (:younger_match) {FactoryGirl.create :user, age: 25}
+      let (:older_match) {FactoryGirl.create :user, age: 41}
+
+      it 'matches a user to someone in their desired age range' do
+
+      end
+
+      it 'doesnt match a user to someone outside of their desired age_range'
 
 
     end

@@ -5,7 +5,7 @@
 #  id              :integer          not null, primary key
 #  name            :string
 #  email           :string
-#  age             :datetime
+#  birthdate       :datetime
 #  gender          :string
 #  dealbreakers    :text
 #  has_apartment   :boolean

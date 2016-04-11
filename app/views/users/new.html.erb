@@ -11,9 +11,10 @@
   <%= f.password_field :password_confirmation %><br>
   <%= f.label :name %><br>
   <%= f.text_field :name %><br><br>
-  <%= f.label :age %>
-  <%= f.date_select :age, {order: [:month, :day, :year], prompt: { day: 'Day', month: 'Month', year: 'Year' }, start_year: Date.today.year - 18, end_year: Date.today.year - 100}, {required: true} %><br>
 
+  <%= f.label :birthdate %>
+  <%= f.date_select :birthdate, {order: [:month, :day, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: Date.today.year - 18, end_year: Date.today.year - 100}, {required: true} %><br>
+  
   <%= f.label :gender %>
 
   <%= f.select :gender, ['M', 'F', "Other"]%><br>
