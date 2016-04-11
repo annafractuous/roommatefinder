@@ -5,11 +5,8 @@
 #  id              :integer          not null, primary key
 #  name            :string
 #  email           :string
-<<<<<<< HEAD
 #  age             :datetime
-=======
 #  birthdate       :datetime
->>>>>>> birthdate
 #  gender          :string
 #  dealbreakers    :text
 #  has_apartment   :boolean
@@ -40,21 +37,18 @@ class User < ActiveRecord::Base
  accepts_nested_attributes_for :cleanliness, :desired_cleanliness
  accepts_nested_attributes_for :schedule, :desired_schedule
  accepts_nested_attributes_for :desired_match_trait
-
-<<<<<<< HEAD
+ 
  validates_presence_of :email, :username, :name, :age, :gender
-
- #validates_uniqueness_of :email, :username
-
-=======
- validates_presence_of :email, :username, :name, :birthdate, :gender
  # validates_uniqueness_of :email, :username
->>>>>>> birthdate
  validates_presence_of :password, on: :create
  validates_confirmation_of :password
  validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
  validates_inclusion_of :gender, :in => %w( M F )
  validates :max_rent, {:numericality => { :greater_than_or_equal_to => 0 }, :on => :update, :if => Proc.new {|c| not c.max_rent.blank?}}
+
+after_create :create_category_objects
+  
+
 
   def convert_age
     now = Time.now.utc.to_date
@@ -62,7 +56,6 @@ class User < ActiveRecord::Base
   end
 
 
-after_create :create_category_objects
 
 
 
