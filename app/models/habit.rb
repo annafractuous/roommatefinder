@@ -16,7 +16,8 @@
 class Habit < ActiveRecord::Base
   include ChoicesQuantifiable::Habit
   include Validatable
-  extend InputColumnable
+  extend InputColumnable::ClassMethods
+  include InputColumnable
   validate :cannot_select_pick_one
   
   belongs_to :user
