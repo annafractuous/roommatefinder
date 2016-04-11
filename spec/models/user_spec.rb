@@ -164,7 +164,7 @@ describe "User" do
         expect(male_user.matches).to_not include(female_match)
       end
 
-      it 'matches a user of either gender seeking either gender to all apprpriate matches' do
+      it 'matches a user of either gender seeking either gender to all appropriate matches' do
         male_user.desired_match_trait.gender = "Any"
         male_user.find_matches
         expect(male_user.matches).to include(female_match)
@@ -180,10 +180,10 @@ describe "User" do
     end
 
     describe '#age' do
-      let (:younger_user) {}
-      let (:older_user) {}
-      let (:younger_match) {}
-      let (:older_match) {}
+      let (:younger_user) {FactoryGirl.create :user, age: }
+      let (:older_user) {FactoryGirl.create :user, age: }
+      let (:younger_match) {FactoryGirl.create :user, age: }
+      let (:older_match) {FactoryGirl.create :user, age: }
 
 
     end

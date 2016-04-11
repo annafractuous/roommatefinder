@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
  accepts_nested_attributes_for :schedule, :desired_schedule
 
  validates_presence_of :email, :username, :name, :age, :gender
- validates_uniqueness_of :email, :username
+ # validates_uniqueness_of :email, :username
  validates_presence_of :password, on: :create
  validates_confirmation_of :password
  validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
