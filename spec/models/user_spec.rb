@@ -69,8 +69,15 @@ describe "User" do
   it "matches cleanly users with other users who want cleanliness" do 
     user1 = FactoryGirl.create(:user, :with_cleanliness, :is_clean_and_wants_clean)
     user2 = FactoryGirl.create(:user, :with_cleanliness, :is_clean_and_wants_clean)
-    result = user1.match_by_mutual_cleanliness(user2)
+    result = user1.match_by_has_and_wants_attribute("cleanliness",user2)
     expect(result).to be true
+  end
+
+  it "does not match cleanly users who want cleany with dirty users" do
+    user1 = FactoryGirl.create(:user, :with_cleanliness, :is_clean_and_wants_clean)
+    user2 = FactoryGirl.create(:user, :with_cleanliness, :is_dirty_and_doesnt_care)
+    result = user1.match_by_has_and_wants_attribute("cleanliness",user2)
+    expect(result).to be false
   end
 end
 
