@@ -31,6 +31,8 @@ class HabitsController < ApplicationController
       redirect_to @user
     else
       # flash[:error] = desired_habit.errors.to_a
+      @method = "POST"
+      @action = user_habits_path(@user)
       render :new
     end
   end
@@ -50,6 +52,8 @@ class HabitsController < ApplicationController
       redirect_to @user
     else
       flash[:error] = desired_habit.errors.to_a
+      @action = user_habit_path(@user, @user.habit)
+      @method = "PATCH"
       render :edit
     end
   end

@@ -17,7 +17,8 @@ class CleanlinessesController < ApplicationController
     @cleanliness = @user.build_cleanliness
     @desired_cleanliness = @user.build_desired_cleanliness
     @method = "POST"
-    @action = user_cleanlinesses_path(@user)  end
+    @action = user_cleanlinesses_path(@user)  
+  end
 
   def create    
     @user = User.find(params[:user_id])
@@ -30,6 +31,7 @@ class CleanlinessesController < ApplicationController
       @method = "POST"
       @action = user_cleanlinesses_path(@user)
       # flash[:error] = desired_cleanliness.errors.to_a
+
       render :new
     end
   end

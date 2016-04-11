@@ -75,6 +75,7 @@ class User < ActiveRecord::Base
    end
 
    def self.question_columns(table)
+     # binding.pry
      table = Object.const_get(table.classify)
      table.column_names.reject { |col| ["id", "user_id", "created_at", "updated_at"].include?(col) }
    end
