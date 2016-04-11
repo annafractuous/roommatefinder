@@ -2,7 +2,8 @@ module InputColumnable
 
     def all_input_columns_nil?
       question_columns = self.class.user_input_columns
-      question_columns.map { |col| self.send(col) }.any?
+      # #any returns false if all values are nil
+      !question_columns.map { |col| self.send(col) }.any?
     end
 
   module ClassMethods
