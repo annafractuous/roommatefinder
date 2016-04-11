@@ -37,10 +37,27 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update(extra_params)
+      redirect_to @user
+    else
+      flash[:error] = @user.errors.to_a
+      redirect_to @user
+    end
+  end
+
+
   private
 
    def user_params
      params.require(:user).permit(:email, :password, :password_confirmation, :username, :name, :age, :gender)
    end
-
+   def extra_params
+    params.require(:user).permit(:dealbreakers, :max_rent, :has_apartment)
+  end
 end

@@ -1,5 +1,10 @@
 <h1><%= @user.name %></h1>
-<p>Age: <%= @user.age %></p>
+<p><strong>Age:</strong> <%= @user.age %></p>
+<p><strong>Has Apartment?: </strong><%= @user.has_apartment ? "Yes" : "No" %></p>
+<p><strong>Max Rent: </strong> <%=@user.max_rent %> </p>
+<p><strong>DealBreakers</strong></p>
+<p><%= @user.dealbreakers %></p>
+
 
 <!-- Cleanliness -->
 <% if !@user.cleanliness %>
@@ -23,6 +28,12 @@
 <% else %>
   <%= link_to "Edit Schedule Information",edit_user_schedule_path(@user, @user.schedule)%> <br>
 <% end %>
+
+ <% if !(@user.dealbreakers &&  @user.max_rent && @user.has_apartment)%>
+  <%= link_to "Enter Additional Details..", edit_user_path(@user) %>
+ <% else %>
+   <%= link_to "Edit Additional Details..", edit_user_path(@user) %>
+ <% end %>
 
 <h4>Your profile is <%= @user.profile_percent_complete %>% complete</h4>
 

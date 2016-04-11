@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   post 'login' => 'sessions#create'
   get 'logout' => 'sessions#destroy', as: 'logout'
   get '/', to: 'pages#home', as: 'root'
+ 
   resources :users do
     resources :cleanlinesses
     resources :habits
