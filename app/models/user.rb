@@ -40,7 +40,9 @@ class User < ActiveRecord::Base
  validates_confirmation_of :password
  validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
  after_create :create_category_objects
-
+ validates_inclusion_of :gender, :in => %w( M F )
+ validates_inclusion_of :age, :in => 0..99
+ validates :max_rent, :numericality => { :greater_than_or_equal_to => 0 }
 
  def profile_percent_complete
    total_questions = 0

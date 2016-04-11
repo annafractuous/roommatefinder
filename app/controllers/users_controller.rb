@@ -47,7 +47,7 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       flash[:error] = @user.errors.to_a
-      redirect_to @user
+      render :edit
     end
   end
 

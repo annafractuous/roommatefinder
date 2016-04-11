@@ -10,10 +10,11 @@
   <%= f.label :password_confirmation %><br>
   <%= f.password_field :password_confirmation %><br>
   <%= f.label :name %><br>
-  <%= f.text_field :name %><br>
-  <%= f.label :age %><br>
-  <%= f.text_field :age %><br>
-  <%= f.label :gender %><br>
-  <%= f.text_field :gender %><br>
+  <%= f.text_field :name %><br><br>
+  <%= f.label :age %>
+  <%= f.select :age, (18..99) %>
+  <%= f.label :gender %>
+  <%= f.select :gender, ['M', 'F']%><br>
+ 
   <%= f.submit %>
 <% end %>
