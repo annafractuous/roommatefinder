@@ -29,7 +29,7 @@ class SchedulesController < ApplicationController
     if schedule.save && desired_schedule.save
       redirect_to @user
     else
-      # flash[:error] = desired_schedule.errors.to_a
+      flash[:error] = desired_schedule.errors.to_a
       @method = "POST"
       @action = user_schedules_path(@user)
       render :new
