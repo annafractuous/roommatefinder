@@ -19,6 +19,7 @@
 class User < ActiveRecord::Base
  include UserMatchifiable::MatchQuantifiable
  include UserMatchifiable::MatchBy
+
  has_secure_password
 
  has_one :cleanliness
