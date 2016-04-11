@@ -5,7 +5,7 @@
 #  id              :integer          not null, primary key
 #  name            :string
 #  email           :string
-#  age             :integer
+#  birthdate       :datetime
 #  gender          :string
 #  dealbreakers    :text
 #  has_apartment   :boolean
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
   private
 
    def user_params
-     params.require(:user).permit(:email, :password, :password_confirmation, :username, :name, :age, :gender)
+     params.require(:user).permit(:email, :password, :password_confirmation, :username, :name, :birthdate, :gender)
    end
 
    def extra_params
