@@ -12,6 +12,7 @@
 #
 
 class CleanlinessesController < ApplicationController
+  before_action :authorize
 
   def edit
     @user = User.find(params[:user_id])
