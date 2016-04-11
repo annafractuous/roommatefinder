@@ -25,6 +25,6 @@ class DesiredHabit < ActiveRecord::Base
   extend InputColumnable
   belongs_to :user
 
-  validate :preference_and_importance_entered?
+  validate :preference_and_importance_entered?, :cannot_select_pick_one
   
 end

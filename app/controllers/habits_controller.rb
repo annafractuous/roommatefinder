@@ -16,8 +16,8 @@
 class HabitsController < ApplicationController
  def new
     @user = User.find(params[:user_id])
-    @habits = @user.build_habit
-    @desired_habits = @user.build_desired_habit
+    habits = @user.build_habit
+    desired_habits = @user.build_desired_habit
     @method = "POST"
     @action = user_habits_path(@user)
   end
@@ -30,7 +30,7 @@ class HabitsController < ApplicationController
     if habit.save && desired_habit.save
       redirect_to @user
     else
-      flash[:error] = desired_habit.errors.to_a
+      flash[:error] = habit.errors.to_a + desired_habit.errors.to_a
       @method = "POST"
       @action = user_habits_path(@user)
       render :new
@@ -51,7 +51,7 @@ class HabitsController < ApplicationController
     if habit.update(habit_params) && desired_habit.update(desired_habit_params)
       redirect_to @user
     else
-      flash[:error] = desired_habit.errors.to_a
+      flash[:error] = habit.errors.to_a + desired_habit.errors.to_a
       @action = user_habit_path(@user, @user.habit)
       @method = "PATCH"
       render :edit

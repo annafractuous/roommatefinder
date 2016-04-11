@@ -16,11 +16,13 @@ class Cleanliness < ActiveRecord::Base
   include Validatable
   include UserMatchifiable
   extend InputColumnable
+  validate :cannot_select_pick_one
+  
+
   belongs_to :user
 
-  def self.user_columns
-       self.column_names.reject { |col| ["id", "user_id", "created_at", "updated_at"].include?(col) }
-  end
+
+
 end
 
 #Hoarder
