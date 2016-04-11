@@ -13,6 +13,7 @@
 #  updated_at      :datetime         not null
 #  password_digest :string
 #  username        :string
+#  max_rent        :integer
 #
 
 class User < ActiveRecord::Base
