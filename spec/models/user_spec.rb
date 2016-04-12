@@ -154,6 +154,7 @@ describe "User" do
       it 'matches a female seeking female to females' do
         female_user = create :user, gender: "F"
         female_match = create :user, gender: "F"
+        male_match = create :user, gender: "M"
         female_user.desired_match_trait.gender = "F"
         female_user.find_matches
         
@@ -164,6 +165,7 @@ describe "User" do
       it 'matches a female seeking a male to males' do
         female_user = create :user, gender: "F"
         male_match = create :user, gender: "M"
+        female_match = create :user, gender: "F"
         female_user.desired_match_trait.gender = "M"
         female_user.find_matches
         expect(female_user.matches).to include(male_match)
@@ -173,6 +175,7 @@ describe "User" do
       it 'matches a male seeking a female to females' do
         male_user = create :user, gender: "M"
         female_match = create :user, gender: "F"
+        male_match = create :user, gender: "M"
         male_user.desired_match_trait.gender = "F"
         male_user.find_matches
         expect(male_user.matches).to include(female_match)
@@ -182,6 +185,7 @@ describe "User" do
       it 'matches a male seeking a male to males' do
         male_user = create :user, gender: "M"
         male_match = create :user, gender: "M"
+        female_match = create :user, gender: "F"
         male_user.desired_match_trait.gender = "M"
         male_user.find_matches
         expect(male_user.matches).to include(male_match)
@@ -190,21 +194,29 @@ describe "User" do
 
       it 'matches a user of either gender seeking either gender to all appropriate matches' do
         male_user = create :user, gender: "M"
-        female_match = create :user, gender: "F"
-        male_match = create :user, gender: "M"
         male_user.desired_match_trait.gender = "Any"
-        male_user.find_matches
-        
         female_user = create :user, gender: "F"
+        female_user.desired_match_trait.gender = "Any"
+        
         female_match = create :user, gender: "F"
         male_match = create :user, gender: "M"
-        female_user.desired_match_trait.gender = "Any"
+        male_user.find_matches
         female_user.find_matches
 
-        expect(male_user.matches).to include(female_match)
-        expect(male_user.matches).to include(male_match)
-        expect(female_user.matches).to include(female_match)
-        expect(female_user.matches).to include(male_match)
+        expect(male_user.matches).to include(female_match, male_match)
+        expect(female_user.matches).to include(female_match, male_match)
+      end
+
+      it 'matches an "other" gender user seeking "other" gender to "other" gender matches' do
+        other_user = create :user, gender: "Other"
+        other_user.desired_match_trait.gender = "Other"
+        other_match = create :user, gender: "Other"
+        female_match = create :user, gender: "F"
+        male_match = create :user, gender: "M"
+
+        other_user.find_matches
+        expect(other_user.matches).to include(other_match)
+        expect(other_user.matches).to_not include(male_match)
       end
     end
 
