@@ -18,8 +18,8 @@
 
 require 'spec_helper'
 
-describe "User" do 
-  it "is invalid without name" do 
+describe "User" do
+  it "is invalid without name" do
     user1 = FactoryGirl.build(:user, name: nil)
     user2 = FactoryGirl.build(:user, name: "")
     user3 = FactoryGirl.build(:user)
@@ -27,23 +27,23 @@ describe "User" do
     user2.valid?
     user3.valid?
 
-
     expect(user1.errors.full_messages).to include "Name can't be blank"
     expect(user2.errors.full_messages).to include "Name can't be blank"
     expect(user3.errors.full_messages).to_not include "Name can't be blank"
   end
+
   it "is invalid without unique username" do
     user = FactoryGirl.create(:user)
     duplicate_username = FactoryGirl.build(:user, username: user.username)
     duplicate_username.valid?
     expect(duplicate_username.errors.full_messages).to include "Username has already been taken"
   end
-  it "is valid with unique username" do 
+
+  it "is valid with unique username" do
     user = FactoryGirl.build(:user)
     user.valid?
     expect(user.errors.full_messages).to_not include "User is invalid without unique username"
   end
-
 
   it "validates email format" do
     user1 = FactoryGirl.build(:user, email: "hahahanicetry")
@@ -51,8 +51,6 @@ describe "User" do
     #not working
     expect(user1.errors.full_messages).to include "Email is invalid"
   end
-
-  
 
   it "should have one cleanliness" do
     t = User.reflect_on_association(:cleanliness)
@@ -73,35 +71,33 @@ describe "User" do
     t = User.reflect_on_association(:desired_habit)
     expect(t.macro).to equal(:has_one)
   end
-    it "should have one schedule" do
+
+  it "should have one schedule" do
     t = User.reflect_on_association(:schedule)
     expect(t.macro).to equal(:has_one)
   end
-   it "should have one  desired schedule" do
+
+  it "should have one desired schedule" do
     t = User.reflect_on_association(:desired_schedule)
     expect(t.macro).to equal(:has_one)
   end
 
-
-
-  it "matches cleanly users with other users who want cleanliness" do 
+  it "matches clean users with other users who want cleanliness" do
     user1 = FactoryGirl.create(:user, :with_cleanliness, :is_clean_and_wants_clean)
     user2 = FactoryGirl.create(:user, :with_cleanliness, :is_clean_and_wants_clean)
     result = user1.match_by_has_and_wants_attribute("cleanliness",user2)
     expect(result).to be true
   end
 
-  it "does not match cleanly users who want cleany with dirty users" do
+  it "does not match users who want cleanliness with dirty users" do
     user1 = FactoryGirl.create(:user, :with_cleanliness, :is_clean_and_wants_clean)
     user2 = FactoryGirl.create(:user, :with_cleanliness, :is_dirty_and_doesnt_care)
     result = user1.match_by_has_and_wants_attribute("cleanliness",user2)
     expect(result).to be false
   end
 
-  
 
   describe '#find_matches' do
-    
     describe 'it builds the basic associations' do
 
       let (:user) { FactoryGirl.build :user }
@@ -110,13 +106,13 @@ describe "User" do
       it 'returns an AR associations collection proxy of users' do
         expect(user.find_matches.first).to be_a(User)
       end
-  
+
       it 'associates a user and match through a MatchConnection' do
         user.find_matches
         expect(user.match_connections.last.user).to eq(user)
         expect(user.match_connections.last.match).to eq(match_for_user)
       end
-  
+
       it 'adds the match to the user\'s matches' do
         expect(user.matches).to include(match_for_user)
       end
@@ -145,7 +141,6 @@ describe "User" do
         user.find_matches
         expect(user.matches).to include(:slightly_over_limit)
       end
-
     end
 
     describe '#gender' do
@@ -193,36 +188,26 @@ describe "User" do
         expect(female_user.matches).to include(female_match)
         expect(female_user.matches).to include(male_match)
       end
-
-
     end
 
     describe '#age' do
-      let (:younger_user) {FactoryGirl.create :user, age: 22}
-      let (:older_user) {FactoryGirl.create :user, age: 38}
-      let (:younger_match) {FactoryGirl.create :user, age: 25}
-      let (:older_match) {FactoryGirl.create :user, age: 41}
+      let (:younger_user) {FactoryGirl.create :user, birthdate: (Time.now - 22.years)}
+      let (:older_user) {FactoryGirl.create :user, birthdate: (Time.now - 38.years)}
+      let (:younger_match) {FactoryGirl.create :user, birthdate: (Time.now - 25.years)}
+      let (:older_match) {FactoryGirl.create :user, birthdate: (Time.now - 41.years)}
 
       it 'matches a user to someone in their desired age range' do
 
       end
 
-      it 'doesnt match a user to someone outside of their desired age_range'
+      it 'doesnt match a user to someone outside of their desired age_range' do
 
-
+      end
     end
 
     describe '#city' do
 
     end
-
   end
-
-  
   end
 end
-
-
-
-
-

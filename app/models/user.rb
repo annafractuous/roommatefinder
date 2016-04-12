@@ -5,7 +5,6 @@
 #  id              :integer          not null, primary key
 #  name            :string
 #  email           :string
-#  age             :datetime
 #  birthdate       :datetime
 #  gender          :string
 #  dealbreakers    :text
@@ -32,13 +31,13 @@ class User < ActiveRecord::Base
  has_one :desired_match_trait
  has_many :match_connections
  has_many :matches, through: :match_connections
- 
+
  accepts_nested_attributes_for :habit, :desired_habit
  accepts_nested_attributes_for :cleanliness, :desired_cleanliness
  accepts_nested_attributes_for :schedule, :desired_schedule
  accepts_nested_attributes_for :desired_match_trait
- 
- validates_presence_of :email, :username, :name, :age, :gender
+
+ validates_presence_of :email, :username, :name, :birthdate, :gender
  # validates_uniqueness_of :email, :username
  validates_presence_of :password, on: :create
  validates_confirmation_of :password
@@ -47,7 +46,7 @@ class User < ActiveRecord::Base
  validates :max_rent, {:numericality => { :greater_than_or_equal_to => 0 }, :on => :update, :if => Proc.new {|c| not c.max_rent.blank?}}
 
 after_create :create_category_objects
-  
+
 
 
   def convert_age
