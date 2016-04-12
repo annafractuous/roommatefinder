@@ -222,10 +222,12 @@ describe "User" do
       it 'matches a user to someone in their desired age range' do
         younger_user.desired_match_trait.min_age = 18
         younger_user.desired_match_trait.max_age = 26
+        younger_user.save
         younger_user.find_matches
 
         older_user.desired_match_trait.min_age = 35
         older_user.desired_match_trait.max_age = 45
+        older_user.save
         older_user.find_matches
 
         expect(younger_user.matches).to include(younger_match)
@@ -235,10 +237,12 @@ describe "User" do
       it 'doesnt match a user to someone outside of their desired age_range' do
         younger_user.desired_match_trait.min_age = 18
         younger_user.desired_match_trait.max_age = 26
+        younger_user.save
         younger_user.find_matches
 
         older_user.desired_match_trait.min_age = 35
         older_user.desired_match_trait.max_age = 45
+        older_user.save
         older_user.find_matches
         
         expect(younger_user.matches).to_not include(older_match)

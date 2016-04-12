@@ -83,9 +83,9 @@ class User < ActiveRecord::Base
 
  def find_matches
   set = User.all.where.not(id: self.id)
-  set = self.reject_wrong_gender(set)
-  set = self.reject_wrong_rent(set)
-
+  set = self.reject_wrong_gender(set) if self.desired_match_trait.gender
+  set = self.reject_wrong_rent(set) if self.max_rent
+  set = self.reject_wrong_age(set) if self.desired_match_trait.min_age && self.desired_match_trait.max_age
   set.each do |match|
     self.match_connections.create(match: match)
   end
@@ -119,8 +119,11 @@ def reject_wrong_gender(set)
 end
 
 ## reject users who aren't the right age ##
-def reject_wrong_age
-  
+def reject_wrong_age(set)
+  age_range = (self.desired_match_trait.min_age..self.desired_match_trait.max_age)
+  set.select do |user|
+    age_range.include?(user.convert_age)
+  end
 end
 
 
