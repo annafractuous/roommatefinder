@@ -78,8 +78,26 @@ class User < ActiveRecord::Base
  end
 
  
+ ## check cleanliness compatibility ##
+ def cleanliness_compatibility_per_match(match)
+    conversion_hash = { 1 => 0, 2 => 1, 3 => 10, 4 => 50 }
+    
+    total_possible_points = 0
+    points_earned = 0
 
+    question_columns = Cleanliness.user_input_columns
 
+    question_columns.each do |attrb| # attrb = "kitchen"
+      importance = self.desired_cleanliness.send("#{attrb}_importance") # "kitchen_importance" => 3
+      points = conversion_hash[importance] # => 10
+      total_possible_points += points
+      desired_answer = self.desired_cleanliness.send(attrb) # => "Museum"
+      answer = match.cleanliness.send(attrb) # => "Average"
+      points_earned += points if answer == desired_answer
+    end
+
+    (points_earned / total_possible_points.to_f * 100).to_i
+ end 
 
  def find_matches
   set = User.all.where.not(id: self.id)
@@ -88,6 +106,7 @@ class User < ActiveRecord::Base
   set = self.reject_wrong_age(set) if self.desired_match_trait.min_age && self.desired_match_trait.max_age
   set = self.reject_wrong_city(set) if self.desired_match_trait.city
   set = self.reject_wrong_move_in_date(set) if self.desired_match_trait.move_in_date
+
   set.each do |match|
     self.match_connections.create(match: match)
   end
