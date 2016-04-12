@@ -2,23 +2,21 @@
 
 <%= form_for @user do |f| %>
   <%= f.label :username %><br>
-  <%= f.text_field :username %><br>
+  <%= f.text_field :username, {required: true} %><br>
   <%= f.label :email %><br>
-  <%= f.text_field :email %><br>
+  <%= f.text_field :email, {required: true} %><br>
   <%= f.label :password %><br>
-  <%= f.password_field :password %><br>
+  <%= f.password_field :password, {required: true} %><br>
   <%= f.label :password_confirmation %><br>
-  <%= f.password_field :password_confirmation %><br>
+  <%= f.password_field :password_confirmation, {required: true} %><br>
   <%= f.label :name %><br>
-  <%= f.text_field :name %><br><br>
+  <%= f.text_field :name, {required: true} %><br><br>
 
   <%= f.label :birthdate %>
   <%= f.date_select :birthdate, {order: [:month, :day, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: Date.today.year - 18, end_year: Date.today.year - 100}, {required: true} %><br>
-  
+
   <%= f.label :gender %>
-
-  <%= f.select :gender, ['M', 'F', "Other"]%><br>
-
+  <%= f.select :gender, ['M', 'F', "Other"], {required: true} %><br>
 
   <%= f.submit %>
 <% end %>
