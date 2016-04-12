@@ -135,9 +135,12 @@ def reject_wrong_city(set)
 end
 
 def reject_wrong_move_in_date(set)
-  move_in_range = ((desired_match_trait.move_in_date - 60.days)..(desired_match_trait.move_in_date + 60.days))
+  min_date = desired_match_trait.move_in_date - 60.days
+  max_date = desired_match_trait.move_in_date + 60.days
+  
   set.select do |user|
-    move_in_range.include?(user.desired_match_trait.move_in_date)
+    #binding.pry
+    user.desired_match_trait.move_in_date.between?(min_date, max_date)
   end
 end
 

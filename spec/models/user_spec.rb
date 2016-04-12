@@ -301,7 +301,7 @@ describe "User" do
         in_a_hurry_user.desired_match_trait.move_in_date = DateTime.now + 54.days
 
         taking_my_time_match.desired_match_trait.move_in_date = DateTime.now + 6.months
-        taking_my_time_user.desired_match_trait.move_in_date = DateTime.now + 8.months
+        taking_my_time_user.desired_match_trait.move_in_date = DateTime.now + 7.months
 
         in_a_hurry_match.save
         in_a_hurry_user.save
