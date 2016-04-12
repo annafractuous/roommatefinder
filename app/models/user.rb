@@ -71,15 +71,15 @@ class User < ActiveRecord::Base
    end
 
    ((completion_hash[:completed]/completion_hash[:total].to_f) * 100).to_i
- end
+  end
 
- def create_category_objects
-   User.question_tables.each { |table| self.send("create_#{table.singularize}") }
- end
+  def create_category_objects
+    User.question_tables.each { |table| self.send("create_#{table.singularize}") }
+  end
 
  
- ## check cleanliness compatibility ##
- def cleanliness_compatibility_per_match(match)
+  ## check cleanliness compatibility ##
+  def cleanliness_percentage_for(match)
     conversion_hash = { 1 => 0, 2 => 1, 3 => 10, 4 => 50 }
     
     total_possible_points = 0
@@ -96,14 +96,21 @@ class User < ActiveRecord::Base
       points_earned += points if answer == desired_answer
     end
 
-    (points_earned / total_possible_points.to_f * 100).to_i
- end 
+    (points_earned / total_possible_points.to_f * 100).round(2)
+  end
 
- def match_with_percentage(set)
+  def mutual_compabilty_percentage(match)
+    user_to_match_percentage = self.cleanliness_percentage_for(match)
+    match_to_user_percentage = match.cleanliness_percentage_for(self)
+
+    Math.sqrt(user_to_match_percentage * match_to_user_percentage).to_i
+  end
+
+  def match_with_percentage(set)
     set.each_with_object({}) do |match, compatibility_hash|
-      compatibility_hash[match] = cleanliness_compatibility_per_match(match)
+      compatibility_hash[match] = mutual_compatabilty_percentage(match)
     end
- end
+  end
 
  def find_matches
   set = User.all.where.not(id: self.id)
