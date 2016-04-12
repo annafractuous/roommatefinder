@@ -47,15 +47,23 @@ class User < ActiveRecord::Base
 
   after_create :create_category_objects
 
+  ## Slug URL ##
   def to_param
     "#{id}-#{username.downcase}"
   end
 
+  ## get age from birthdate ##
   def convert_age
     now = Time.now.utc.to_date
      now.year - self.birthdate.year - (self.birthdate.to_date.change(:year => now.year) > now ? 1 : 0)
   end
 
+  ## build user's associated cleanliness, desired cleanliness, etc. on user initialization ##
+  def create_category_objects
+    User.question_tables.each { |table| self.send("create_#{table.singularize}") }
+  end
+
+  ## calculate percentage of profile that's complete ##
   def profile_percent_complete
    completion_hash = User.user_columns.each_with_object({completed: 0, total: 0}) do |col, num_questions|
      num_questions[:total] += 1
@@ -72,9 +80,9 @@ class User < ActiveRecord::Base
    ((completion_hash[:completed]/completion_hash[:total].to_f) * 100).to_i
  end
 
- def create_category_objects
-   User.question_tables.each { |table| self.send("create_#{table.singularize}") }
- end
+ ## MATCHING ALGORITHMS ##
+
+
 
  private
 
