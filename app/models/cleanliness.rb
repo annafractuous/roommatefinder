@@ -18,16 +18,6 @@ class Cleanliness < ActiveRecord::Base
   extend InputColumnable::ClassMethods
   include InputColumnable
   validate :cannot_select_pick_one
-  
 
   belongs_to :user
-
-
-
 end
-
-#Hoarder
-#Controlled Mess
-#Average
-#Above Average
-#Pristine

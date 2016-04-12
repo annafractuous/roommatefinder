@@ -1,0 +1,30 @@
+<%= form_for user, url: action, method: method do |f| %>
+  <%= f.label :has_apartment, "Check if you have an apartment" %>
+  <%= f.check_box :has_apartment, {}, true, false %> <br>
+  <!-- put a field here that will show the rent in your current apt. if you have one -->
+  <%= f.label :max_rent, "Or, what's the maximum rent you're willing to pay?" %>
+  <%= f.text_field :max_rent %> <p>(We'll still show you places up to $50 over)</p> <br>
+  <%= f.label :dealbreakers, "What are your dealbreakers?" %><br>
+  <%= f.text_area :dealbreakers, placeholder:  "e.g. no Bon Jovi lovers, no dragon tattoos" %><br>
+
+  <h3>Tell us more about what you're looking for</h3>
+  <%= f.fields_for :desired_match_trait do |trait| %>
+    <%= trait.label :city %>
+    <%= trait.text_field :city %><br>
+
+    <%= trait.label :move_in_date, "Move in by" %>
+    <%= trait.date_select :move_in_date, {order: [:month, :day, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: Date.today.year, end_year: Date.today.year + 1} %><br>
+
+    <%= trait.label :gender, "Preferred gender" %>
+    <%= trait.select :gender, ['M', 'F', "Other", "Any"]%><br>
+
+    <!-- dropdown -->
+    <%= trait.label :min_age %>
+    <%= trait.select :min_age, 18..99 %>
+
+    <%= trait.label :max_age %>
+    <%= trait.select :max_age, 18..99 %><br>
+
+  <% end %>
+  <%= f.submit %>
+<% end %>

@@ -54,15 +54,8 @@ class UsersController < ApplicationController
 
   private
 
-   def user_params
-     params.require(:user).permit(:email, :password, :password_confirmation, :username, :name, :birthdate, :gender)
-   end
-
-   def extra_params
-    params.require(:user).permit(:dealbreakers, :max_rent, :has_apartment)
-  end
-
-  def desired_match_params
-    params.require(:user).permit(:desired_cleanliness_attributes => [:gender, :move_in_date, :min_age, :max_age, :city])
-  end
+    def user_params
+      params.require(:user).permit(:email, :password, :password_confirmation, :username, :name, :birthdate, :gender)
+    end
+    
 end

@@ -4,17 +4,14 @@ Rails.application.routes.draw do
   post 'login' => 'sessions#create'
   get 'logout' => 'sessions#destroy', as: 'logout'
   get '/', to: 'pages#home', as: 'root'
-  get '/users/:id/:username', to: 'users#show'
 
   resources :users do
-    resources :cleanlinesses
-    resources :habits
-    resources :schedules
+    resources :cleanlinesses, only: [:edit, :update]
+    resources :habits, only: [:edit, :update]
+    resources :schedules, only: [:edit, :update]
+    resources :desired_match_traits, only: [:edit, :update]
   end
   resources :match_connections
-
-
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

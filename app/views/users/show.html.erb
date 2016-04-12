@@ -1,11 +1,12 @@
 <h1><%= @user.name %></h1>
+<p><small><%= link_to "Edit Your Profile", edit_user_path(@user) %></small></p>
 
 <p><strong>Age:</strong> <%= @user.convert_age %></p>
 
 <p><strong>Has Apartment?</strong>
   <%= @user.has_apartment ? "Yes" : "No" %> </p>
 
-<p><strong>Max Rent: </strong> 
+<p><strong>Max Rent: </strong>
 <%=@user.max_rent%> </p>
 
 <p><strong>DealBreakers</strong></p>
@@ -14,32 +15,33 @@
 
 <!-- Cleanliness -->
 <% if @user.cleanliness.all_input_columns_nil?%>
-  <%= link_to "Enter your Cleanliness Information",edit_user_cleanliness_path(@user, @user.cleanliness)%> <br>
+  <%= link_to "Enter your Cleanliness Information", edit_user_cleanliness_path(@user, @user.cleanliness)%> <br>
 <% else %>
-  <%= link_to "Edit Cleanliness Information",edit_user_cleanliness_path(@user, @user.cleanliness)%> <br>
+  <%= link_to "Edit Cleanliness Information", edit_user_cleanliness_path(@user, @user.cleanliness)%> <br>
 <% end %>
 
 
 <!-- Habit -->
 <% if @user.habit.all_input_columns_nil? %>
-  <%= link_to "Enter your Habit Information",edit_user_habit_path(@user, @user.habit)%> <br>
+  <%= link_to "Enter your Habit Information", edit_user_habit_path(@user, @user.habit)%> <br>
 <% else %>
-  <%= link_to "Edit Habit Information",edit_user_habit_path(@user, @user.habit)%> <br>
+  <%= link_to "Edit Habit Information", edit_user_habit_path(@user, @user.habit)%> <br>
 <% end %>
 
 
 <!-- Schedule -->
 <% if @user.schedule.all_input_columns_nil? %>
-  <%= link_to "Enter your Schedule Information",edit_user_schedule_path(@user, @user.schedule)%> <br>
+  <%= link_to "Enter your Schedule Information", edit_user_schedule_path(@user, @user.schedule)%> <br>
 <% else %>
-  <%= link_to "Edit Schedule Information",edit_user_schedule_path(@user, @user.schedule)%> <br>
+  <%= link_to "Edit Schedule Information", edit_user_schedule_path(@user, @user.schedule)%> <br>
 <% end %>
 
- <% if !(@user.dealbreakers &&  @user.max_rent && @user.has_apartment)%>
-  <%= link_to "Enter Additional Details..", edit_user_path(@user) %>
- <% else %>
-   <%= link_to "Edit Additional Details..", edit_user_path(@user) %>
- <% end %>
+<!-- Additional Details -->
+<% if !(@user.dealbreakers && @user.max_rent && @user.has_apartment) || @user.desired_match_trait.all_input_columns_nil? %>
+  <%= link_to "Enter Additional Details", edit_user_desired_match_trait_path(@user, @user.desired_match_trait) %>
+<% else %>
+  <%= link_to "Edit Additional Details", edit_user_desired_match_trait_path(@user, @user.desired_match_trait) %>
+<% end %>
 
 <h4>Your profile is <%= @user.profile_percent_complete %>% complete</h4>
 
