@@ -252,10 +252,38 @@ describe "User" do
     end
 
     describe '#city' do
-      #make users/ matches
+      let!(:new_york_user) {FactoryGirl.create :user}
+      let!(:rancho_cucamonga_user) {FactoryGirl.create :user}
+
+      let!(:new_york_match) {FactoryGirl.create :user}
+      let!(:rancho_cucamonga_match) {FactoryGirl.create :user}
+
+      let!(:nebraska_match) {FactoryGirl.create :user}
+
 
       it 'only matches users and matches seeking apt in same city' do
+        new_york_user.desired_match_trait.city = "New York"
+        rancho_cucamonga_user.desired_match_trait.city = "Rancho Cucamonga"
 
+        new_york_match.desired_match_trait.city = "New York"
+        rancho_cucamonga_match.desired_match_trait.city = "Rancho Cucamonga"
+
+        nebraska_match.desired_match_trait.city = "Nebraska"
+
+        new_york_user.save
+        new_york_match.save
+        rancho_cucamonga_user.save
+        rancho_cucamonga_match.save
+        nebraska_match.save
+
+        new_york_user.find_matches
+        rancho_cucamonga_user.find_matches
+        nebraska_match.find_matches
+
+        expect(new_york_user.matches).to include(new_york_match)
+        expect(rancho_cucamonga_user.matches).to include(rancho_cucamonga_match)
+        expect(new_york_user.matches).to_not include(nebraska_match, rancho_cucamonga_match)
+        expect(rancho_cucamonga_user.matches).to_not include(nebraska_match, new_york_match)
       end
 
     end
