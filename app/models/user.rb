@@ -47,6 +47,7 @@ class User < ActiveRecord::Base
 
   after_create :create_category_objects
 
+
   def to_param
     "#{id}-#{username.downcase}"
   end
@@ -75,6 +76,36 @@ class User < ActiveRecord::Base
  def create_category_objects
    User.question_tables.each { |table| self.send("create_#{table.singularize}") }
  end
+
+ 
+
+
+
+ def find_matches
+  # binding.pry
+  matches = User.all.where.not(id: self.id)
+
+  matches.to_a.reject! do |match|
+    if self.max_rent && match.max_rent
+      (self.max_rent + 200) < match.max_rent 
+    end
+  end
+
+  
+  matches.each do |match|
+    self.match_connections.create(match: match)
+  end
+
+  self.matches
+ end
+
+ 
+ 
+
+
+
+
+
 
  private
 

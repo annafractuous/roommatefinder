@@ -82,38 +82,42 @@ describe "User" do
     expect(t.macro).to equal(:has_one)
   end
 
-  it "matches clean users with other users who want cleanliness" do
-    user1 = FactoryGirl.create(:user, :with_cleanliness, :is_clean_and_wants_clean)
-    user2 = FactoryGirl.create(:user, :with_cleanliness, :is_clean_and_wants_clean)
-    result = user1.match_by_has_and_wants_attribute("cleanliness",user2)
-    expect(result).to be true
-  end
+  # it "matches clean users with other users who want cleanliness" do
+  #   user1 = FactoryGirl.create(:complete_user, :is_clean_and_wants_clean)
+  #   user2 = FactoryGirl.create(:conplete_user, :is_clean_and_wants_clean)
+  #   result = user1.match_by_has_and_wants_attribute("cleanliness",user2)
+  #   expect(result).to be true
+  # end
 
-  it "does not match users who want cleanliness with dirty users" do
-    user1 = FactoryGirl.create(:user, :with_cleanliness, :is_clean_and_wants_clean)
-    user2 = FactoryGirl.create(:user, :with_cleanliness, :is_dirty_and_doesnt_care)
-    result = user1.match_by_has_and_wants_attribute("cleanliness",user2)
-    expect(result).to be false
-  end
+  # it "does not match users who want cleanliness with dirty users" do
+  #   user1 = FactoryGirl.create(:user, :with_cleanliness, :is_clean_and_wants_clean)
+  #   user2 = FactoryGirl.create(:user, :with_cleanliness, :is_dirty_and_doesnt_care)
+  #   result = user1.match_by_has_and_wants_attribute("cleanliness",user2)
+  #   expect(result).to be false
+  # end
 
 
   describe '#find_matches' do
     describe 'it builds the basic associations' do
 
-      let (:user) { FactoryGirl.build :user }
-      let (:match_for_user) { FactoryGirl.build :user }
-
       it 'returns an AR associations collection proxy of users' do
+        user = create :user
+        match_for_user = create :user
         expect(user.find_matches.first).to be_a(User)
       end
 
       it 'associates a user and match through a MatchConnection' do
+        user = create :user
+        match_for_user = create :user
         user.find_matches
         expect(user.match_connections.last.user).to eq(user)
         expect(user.match_connections.last.match).to eq(match_for_user)
       end
 
       it 'adds the match to the user\'s matches' do
+        user = create :user
+        match_for_user = create :user
+        user.find_matches
         expect(user.matches).to include(match_for_user)
       end
 
@@ -122,41 +126,44 @@ describe "User" do
   describe 'matches basic compatibilty on user attributes' do
 
     describe '#max_rent' do
-      let (:user) {FactoryGirl.create(:user, max_rent: 850 }
-      let (:seeking_too_high_rent) {FactoryGirl.create(:user, max_rent: 1100)}
-      let (:seeking_acceptable_rent) {FactoryGirl.create(:user, max_rent: 800)}
-      let (:slightly_over_limit) {FactoryGirl.create(:user, max_rent: 900)}
 
       it 'doesnt match to users who are seeking a higher rent' do
+        user = create :user, max_rent: 850
+        seeking_too_high_rent = create :user, max_rent: 1300
         user.find_matches
-        expect(user.matches).not_to include(:seeking_too_high_rent)
+        expect(user.matches).not_to include(seeking_too_high_rent)
       end
 
       it 'does match to users who are seeking a rent below the limit' do
+        user = create :user, max_rent: 850
+        seeking_acceptable_rent = create :user, max_rent: 750
         user.find_matches
-        expect(user.matches).to include(:seeking_acceptable_rent)
+        expect(user.matches).to include(seeking_acceptable_rent)
       end
 
       it 'allows a rent over the limit but within reasonable limit' do
+        user = create :user, max_rent: 850
+        slightly_over_limit = create :user, max_rent: 900
         user.find_matches
-        expect(user.matches).to include(:slightly_over_limit)
+        expect(user.matches).to include(slightly_over_limit)
       end
     end
 
     describe '#gender' do
-      let (:female_user) {FactoryGirl.create(:user, gender: "F")}
-      let (:male_user)  {FactoryGirl.create(:user, gender: "M")}
-      let (:female_match) {FactoryGirl.create(:user, gender: "F")}
-      let (:male_match)  {FactoryGirl.create(:user, gender: "M")}
 
       it 'matches a female seeking female to females' do
+        female_user = create :user, gender: "F"
+        female_match = create :user, gender: "F"
         female_user.desired_match_trait.gender = "F"
         female_user.find_matches
+        
         expect(female_user.matches).to include(female_match)
         expect(female_user.matches).to_not include(male_match)
       end
 
       it 'matches a female seeking a male to males' do
+        female_user = create :user, gender: "F"
+        male_match = create :user, gender: "M"
         female_user.desired_match_trait.gender = "M"
         female_user.find_matches
         expect(female_user.matches).to include(male_match)
@@ -164,6 +171,8 @@ describe "User" do
       end
 
       it 'matches a male seeking a female to females' do
+        male_user = create :user, gender: "M"
+        female_match = create :user, gender: "F"
         male_user.desired_match_trait.gender = "F"
         male_user.find_matches
         expect(male_user.matches).to include(female_match)
@@ -171,6 +180,8 @@ describe "User" do
       end
 
       it 'matches a male seeking a male to males' do
+        male_user = create :user, gender: "M"
+        male_match = create :user, gender: "M"
         male_user.desired_match_trait.gender = "M"
         male_user.find_matches
         expect(male_user.matches).to include(male_match)
@@ -178,13 +189,20 @@ describe "User" do
       end
 
       it 'matches a user of either gender seeking either gender to all appropriate matches' do
+        male_user = create :user, gender: "M"
+        female_match = create :user, gender: "F"
+        male_match = create :user, gender: "M"
         male_user.desired_match_trait.gender = "Any"
         male_user.find_matches
-        expect(male_user.matches).to include(female_match)
-        expect(male_user.matches).to include(male_match)
-
+        
+        female_user = create :user, gender: "F"
+        female_match = create :user, gender: "F"
+        male_match = create :user, gender: "M"
         female_user.desired_match_trait.gender = "Any"
         female_user.find_matches
+
+        expect(male_user.matches).to include(female_match)
+        expect(male_user.matches).to include(male_match)
         expect(female_user.matches).to include(female_match)
         expect(female_user.matches).to include(male_match)
       end
@@ -197,15 +215,39 @@ describe "User" do
       let (:older_match) {FactoryGirl.create :user, birthdate: (Time.now - 41.years)}
 
       it 'matches a user to someone in their desired age range' do
+        younger_user.desired_match_trait.min_age = 18
+        younger_user.desired_match_trait.max_age = 26
+        younger_user.find_matches
 
+        older_user.desired_match_trait.min_age = 35
+        older_user.desired_match_trait.max_age = 45
+        older_user.find_matches
+
+        expect(younger_user.matches).to include(younger_match)
+        expect(older_user.matches).to include(older_match)
       end
 
       it 'doesnt match a user to someone outside of their desired age_range' do
+        younger_user.desired_match_trait.min_age = 18
+        younger_user.desired_match_trait.max_age = 26
+        younger_user.find_matches
 
+        older_user.desired_match_trait.min_age = 35
+        older_user.desired_match_trait.max_age = 45
+        older_user.find_matches
+        
+        expect(younger_user.matches).to_not include(older_match)
+        expect(older_user.matches).to_not include(younger_match)
       end
+
     end
 
     describe '#city' do
+      #make users/ matches
+
+      it 'only matches users and matches seeking apt in same city' do
+
+      end
 
     end
   end

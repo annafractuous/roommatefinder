@@ -13,6 +13,7 @@ module UserMatchifiable
   module MatchQuantifiable
     def quantify_attribute(attribute)
       Cleanliness.user_input_columns.inject(0) do |sum, col|
+        # binding.pry
         if self.send(attribute).send(col) != nil
           sum + self.send(attribute).send(col)
         else
