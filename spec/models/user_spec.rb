@@ -287,6 +287,44 @@ describe "User" do
       end
 
     end
+
+    describe '#move_in_date' do
+      let!(:in_a_hurry_user) {FactoryGirl.create :user}
+      let!(:taking_my_time_user) {FactoryGirl.create :user}
+
+      let!(:in_a_hurry_match) {FactoryGirl.create :user}
+      let!(:taking_my_time_match) {FactoryGirl.create :user}
+
+      it 'only matches users moving within two months of one another' do
+
+        in_a_hurry_match.desired_match_trait.move_in_date = DateTime.now + 30.days
+        in_a_hurry_user.desired_match_trait.move_in_date = DateTime.now + 54.days
+
+        taking_my_time_match.desired_match_trait.move_in_date = DateTime.now + 6.months
+        taking_my_time_user.desired_match_trait.move_in_date = DateTime.now + 8.months
+
+        in_a_hurry_match.save
+        in_a_hurry_user.save
+
+        taking_my_time_user.save
+        taking_my_time_match.save
+        
+        in_a_hurry_match.find_matches
+        in_a_hurry_user.find_matches
+
+        taking_my_time_user.find_matches
+        taking_my_time_match.find_matches
+
+        expect(in_a_hurry_user.matches).to include(in_a_hurry_match)
+        expect(taking_my_time_user.matches).to include(taking_my_time_match)
+        expect(in_a_hurry_user.matches).to_not include(taking_my_time_match)
+        expect(taking_my_time_user.matches).to_not include(in_a_hurry_match)
+
+      end
+
+
+
+    end
   end
   end
 end

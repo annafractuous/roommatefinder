@@ -87,6 +87,7 @@ class User < ActiveRecord::Base
   set = self.reject_wrong_rent(set) if self.max_rent
   set = self.reject_wrong_age(set) if self.desired_match_trait.min_age && self.desired_match_trait.max_age
   set = self.reject_wrong_city(set) if self.desired_match_trait.city
+  set = self.reject_wrong_move_in_date(set) if self.desired_match_trait.move_in_date
   set.each do |match|
     self.match_connections.create(match: match)
   end
@@ -130,6 +131,13 @@ end
 def reject_wrong_city(set)
   set.select do |user|
     user.desired_match_trait.city == self.desired_match_trait.city
+  end
+end
+
+def reject_wrong_move_in_date(set)
+  move_in_range = ((desired_match_trait.move_in_date - 60.days)..(desired_match_trait.move_in_date + 60.days))
+  set.select do |user|
+    move_in_range.include?(user.desired_match_trait.move_in_date)
   end
 end
 
