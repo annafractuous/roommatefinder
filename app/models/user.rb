@@ -17,35 +17,39 @@
 #
 
 class User < ActiveRecord::Base
- include UserMatchifiable::MatchQuantifiable
- include UserMatchifiable::MatchBy
+  include UserMatchifiable::MatchQuantifiable
+  include UserMatchifiable::MatchBy
 
- has_secure_password
+  has_secure_password
 
- has_one :cleanliness
- has_one :desired_cleanliness
- has_one :schedule
- has_one :desired_schedule
- has_one :habit
- has_one :desired_habit
- has_one :desired_match_trait
- has_many :match_connections
- has_many :matches, through: :match_connections
+  has_one :cleanliness
+  has_one :desired_cleanliness
+  has_one :schedule
+  has_one :desired_schedule
+  has_one :habit
+  has_one :desired_habit
+  has_one :desired_match_trait
+  has_many :match_connections
+  has_many :matches, through: :match_connections
 
- accepts_nested_attributes_for :habit, :desired_habit
- accepts_nested_attributes_for :cleanliness, :desired_cleanliness
- accepts_nested_attributes_for :schedule, :desired_schedule
- accepts_nested_attributes_for :desired_match_trait
+  accepts_nested_attributes_for :habit, :desired_habit
+  accepts_nested_attributes_for :cleanliness, :desired_cleanliness
+  accepts_nested_attributes_for :schedule, :desired_schedule
+  accepts_nested_attributes_for :desired_match_trait
 
- validates_presence_of :email, :username, :name, :birthdate, :gender
- validates_uniqueness_of :email, :username
- validates_presence_of :password, on: :create
- validates_confirmation_of :password
- validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
- validates_inclusion_of :gender, :in => %w( M F Other)
- validates :max_rent, {:numericality => { :greater_than_or_equal_to => 0 }, :on => :update, :if => Proc.new {|c| not c.max_rent.blank?}}
+  validates_presence_of :email, :username, :name, :birthdate, :gender
+  validates_uniqueness_of :email, :username
+  validates_presence_of :password, on: :create
+  validates_confirmation_of :password
+  validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
+  validates_inclusion_of :gender, :in => %w( M F Other)
+  validates :max_rent, {:numericality => { :greater_than_or_equal_to => 0 }, :on => :update, :if => Proc.new {|c| not c.max_rent.blank?}}
 
   after_create :create_category_objects
+
+  def to_param
+    "#{id}-#{username.downcase}"
+  end
 
   def convert_age
     now = Time.now.utc.to_date
