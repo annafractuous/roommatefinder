@@ -98,25 +98,22 @@ describe "User" do
 
 
   describe '#find_matches' do
+    
     describe 'it builds the basic associations' do
+      let!(:user) { create :user }
+      let!(:match_for_user) { create :user }
 
       it 'returns an AR associations collection proxy of users' do
-        user = create :user
-        match_for_user = create :user
         expect(user.find_matches.first).to be_a(User)
       end
 
       it 'associates a user and match through a MatchConnection' do
-        user = create :user
-        match_for_user = create :user
         user.find_matches
         expect(user.match_connections.last.user).to eq(user)
         expect(user.match_connections.last.match).to eq(match_for_user)
       end
 
       it 'adds the match to the user\'s matches' do
-        user = create :user
-        match_for_user = create :user
         user.find_matches
         expect(user.matches).to include(match_for_user)
       end
@@ -126,36 +123,41 @@ describe "User" do
   describe 'matches basic compatibilty on user attributes' do
 
     describe '#max_rent' do
-
+      let!(:user) { create :user, max_rent: 850 }
+      let!(:seeking_too_high_rent) { create :user, max_rent: 1300 }
+      let!(:seeking_acceptable_rent) { create :user, max_rent: 750 }
+      let!(:slightly_over_limit) { create :user, max_rent: 900 }
+      
       it 'doesnt match to users who are seeking a higher rent' do
-        user = create :user, max_rent: 850
-        seeking_too_high_rent = create :user, max_rent: 1300
         user.find_matches
+        
         expect(user.matches).not_to include(seeking_too_high_rent)
       end
 
       it 'does match to users who are seeking a rent below the limit' do
-        user = create :user, max_rent: 850
-        seeking_acceptable_rent = create :user, max_rent: 750
         user.find_matches
+        
         expect(user.matches).to include(seeking_acceptable_rent)
       end
 
       it 'allows a rent over the limit but within reasonable limit' do
-        user = create :user, max_rent: 850
-        slightly_over_limit = create :user, max_rent: 900
         user.find_matches
+        
         expect(user.matches).to include(slightly_over_limit)
       end
     end
 
     describe '#gender' do
+      let!(:female_user) { create :user, gender: "F" }
+      let!(:female_match) { create :user, gender: "F" }
+      let!(:male_user) { create :user, gender: "M" }
+      let!(:male_match) { create :user, gender: "M" }
+      let!(:other_user) { create :user, gender: "Other" }
+      let!(:other_match) { create :user, gender: "Other" }
 
       it 'matches a female seeking female to females' do
-        female_user = create :user, gender: "F"
-        female_match = create :user, gender: "F"
-        male_match = create :user, gender: "M"
         female_user.desired_match_trait.gender = "F"
+        
         female_user.find_matches
         
         expect(female_user.matches).to include(female_match)
@@ -163,43 +165,37 @@ describe "User" do
       end
 
       it 'matches a female seeking a male to males' do
-        female_user = create :user, gender: "F"
-        male_match = create :user, gender: "M"
-        female_match = create :user, gender: "F"
         female_user.desired_match_trait.gender = "M"
+        
         female_user.find_matches
+        
         expect(female_user.matches).to include(male_match)
         expect(female_user.matches).to_not include(female_match)
       end
 
       it 'matches a male seeking a female to females' do
-        male_user = create :user, gender: "M"
-        female_match = create :user, gender: "F"
-        male_match = create :user, gender: "M"
         male_user.desired_match_trait.gender = "F"
+        
         male_user.find_matches
+        
         expect(male_user.matches).to include(female_match)
         expect(male_user.matches).to_not include(male_match)
       end
 
       it 'matches a male seeking a male to males' do
-        male_user = create :user, gender: "M"
-        male_match = create :user, gender: "M"
         female_match = create :user, gender: "F"
         male_user.desired_match_trait.gender = "M"
+        
         male_user.find_matches
+        
         expect(male_user.matches).to include(male_match)
         expect(male_user.matches).to_not include(female_match)
       end
 
       it 'matches a user of either gender seeking either gender to all appropriate matches' do
-        male_user = create :user, gender: "M"
         male_user.desired_match_trait.gender = "Any"
-        female_user = create :user, gender: "F"
         female_user.desired_match_trait.gender = "Any"
         
-        female_match = create :user, gender: "F"
-        male_match = create :user, gender: "M"
         male_user.find_matches
         female_user.find_matches
 
@@ -208,23 +204,20 @@ describe "User" do
       end
 
       it 'matches an "other" gender user seeking "other" gender to "other" gender matches' do
-        other_user = create :user, gender: "Other"
         other_user.desired_match_trait.gender = "Other"
-        other_match = create :user, gender: "Other"
-        female_match = create :user, gender: "F"
-        male_match = create :user, gender: "M"
-
         other_user.find_matches
+
         expect(other_user.matches).to include(other_match)
         expect(other_user.matches).to_not include(male_match)
       end
     end
 
     describe '#age' do
-      let (:younger_user) {FactoryGirl.create :user, birthdate: (Time.now - 22.years)}
-      let (:older_user) {FactoryGirl.create :user, birthdate: (Time.now - 38.years)}
-      let (:younger_match) {FactoryGirl.create :user, birthdate: (Time.now - 25.years)}
-      let (:older_match) {FactoryGirl.create :user, birthdate: (Time.now - 41.years)}
+
+      let!(:younger_user) {FactoryGirl.create :user, birthdate: (Time.now - 22.years)}
+      let!(:older_user) {FactoryGirl.create :user, birthdate: (Time.now - 38.years)}
+      let!(:younger_match) {FactoryGirl.create :user, birthdate: (Time.now - 25.years)}
+      let!(:older_match) {FactoryGirl.create :user, birthdate: (Time.now - 41.years)}
 
       it 'matches a user to someone in their desired age range' do
         younger_user.desired_match_trait.min_age = 18
