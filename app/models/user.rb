@@ -99,6 +99,12 @@ class User < ActiveRecord::Base
     (points_earned / total_possible_points.to_f * 100).to_i
  end 
 
+ def match_with_percentage(set)
+    set.each_with_object({}) do |match, compatibility_hash|
+      compatibility_hash[match] = cleanliness_compatibility_per_match(match)
+    end
+ end
+
  def find_matches
   set = User.all.where.not(id: self.id)
   set = self.reject_wrong_gender(set) if self.desired_match_trait.gender
