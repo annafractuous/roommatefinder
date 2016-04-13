@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
 
   after_create :create_category_objects
 
-  ## Slug URL ##
+  ## slug URL ##
   def to_param
     "#{id}-#{username.downcase}"
   end
@@ -64,6 +64,10 @@ class User < ActiveRecord::Base
   end
 
   ## calculate percentage of profile that's complete ##
+  def match_connection_object_for(match)
+    self.match_connections.where(match: match)[0]
+  end
+
   def profile_percent_complete
    completion_hash = User.user_columns.each_with_object({completed: 0, total: 0}) do |col, num_questions|
      num_questions[:total] += 1
@@ -92,6 +96,7 @@ class User < ActiveRecord::Base
     question_columns = Cleanliness.user_input_columns
 
     question_columns.each do |attrb| # attrb = "kitchen"
+
       importance = self.desired_cleanliness.send("#{attrb}_importance") # "kitchen_importance" => 3
       points = conversion_hash[importance] # => 10
       total_possible_points += points
@@ -101,6 +106,10 @@ class User < ActiveRecord::Base
     end
 
     (points_earned / total_possible_points.to_f * 100).to_i
+
+    # if a user's desired importance is 0 for every category
+    # total_possible_points will be 0 which will cause a divide by 0 error.
+    total_possible_points != 0 ? (points_earned / total_possible_points.to_f * 100).round(2) : 0
   end
 
  ## calculate compatibility score for category by checking user & match's compatability with each other ##
@@ -123,6 +132,7 @@ class User < ActiveRecord::Base
       connection = self.match_connections.create(match: match)
       compatibility_score = self.mutual_compatabilty_percentage(match)
       connection.compatibility = compatibility_score
+      connection.save
     end
 
     self.matches
