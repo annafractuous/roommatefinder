@@ -17,8 +17,6 @@
 #
 
 class User < ActiveRecord::Base
-  include UserMatchifiable::MatchQuantifiable
-  include UserMatchifiable::MatchBy
 
   has_secure_password
 
@@ -47,7 +45,7 @@ class User < ActiveRecord::Base
 
   after_create :create_category_objects
 
-  ## Slug URL ##
+  ## slug URL ##
   def to_param
     "#{id}-#{username.downcase}"
   end
@@ -65,48 +63,56 @@ class User < ActiveRecord::Base
 
   ## calculate percentage of profile that's complete ##
   def profile_percent_complete
-   completion_hash = User.user_columns.each_with_object({completed: 0, total: 0}) do |col, num_questions|
+    ## questions completed on user model (e.g. max rent, etc.) ##
+    completion_hash = User.user_columns.each_with_object({completed: 0, total: 0}) do |col, num_questions|
      num_questions[:total] += 1
      num_questions[:completed] += 1 if self.send(col)
-   end
+    end
 
-   completion_hash = User.question_tables.each_with_object(completion_hash) do |category, num_questions|
+    ## questions completed on all other models (e.g. cleanliness, desired_cleanliness, etc.) ##
+    completion_hash = User.question_tables.each_with_object(completion_hash) do |category, num_questions|
       Object.const_get(category.classify).user_input_columns.each do |col|
         num_questions[:total] += 1
         num_questions[:completed] += 1 if self.send(category.singularize).send(col)
       end
-   end
+    end
 
    ((completion_hash[:completed]/completion_hash[:total].to_f) * 100).to_i
   end
 
  ## MATCHING ALGORITHMS ##
 
-  ## check cleanliness compatibility ##
-  def cleanliness_percentage_for(match)
+  ## check one-way compatibility between user and match for a single category ##
+  def compatibility_percentage_per_category(category, match)
+    ## weighted responses to 'how important is this to you' ##
     conversion_hash = { 1 => 0, 2 => 1, 3 => 10, 4 => 50 }
 
     total_possible_points = 0
     points_earned = 0
 
-    question_columns = Cleanliness.user_input_columns
+    table = Object.const_get(category.classify) # e.g. Cleanliness table
+    question_columns = table.user_input_columns
+    # => ["kitchen", "bathroom", "common_space"]
 
-    question_columns.each do |attrb| # attrb = "kitchen"
-      importance = self.desired_cleanliness.send("#{attrb}_importance") # "kitchen_importance" => 3
-      points = conversion_hash[importance] # => 10
+    question_columns.each do |attrb| # e.g. attrb = "kitchen"
+      desired_cat = "desired_#{category}".singularize # desired_cleanliness
+      desired_answer = self.send(desired_cat).send(attrb) # => "Presentable"
+      importance = self.send(desired_cat).send("#{attrb}_importance") # e.g. "kitchen_importance" => 3
+
+      points = conversion_hash[importance] # => e.g. 10
       total_possible_points += points
-      desired_answer = self.desired_cleanliness.send(attrb) # => "Museum"
-      answer = match.cleanliness.send(attrb) # => "Average"
+
+      answer = match.send(category.singularize).send(attrb) # => "Average"
       points_earned += points if answer == desired_answer
     end
 
     (points_earned / total_possible_points.to_f * 100).to_i
   end
 
- ## calculate compatibility score for category by checking user & match's compatability with each other ##
-  def mutual_compatabilty_percentage(match)
-    user_to_match_percentage = self.cleanliness_percentage_for(match)
-    match_to_user_percentage = match.cleanliness_percentage_for(self)
+ ## calculate mutual compatibility for category ##
+  def mutual_compatabilty_percentage(category, match)
+    user_to_match_percentage = self.compatibility_percentage_per_category(category, match)
+    match_to_user_percentage = match.compatibility_percentage_per_category(category, self)
 
     compatibility = Math.sqrt(user_to_match_percentage * match_to_user_percentage).to_i
   end
@@ -120,9 +126,12 @@ class User < ActiveRecord::Base
     set = self.reject_wrong_move_in_date(set) if self.desired_match_trait.move_in_date
 
     set.each do |match|
-      connection = self.match_connections.create(match: match)
-      compatibility_score = self.mutual_compatabilty_percentage(match)
-      connection.compatibility = compatibility_score
+      categories = User.question_tables.reject { |table| table.starts_with?("desired") }
+      # => ["cleanlinesses", "habits", "schedules"]
+      categories.each do |category|
+        compatibility_score = self.mutual_compatabilty_percentage(category, match)
+        connection = self.match_connections.create(match: match, compatibility: compatibility_score)
+      end
     end
 
     self.matches
