@@ -26,6 +26,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      UserMailer.welcome_email(@user).deliver
       session[:user_id] = @user.id
       redirect_to @user, notice: "Welcome to RoomMater!"
     else
@@ -44,7 +45,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(extra_params)
+    if @user.update(user_params)
       redirect_to @user
     else
       flash[:error] = @user.errors.to_a
