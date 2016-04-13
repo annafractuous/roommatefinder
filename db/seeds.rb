@@ -18,13 +18,12 @@ end
   user.desired_match_trait.city = "Rancho Cucamonga"
 end
 
+# Cleanliness
+# ===========
 
 all_users = User.all.shuffle
 # 2-i dont cares 5-a little important 10-somewhat important 5-very important
 importances = [1,1,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4]
-
-# Cleanliness
-# ===========
 
 # clean users
 # -----------

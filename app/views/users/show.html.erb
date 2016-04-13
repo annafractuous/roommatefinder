@@ -12,36 +12,46 @@
 <p><strong>DealBreakers</strong></p>
 <p><%= @user.dealbreakers %></p>
 
+<!-- Additional Details -->
+<div class="form_link" id="desired_match_trait">
+<% if @user.desired_match_trait.all_input_columns_nil? %>
+  <h5><%= link_to "Click Here To Get Started", edit_user_desired_match_trait_path(@user, @user.desired_match_trait) %> <br>Before continuing please enter some additional information about yourself so we can find you the best matches</h5>
+<% else %>
+  <%= link_to "Edit Additional Details", edit_user_desired_match_trait_path(@user, @user.desired_match_trait) %>
+<% end %>
+</div>
+
 
 <!-- Cleanliness -->
+<div class="form_link" id="cleanliness">
 <% if @user.cleanliness.all_input_columns_nil?%>
   <%= link_to "Enter your Cleanliness Information", edit_user_cleanliness_path(@user, @user.cleanliness)%> <br>
 <% else %>
   <%= link_to "Edit Cleanliness Information", edit_user_cleanliness_path(@user, @user.cleanliness)%> <br>
 <% end %>
+</div>
 
 
 <!-- Habit -->
+<div class="form_link" id="habit">
 <% if @user.habit.all_input_columns_nil? %>
   <%= link_to "Enter your Habit Information", edit_user_habit_path(@user, @user.habit)%> <br>
 <% else %>
   <%= link_to "Edit Habit Information", edit_user_habit_path(@user, @user.habit)%> <br>
 <% end %>
+</div>
 
 
 <!-- Schedule -->
+<div class="form_link" id="schedule">
 <% if @user.schedule.all_input_columns_nil? %>
   <%= link_to "Enter your Schedule Information", edit_user_schedule_path(@user, @user.schedule)%> <br>
 <% else %>
   <%= link_to "Edit Schedule Information", edit_user_schedule_path(@user, @user.schedule)%> <br>
 <% end %>
+</div>
 
-<!-- Additional Details -->
-<% if !(@user.dealbreakers && @user.max_rent && @user.has_apartment) || @user.desired_match_trait.all_input_columns_nil? %>
-  <%= link_to "Enter Additional Details", edit_user_desired_match_trait_path(@user, @user.desired_match_trait) %>
-<% else %>
-  <%= link_to "Edit Additional Details", edit_user_desired_match_trait_path(@user, @user.desired_match_trait) %>
-<% end %>
+
 
 <h4>Your profile is <%= @user.profile_percent_complete %>% complete</h4>
 
