@@ -10,9 +10,11 @@ Rails.application.routes.draw do
     resources :habits, only: [:edit, :update]
     resources :schedules, only: [:edit, :update]
     resources :desired_match_traits, only: [:edit, :update]
+    get 'matches' => 'match_connections#index', as: 'matches'
+    get 'matches/:match_id' => 'match_connections#show', as: 'match'
   end
-  resources :match_connections
 
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

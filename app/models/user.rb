@@ -61,6 +61,10 @@ class User < ActiveRecord::Base
     self.match_connections.where(match: match)[0]
   end
 
+  def compatibility_with(match)
+    self.match_connection_object_for(match).compatibility
+  end
+
   def profile_percent_complete
    completion_hash = User.user_columns.each_with_object({completed: 0, total: 0}) do |col, num_questions|
      num_questions[:total] += 1
@@ -127,9 +131,11 @@ class User < ActiveRecord::Base
 
     set.each do |match|
       connection = self.match_connections.create(match: match)
-      compatibility_score = self.mutual_compatabilty_percentage(match)
-      connection.compatibility = compatibility_score
-      connection.save
+      if connection
+        compatibility_score = self.mutual_compatabilty_percentage(match)
+        connection.compatibility = compatibility_score
+        connection.save
+      end
     end
 
     self.matches

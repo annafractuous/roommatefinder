@@ -1,21 +1,13 @@
 
 FactoryGirl.define do
 
-  sequence :email do |n|
-    "user#{n}@example.com" 
-  end
-
-  sequence :username do |n|
-    "user#{n}" 
-  end
-
 
  factory :user do
     name { Faker::Name.name }
     birthdate { Faker::Date.between(60.years.ago, 18.years.ago) }
     gender { ["M", "F"].sample }
-    email
-    username
+    email "temp@temp.com"
+    username "temp"
     password { "123" }
     max_rent { 900 }
 
@@ -24,6 +16,8 @@ FactoryGirl.define do
     # the factories like this as another callback.
     # Not efficient, figure out better way if time
     after(:create) do |user|
+      user.email = "user#{user.id}@example.com"
+      user.username = "user#{user.id}"
       user.cleanliness = FactoryGirl.create :cleanliness
       user.desired_cleanliness = FactoryGirl.create :desired_cleanliness
       user.schedule = FactoryGirl.create :schedule
@@ -31,6 +25,7 @@ FactoryGirl.define do
       user.habit = FactoryGirl.create :habit
       user.desired_habit = FactoryGirl.create :desired_habit
       user.desired_match_trait = FactoryGirl.create :desired_match_trait
+      user.save
     end
 
 

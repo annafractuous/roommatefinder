@@ -11,12 +11,20 @@
 #
 
 class MatchConnectionsController < ApplicationController
-  
-  def index
-    render :index
-  end
 
   def create
+  end
+
+  def index
+    @user = User.find(params[:user_id])
+    @matches = @user.find_matches
+    # switch to ActiveRecord SQL-y type statements
+    @matches = @matches.reject { |match| @user.compatibility_with(match) < 25 }.sort_by { |match| @user.compatibility_with(match)}.reverse
+    render 'index'
+  end
+
+  def show
+
   end
 
 end
