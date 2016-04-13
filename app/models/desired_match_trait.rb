@@ -17,7 +17,6 @@ class DesiredMatchTrait < ActiveRecord::Base
   belongs_to :user
   include ChoicesQuantifiable::Cleanliness
   include Validatable
-  include UserMatchifiable
   extend InputColumnable::ClassMethods
   include InputColumnable
 end
