@@ -106,15 +106,38 @@ class User < ActiveRecord::Base
       points_earned += points if answer == desired_answer
     end
 
-    (points_earned / total_possible_points.to_f * 100).to_i
+    total_possible_points != 0 ? (points_earned / total_possible_points.to_f * 100).to_i : 0
   end
 
  ## calculate mutual compatibility for category ##
-  def mutual_compatabilty_percentage(category, match)
+  def mutual_compatabilty_percentage_per_category(category, match)
     user_to_match_percentage = self.compatibility_percentage_per_category(category, match)
     match_to_user_percentage = match.compatibility_percentage_per_category(category, self)
 
     compatibility = Math.sqrt(user_to_match_percentage * match_to_user_percentage).to_i
+  end
+
+  ## get all mutual compatibility scores ##
+  def all_category_compatibility_scores(match)
+    categories = User.question_tables.reject { |table| table.starts_with?("desired") }
+    # => ["cleanlinesses", "habits", "schedules"]
+    categories.each_with_object([]) do |category, compat_scores|
+      unless self.send(category.singularize).all_input_columns_nil?
+        compat_scores << self.mutual_compatabilty_percentage_per_category(category, match)
+      end
+    end
+  end
+
+  ## calculate total mutual compatibility ##
+  def calculate_compatibility_score(category_scores)
+    if category_scores.size == 2
+      return Math.sqrt(category_scores.first * category_scores.last.to_f).to_i
+    else
+      first = category_scores.shift.to_f
+      second = category_scores.shift.to_f
+      category_scores.unshift(Math.sqrt(first * second))
+      calculate_compatibility_score(category_scores)
+    end
   end
 
   def find_matches
@@ -126,12 +149,9 @@ class User < ActiveRecord::Base
     set = self.reject_wrong_move_in_date(set) if self.desired_match_trait.move_in_date
 
     set.each do |match|
-      categories = User.question_tables.reject { |table| table.starts_with?("desired") }
-      # => ["cleanlinesses", "habits", "schedules"]
-      categories.each do |category|
-        compatibility_score = self.mutual_compatabilty_percentage(category, match)
-        connection = self.match_connections.create(match: match, compatibility: compatibility_score)
-      end
+      category_compat_scores = all_category_compatibility_scores(match) # => [63, 45, 87]
+      compatibility_score = self.calculate_compatibility_score(category_compat_scores)
+      connection = self.match_connections.create(match: match, compatibility: compatibility_score)
     end
 
     self.matches
