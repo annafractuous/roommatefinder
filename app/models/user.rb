@@ -114,7 +114,7 @@ class User < ActiveRecord::Base
       points_earned += points if answer == desired_answer
     end
 
-    total_possible_points != 0 ? (points_earned / total_possible_points.to_f * 100).to_i : 0
+    total_possible_points != 0 ? (points_earned / total_possible_points.to_f * 100).to_i : 1
   end
 
   ## calculate mutual compatibility for category ##
