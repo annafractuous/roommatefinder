@@ -14,7 +14,6 @@
 class Cleanliness < ActiveRecord::Base
   include ChoicesQuantifiable::Cleanliness
   include Validatable
-  include UserMatchifiable
   extend InputColumnable::ClassMethods
   include InputColumnable
   validate :cannot_select_pick_one
