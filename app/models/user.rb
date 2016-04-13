@@ -78,27 +78,12 @@ class User < ActiveRecord::Base
    end
 
    ((completion_hash[:completed]/completion_hash[:total].to_f) * 100).to_i
- end
+  end
 
  ## MATCHING ALGORITHMS ##
 
- def find_matches
-  set = User.all.where.not(id: self.id)
-  set = self.reject_wrong_gender(set) if self.desired_match_trait.gender
-  set = self.reject_wrong_rent(set) if self.max_rent
-  set = self.reject_wrong_age(set) if self.desired_match_trait.min_age && self.desired_match_trait.max_age
-  set = self.reject_wrong_city(set) if self.desired_match_trait.city
-  set = self.reject_wrong_move_in_date(set) if self.desired_match_trait.move_in_date
-
-  set.each do |match|
-    self.match_connections.create(match: match)
-  end
-
-  self.matches
- end
-
- ## check cleanliness compatibility ##
- def cleanliness_compatibility_per_match(match)
+  ## check cleanliness compatibility ##
+  def cleanliness_percentage_for(match)
     conversion_hash = { 1 => 0, 2 => 1, 3 => 10, 4 => 50 }
 
     total_possible_points = 0
@@ -116,20 +101,36 @@ class User < ActiveRecord::Base
     end
 
     (points_earned / total_possible_points.to_f * 100).to_i
- end
+  end
 
- ## return hash of match with their category compatibility score ##
- def match_with_percentage(set)
-    set.each_with_object({}) do |match, compatibility_hash|
-      compatibility_hash[match] = cleanliness_compatibility_per_match(match)
+ ## calculate compatibility score for category by checking user & match's compatability with each other ##
+  def mutual_compatabilty_percentage(match)
+    user_to_match_percentage = self.cleanliness_percentage_for(match)
+    match_to_user_percentage = match.cleanliness_percentage_for(self)
+
+    compatibility = Math.sqrt(user_to_match_percentage * match_to_user_percentage).to_i
+  end
+
+  def find_matches
+    set = User.all.where.not(id: self.id)
+    set = self.reject_wrong_gender(set) if self.desired_match_trait.gender
+    set = self.reject_wrong_rent(set) if self.max_rent
+    set = self.reject_wrong_age(set) if self.desired_match_trait.min_age && self.desired_match_trait.max_age
+    set = self.reject_wrong_city(set) if self.desired_match_trait.city
+    set = self.reject_wrong_move_in_date(set) if self.desired_match_trait.move_in_date
+
+    set.each do |match|
+      connection = self.match_connections.create(match: match)
+      compatibility_score = self.mutual_compatabilty_percentage(match)
+      connection.compatibility = compatibility_score
     end
- end
+
+    self.matches
+  end
 
  def reject_wrong_rent(set)
   set.reject do |match|
-    if self.max_rent && match.max_rent
-      (self.max_rent + 200) < match.max_rent
-    end
+    (self.max_rent + 200) < match.max_rent if self.max_rent && match.max_rent
   end
  end
 

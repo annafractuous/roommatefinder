@@ -44,7 +44,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(extra_params)
+    if @user.update(user_params)
       redirect_to @user
     else
       flash[:error] = @user.errors.to_a
@@ -57,5 +57,5 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :username, :name, :birthdate, :gender)
     end
-    
+
 end

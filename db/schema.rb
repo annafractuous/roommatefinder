@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160411214858) do
+ActiveRecord::Schema.define(version: 20160413131734) do
 
   create_table "cleanlinesses", force: :cascade do |t|
     t.datetime "created_at",   null: false
@@ -89,8 +89,9 @@ ActiveRecord::Schema.define(version: 20160411214858) do
   create_table "match_connections", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "match_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "compatibility"
   end
 
   create_table "schedules", force: :cascade do |t|
