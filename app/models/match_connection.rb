@@ -13,4 +13,8 @@
 class MatchConnection < ActiveRecord::Base
   belongs_to :user
   belongs_to :match, :class_name => "User"
+  # validations
+  validates_uniqueness_of :user_id, :scope => :match_id
+
+
 end

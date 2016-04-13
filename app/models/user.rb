@@ -159,7 +159,12 @@ class User < ActiveRecord::Base
     set.each do |match|
       category_compat_scores = all_category_compatibility_scores(match) # => [63, 45, 87]
       compatibility_score = self.calculate_compatibility_score(category_compat_scores)
-      connection = self.match_connections.create(match: match, compatibility: compatibility_score)
+      connection = self.match_connections.new(match: match)
+      if !connection.save # e.g. if connection already exists
+        connection = self.match_connection_object_for(match)
+      end
+      connection.compatibility = compatibility_score
+      connection.save
     end
 
     self.matches

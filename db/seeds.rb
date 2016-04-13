@@ -36,7 +36,7 @@ clean_users.each do |user|
 end
 
 # clean users seeking clean users
-clean_users.pop(20).each do |user|
+clean_users.pop(25).each do |user|
   user.desired_cleanliness.kitchen = [4,4,5].sample
   user.desired_cleanliness.kitchen_importance = importances.sample
   user.desired_cleanliness.bathroom = [4,4,5].sample
