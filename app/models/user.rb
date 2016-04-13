@@ -99,33 +99,29 @@ class User < ActiveRecord::Base
     (points_earned / total_possible_points.to_f * 100).round(2)
   end
 
-  def mutual_compabilty_percentage(match)
+  def mutual_compatabilty_percentage(match)
     user_to_match_percentage = self.cleanliness_percentage_for(match)
     match_to_user_percentage = match.cleanliness_percentage_for(self)
 
-    Math.sqrt(user_to_match_percentage * match_to_user_percentage).to_i
+    compatibility = Math.sqrt(user_to_match_percentage * match_to_user_percentage).to_i
   end
 
-  def match_with_percentage(set)
-    set.each_with_object({}) do |match, compatibility_hash|
-      compatibility_hash[match] = mutual_compatabilty_percentage(match)
+  def find_matches
+    set = User.all.where.not(id: self.id)
+    set = self.reject_wrong_gender(set) if self.desired_match_trait.gender
+    set = self.reject_wrong_rent(set) if self.max_rent
+    set = self.reject_wrong_age(set) if self.desired_match_trait.min_age && self.desired_match_trait.max_age
+    set = self.reject_wrong_city(set) if self.desired_match_trait.city
+    set = self.reject_wrong_move_in_date(set) if self.desired_match_trait.move_in_date
+
+    set.each do |match|
+      connection = self.match_connections.create(match: match)
+      compatibility_score = self.mutual_compatabilty_percentage(match)
+      connection.compatibility = compatibility_score
     end
+
+    self.matches
   end
-
- def find_matches
-  set = User.all.where.not(id: self.id)
-  set = self.reject_wrong_gender(set) if self.desired_match_trait.gender
-  set = self.reject_wrong_rent(set) if self.max_rent
-  set = self.reject_wrong_age(set) if self.desired_match_trait.min_age && self.desired_match_trait.max_age
-  set = self.reject_wrong_city(set) if self.desired_match_trait.city
-  set = self.reject_wrong_move_in_date(set) if self.desired_match_trait.move_in_date
-
-  set.each do |match|
-    self.match_connections.create(match: match)
-  end
-
-  self.matches
- end
 
  def reject_wrong_rent(set)
   set.reject do |match|
@@ -137,45 +133,46 @@ class User < ActiveRecord::Base
 
  
  ## reject users who aren't the right gender ##
-def reject_wrong_gender(set)
-  set.select do |user|
-    case desired_match_trait.gender
-    when "M"
-      user.gender == "M"
-    when "F"
-      user.gender == "F"
-    when "Other"
-      user.gender == "Other"
-    else
-      user
+  def reject_wrong_gender(set)
+    set.select do |user|
+      case desired_match_trait.gender
+      when "M"
+        user.gender == "M"
+      when "F"
+        user.gender == "F"
+      when "Other"
+        user.gender == "Other"
+      else
+        user
+      end
     end
   end
-end
 
-## reject users who aren't the right age ##
-def reject_wrong_age(set)
-  age_range = (self.desired_match_trait.min_age..self.desired_match_trait.max_age)
-  set.select do |user|
-    age_range.include?(user.convert_age)
+  ## reject users who aren't the right age ##
+  def reject_wrong_age(set)
+    age_range = (self.desired_match_trait.min_age..self.desired_match_trait.max_age)
+    set.select do |user|
+      age_range.include?(user.convert_age)
+    end
   end
-end
-
-def reject_wrong_city(set)
-  set.select do |user|
-    user.desired_match_trait.city == self.desired_match_trait.city
-  end
-end
-
-def reject_wrong_move_in_date(set)
-  min_date = desired_match_trait.move_in_date - 60.days
-  max_date = desired_match_trait.move_in_date + 60.days
   
-  set.select do |user|
-    #binding.pry
-    user.desired_match_trait.move_in_date.between?(min_date, max_date)
+  ## reject users who aren't from the same city ##
+  def reject_wrong_city(set)
+    set.select do |user|
+      user.desired_match_trait.city == self.desired_match_trait.city
+    end
   end
-end
-
+  
+  ## reject users who aren't able to move at the same time ##
+  def reject_wrong_move_in_date(set)
+    min_date = desired_match_trait.move_in_date - 60.days
+    max_date = desired_match_trait.move_in_date + 60.days
+    
+    set.select do |user|
+      user.desired_match_trait.move_in_date.between?(min_date, max_date)
+    end
+  end
+  
 
 
 
