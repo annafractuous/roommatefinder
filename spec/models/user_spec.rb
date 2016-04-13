@@ -82,26 +82,26 @@ describe "User" do
     expect(t.macro).to equal(:has_one)
   end
 
-  it "matches clean users with other users who want cleanliness" do
-    user1 = FactoryGirl.create(:user, :with_cleanliness, :is_clean_and_wants_clean)
-    user2 = FactoryGirl.create(:user, :with_cleanliness, :is_clean_and_wants_clean)
-    result = user1.match_by_has_and_wants_attribute("cleanliness",user2)
-    expect(result).to be true
-  end
+  # it "matches clean users with other users who want cleanliness" do
+  #   user1 = FactoryGirl.create(:complete_user, :is_clean_and_wants_clean)
+  #   user2 = FactoryGirl.create(:conplete_user, :is_clean_and_wants_clean)
+  #   result = user1.match_by_has_and_wants_attribute("cleanliness",user2)
+  #   expect(result).to be true
+  # end
 
-  it "does not match users who want cleanliness with dirty users" do
-    user1 = FactoryGirl.create(:user, :with_cleanliness, :is_clean_and_wants_clean)
-    user2 = FactoryGirl.create(:user, :with_cleanliness, :is_dirty_and_doesnt_care)
-    result = user1.match_by_has_and_wants_attribute("cleanliness",user2)
-    expect(result).to be false
-  end
+  # it "does not match users who want cleanliness with dirty users" do
+  #   user1 = FactoryGirl.create(:user, :with_cleanliness, :is_clean_and_wants_clean)
+  #   user2 = FactoryGirl.create(:user, :with_cleanliness, :is_dirty_and_doesnt_care)
+  #   result = user1.match_by_has_and_wants_attribute("cleanliness",user2)
+  #   expect(result).to be false
+  # end
 
 
   describe '#find_matches' do
+    
     describe 'it builds the basic associations' do
-
-      let (:user) { FactoryGirl.build :user }
-      let (:match_for_user) { FactoryGirl.build :user }
+      let!(:user) { create :user }
+      let!(:match_for_user) { create :user }
 
       it 'returns an AR associations collection proxy of users' do
         expect(user.find_matches.first).to be_a(User)
@@ -114,6 +114,7 @@ describe "User" do
       end
 
       it 'adds the match to the user\'s matches' do
+        user.find_matches
         expect(user.matches).to include(match_for_user)
       end
 
@@ -122,90 +123,206 @@ describe "User" do
   describe 'matches basic compatibilty on user attributes' do
 
     describe '#max_rent' do
-      let (:user) {FactoryGirl.create(:user, max_rent: 850 }
-      let (:seeking_too_high_rent) {FactoryGirl.create(:user, max_rent: 1100)}
-      let (:seeking_acceptable_rent) {FactoryGirl.create(:user, max_rent: 800)}
-      let (:slightly_over_limit) {FactoryGirl.create(:user, max_rent: 900)}
-
+      let!(:user) { create :user, max_rent: 850 }
+      let!(:seeking_too_high_rent) { create :user, max_rent: 1300 }
+      let!(:seeking_acceptable_rent) { create :user, max_rent: 750 }
+      let!(:slightly_over_limit) { create :user, max_rent: 900 }
+      
       it 'doesnt match to users who are seeking a higher rent' do
         user.find_matches
-        expect(user.matches).not_to include(:seeking_too_high_rent)
+        
+        expect(user.matches).not_to include(seeking_too_high_rent)
       end
 
       it 'does match to users who are seeking a rent below the limit' do
         user.find_matches
-        expect(user.matches).to include(:seeking_acceptable_rent)
+        
+        expect(user.matches).to include(seeking_acceptable_rent)
       end
 
       it 'allows a rent over the limit but within reasonable limit' do
         user.find_matches
-        expect(user.matches).to include(:slightly_over_limit)
+        
+        expect(user.matches).to include(slightly_over_limit)
       end
     end
 
     describe '#gender' do
-      let (:female_user) {FactoryGirl.create(:user, gender: "F")}
-      let (:male_user)  {FactoryGirl.create(:user, gender: "M")}
-      let (:female_match) {FactoryGirl.create(:user, gender: "F")}
-      let (:male_match)  {FactoryGirl.create(:user, gender: "M")}
+      let!(:female_user) { create :user, gender: "F" }
+      let!(:female_match) { create :user, gender: "F" }
+      let!(:male_user) { create :user, gender: "M" }
+      let!(:male_match) { create :user, gender: "M" }
+      let!(:other_user) { create :user, gender: "Other" }
+      let!(:other_match) { create :user, gender: "Other" }
 
       it 'matches a female seeking female to females' do
         female_user.desired_match_trait.gender = "F"
+        
         female_user.find_matches
+        
         expect(female_user.matches).to include(female_match)
         expect(female_user.matches).to_not include(male_match)
       end
 
       it 'matches a female seeking a male to males' do
         female_user.desired_match_trait.gender = "M"
+        
         female_user.find_matches
+        
         expect(female_user.matches).to include(male_match)
         expect(female_user.matches).to_not include(female_match)
       end
 
       it 'matches a male seeking a female to females' do
         male_user.desired_match_trait.gender = "F"
+        
         male_user.find_matches
+        
         expect(male_user.matches).to include(female_match)
         expect(male_user.matches).to_not include(male_match)
       end
 
       it 'matches a male seeking a male to males' do
+        female_match = create :user, gender: "F"
         male_user.desired_match_trait.gender = "M"
+        
         male_user.find_matches
+        
         expect(male_user.matches).to include(male_match)
         expect(male_user.matches).to_not include(female_match)
       end
 
       it 'matches a user of either gender seeking either gender to all appropriate matches' do
         male_user.desired_match_trait.gender = "Any"
-        male_user.find_matches
-        expect(male_user.matches).to include(female_match)
-        expect(male_user.matches).to include(male_match)
-
         female_user.desired_match_trait.gender = "Any"
+        
+        male_user.find_matches
         female_user.find_matches
-        expect(female_user.matches).to include(female_match)
-        expect(female_user.matches).to include(male_match)
+
+        expect(male_user.matches).to include(female_match, male_match)
+        expect(female_user.matches).to include(female_match, male_match)
+      end
+
+      it 'matches an "other" gender user seeking "other" gender to "other" gender matches' do
+        other_user.desired_match_trait.gender = "Other"
+        other_user.find_matches
+
+        expect(other_user.matches).to include(other_match)
+        expect(other_user.matches).to_not include(male_match)
       end
     end
 
     describe '#age' do
-      let (:younger_user) {FactoryGirl.create :user, birthdate: (Time.now - 22.years)}
-      let (:older_user) {FactoryGirl.create :user, birthdate: (Time.now - 38.years)}
-      let (:younger_match) {FactoryGirl.create :user, birthdate: (Time.now - 25.years)}
-      let (:older_match) {FactoryGirl.create :user, birthdate: (Time.now - 41.years)}
+
+      let!(:younger_user) {FactoryGirl.create :user, birthdate: (Time.now - 22.years)}
+      let!(:older_user) {FactoryGirl.create :user, birthdate: (Time.now - 38.years)}
+      let!(:younger_match) {FactoryGirl.create :user, birthdate: (Time.now - 25.years)}
+      let!(:older_match) {FactoryGirl.create :user, birthdate: (Time.now - 41.years)}
 
       it 'matches a user to someone in their desired age range' do
+        younger_user.desired_match_trait.min_age = 18
+        younger_user.desired_match_trait.max_age = 26
+        younger_user.save
+        younger_user.find_matches
 
+        older_user.desired_match_trait.min_age = 35
+        older_user.desired_match_trait.max_age = 45
+        older_user.save
+        older_user.find_matches
+
+        expect(younger_user.matches).to include(younger_match)
+        expect(older_user.matches).to include(older_match)
       end
 
       it 'doesnt match a user to someone outside of their desired age_range' do
+        younger_user.desired_match_trait.min_age = 18
+        younger_user.desired_match_trait.max_age = 26
+        younger_user.save
+        younger_user.find_matches
 
+        older_user.desired_match_trait.min_age = 35
+        older_user.desired_match_trait.max_age = 45
+        older_user.save
+        older_user.find_matches
+        
+        expect(younger_user.matches).to_not include(older_match)
+        expect(older_user.matches).to_not include(younger_match)
       end
+
     end
 
     describe '#city' do
+      let!(:new_york_user) {FactoryGirl.create :user}
+      let!(:rancho_cucamonga_user) {FactoryGirl.create :user}
+
+      let!(:new_york_match) {FactoryGirl.create :user}
+      let!(:rancho_cucamonga_match) {FactoryGirl.create :user}
+
+      let!(:nebraska_match) {FactoryGirl.create :user}
+
+
+      it 'only matches users and matches seeking apt in same city' do
+        new_york_user.desired_match_trait.city = "New York"
+        rancho_cucamonga_user.desired_match_trait.city = "Rancho Cucamonga"
+
+        new_york_match.desired_match_trait.city = "New York"
+        rancho_cucamonga_match.desired_match_trait.city = "Rancho Cucamonga"
+
+        nebraska_match.desired_match_trait.city = "Nebraska"
+
+        new_york_user.save
+        new_york_match.save
+        rancho_cucamonga_user.save
+        rancho_cucamonga_match.save
+        nebraska_match.save
+
+        new_york_user.find_matches
+        rancho_cucamonga_user.find_matches
+        nebraska_match.find_matches
+
+        expect(new_york_user.matches).to include(new_york_match)
+        expect(rancho_cucamonga_user.matches).to include(rancho_cucamonga_match)
+        expect(new_york_user.matches).to_not include(nebraska_match, rancho_cucamonga_match)
+        expect(rancho_cucamonga_user.matches).to_not include(nebraska_match, new_york_match)
+      end
+
+    end
+
+    describe '#move_in_date' do
+      let!(:in_a_hurry_user) {FactoryGirl.create :user}
+      let!(:taking_my_time_user) {FactoryGirl.create :user}
+
+      let!(:in_a_hurry_match) {FactoryGirl.create :user}
+      let!(:taking_my_time_match) {FactoryGirl.create :user}
+
+      it 'only matches users moving within two months of one another' do
+
+        in_a_hurry_match.desired_match_trait.move_in_date = DateTime.now + 30.days
+        in_a_hurry_user.desired_match_trait.move_in_date = DateTime.now + 54.days
+
+        taking_my_time_match.desired_match_trait.move_in_date = DateTime.now + 6.months
+        taking_my_time_user.desired_match_trait.move_in_date = DateTime.now + 7.months
+
+        in_a_hurry_match.save
+        in_a_hurry_user.save
+
+        taking_my_time_user.save
+        taking_my_time_match.save
+        
+        in_a_hurry_match.find_matches
+        in_a_hurry_user.find_matches
+
+        taking_my_time_user.find_matches
+        taking_my_time_match.find_matches
+
+        expect(in_a_hurry_user.matches).to include(in_a_hurry_match)
+        expect(taking_my_time_user.matches).to include(taking_my_time_match)
+        expect(in_a_hurry_user.matches).to_not include(taking_my_time_match)
+        expect(taking_my_time_user.matches).to_not include(in_a_hurry_match)
+
+      end
+
+
 
     end
   end
