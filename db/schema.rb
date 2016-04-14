@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160413131734) do
+ActiveRecord::Schema.define(version: 20160414134748) do
 
   create_table "cleanlinesses", force: :cascade do |t|
     t.datetime "created_at",   null: false
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20160413131734) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "compatibility"
+    t.boolean  "interested"
   end
 
   create_table "schedules", force: :cascade do |t|
