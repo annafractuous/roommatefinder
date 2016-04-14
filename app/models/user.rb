@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
 
   ## display name as first name and 1st initial of last name ##
   def display_name
-    name = name.split
+    name = self.name.split
     last_initial = name.last[0] + "."
     "#{name.first} #{last_initial}"
   end
@@ -164,7 +164,7 @@ class User < ActiveRecord::Base
   ## check one-way compatibility for a single category ##
   def compatibility_percentage_per_category(category, match)
     ## weighted responses to 'how important is this to you' ##
-    conversion_hash = { 1 => 0, 2 => 1, 3 => 10, 4 => 50 }
+    conversion_hash = { 1 => 0, 2 => 1, 3 => 10, 4 => 250 }
 
     total_possible_points = 0
     points_earned = 0
@@ -177,7 +177,7 @@ class User < ActiveRecord::Base
       desired_cat = "desired_#{category}".singularize
       desired_answers = self.send(desired_cat).send(attrb).split('') # "45" => ["4", "5"]
       importance = self.send(desired_cat).send("#{attrb}_importance")
-
+      binding.pry
       points = conversion_hash[importance]
       total_possible_points += points
 

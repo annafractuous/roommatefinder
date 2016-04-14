@@ -329,7 +329,7 @@ end
 subset = all_users.pop(55).each do |user|
   user.schedule.bathroom = 1
   user.desired_schedule.bathroom = ["1","2","3","4","5"].sample(rand(1..3)).join
-  user.desired_schedule.bathroom_importance = "12"
+  user.desired_schedule.bathroom_importance = 1
   user.save
 end
 

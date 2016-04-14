@@ -21,30 +21,30 @@
     <%= render "dropdown", method: :kitchen, object: user.schedule, quantified_method: :kitchen_schedule_quantified, f: schedule_form %>
   <% end %><br>
   
-  <h3>How do you want someone else to answer</h3>
+  <h3>What answers are acceptable for someone else to respond with</h3>
   <h4>and how important is their response to you</h4>
   <%= f.fields_for :desired_schedule do |desired_schedule_form| %>
     
-    <!-- dropdown -->
+    <!-- checkbox -->
     <%= desired_schedule_form.label :work %>
-    <%= render "dropdown", method: :work, object: user.desired_schedule, quantified_method: :work_schedule_quantified, f: desired_schedule_form %>
+    <%= render "checkbox", method: :work, object: user.desired_schedule, quantified_method: :work_schedule_quantified, f: desired_schedule_form %>
     <!-- radio buttons -->
     <%= render "importance", user: user, method: :work_importance, f: desired_schedule_form %>
     
-    <!-- dropdown -->
+    <!-- checkbox -->
     <%= desired_schedule_form.label :sleep %>
-    <%= render "dropdown", method: :sleep, object: user.desired_schedule, quantified_method: :sleep_schedule_quantified, f: desired_schedule_form %>
+    <%= render "checkbox", method: :sleep, object: user.desired_schedule, quantified_method: :sleep_schedule_quantified, f: desired_schedule_form %>
     <!-- radio buttons -->
     <%= render "importance", user: user, method: :sleep_importance, f: desired_schedule_form %>
     
-    <!-- dropdown -->
+    <!-- checkbox -->
     <%= desired_schedule_form.label :bathroom %>
-    <%= render "dropdown", method: :bathroom, object: user.desired_schedule, quantified_method: :bathroom_schedule_quantified, f: desired_schedule_form %>
+    <%= render "checkbox", method: :bathroom, object: user.desired_schedule, quantified_method: :bathroom_schedule_quantified, f: desired_schedule_form %>
     <%= render "importance", user: user, method: :bathroom_importance, f: desired_schedule_form %>
     
-    <!-- dropdown -->
+    <!-- checkbox -->
     <%= desired_schedule_form.label :kitchen %>
-    <%= render "dropdown", method: :kitchen, object: user.desired_schedule, quantified_method: :kitchen_schedule_quantified, f: desired_schedule_form %>
+    <%= render "checkbox", method: :kitchen, object: user.desired_schedule, quantified_method: :kitchen_schedule_quantified, f: desired_schedule_form %>
     <!-- radio buttons -->
     <%= render "importance", user: user, method: :kitchen_importance, f: desired_schedule_form %>
   <% end %><br>

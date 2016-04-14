@@ -26,6 +26,7 @@ class SchedulesController < ApplicationController
     schedule = @user.schedule
     desired_schedule = @user.desired_schedule
 
+    self.desired_answer_params_to_string
     if schedule.update(schedule_params) && desired_schedule.update(desired_schedule_params)
       redirect_to @user
     else
@@ -44,6 +45,11 @@ class SchedulesController < ApplicationController
 
     def desired_schedule_params
       params.require(:user).permit(:desired_schedule_attributes =>[:work, :work_importance, :sleep, :sleep_importance, :bathroom, :bathroom_importance, :kitchen, :kitchen_importance])[:desired_schedule_attributes]
+    end
+
+    def desired_answer_params_to_string
+      question_columns = Schedule.user_input_columns
+      question_columns.each { |question| desired_schedule_params[question].join }
     end
 
 end

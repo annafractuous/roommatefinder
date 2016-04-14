@@ -54,7 +54,10 @@ class UsersController < ApplicationController
         "a person of nontraditional gender"
       when "Any"
         "any gender"
+      else
+        "You haven't entered a preferred gender"
       end
+      
 
   end
 

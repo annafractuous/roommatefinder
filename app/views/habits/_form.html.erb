@@ -24,37 +24,37 @@
     <%= render "dropdown", method: :music, object: user.habit, quantified_method: :music_quantified, f: habit_form %>
   <% end %><br>
 
-  <h3>How do you want someone else to answer</h3>
+  <h3>What answers are acceptable for someone else to respond with</h3>
   <h4>and how important is their response to you</h4>
   <%= f.fields_for :desired_habit do |desired_habit_form| %>
 
-    <!-- dropdown -->
+    <!-- checkbox -->
     <%= desired_habit_form.label :drinking %>
-    <%= render "dropdown", method: :drinking, object: user.desired_habit, quantified_method: :wildness_quantified, f: desired_habit_form %>
+    <%= render "checkbox", method: :drinking, object: user.desired_habit, quantified_method: :wildness_quantified, f: desired_habit_form %>
     <!-- radio buttons -->
     <%= render "importance", user: user, method: :drinking_importance, f: desired_habit_form %>
 
-    <!-- dropdown -->
+    <!-- checkbox -->
     <%= desired_habit_form.label :four_twenty %>
-    <%= render "dropdown", method: :four_twenty, object: user.desired_habit, quantified_method: :wildness_quantified, f: desired_habit_form %>
+    <%= render "checkbox", method: :four_twenty, object: user.desired_habit, quantified_method: :wildness_quantified, f: desired_habit_form %>
     <!-- radio buttons -->
     <%= render "importance", user: user, method: :four_twenty_importance, f: desired_habit_form %>
 
-    <!-- dropdown -->
+    <!-- checkbox -->
     <%= desired_habit_form.label :overnight_visitors %>
-    <%= render "dropdown", method: :overnight_visitors, object: user.desired_habit, quantified_method: :visitors_quantified, f: desired_habit_form %>
+    <%= render "checkbox", method: :overnight_visitors, object: user.desired_habit, quantified_method: :visitors_quantified, f: desired_habit_form %>
     <!-- radio buttons -->
     <%= render "importance", user: user, method: :overnight_visitors_importance, f: desired_habit_form %>
 
-    <!-- dropdown -->
+    <!-- checkbox -->
     <%= desired_habit_form.label :partying %>
-    <%= render "dropdown", method: :partying, object: user.desired_habit, quantified_method: :wildness_quantified, f: desired_habit_form %>
+    <%= render "checkbox", method: :partying, object: user.desired_habit, quantified_method: :wildness_quantified, f: desired_habit_form %>
     <!-- radio buttons -->
     <%= render "importance", user: user, method: :partying_importance, f: desired_habit_form %>
 
-    <!-- dropdown -->
+    <!-- checkbox -->
     <%= desired_habit_form.label :music %>
-    <%= render "dropdown", method: :music, object: user.desired_habit, quantified_method: :music_quantified, f: desired_habit_form %>
+    <%= render "checkbox", method: :music, object: user.desired_habit, quantified_method: :music_quantified, f: desired_habit_form %>
     <!-- radio buttons -->
     <%= render "importance", user: user, method: :music_importance, f: desired_habit_form %>
   <% end %><br>
