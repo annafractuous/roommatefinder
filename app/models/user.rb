@@ -99,6 +99,7 @@ class User < ActiveRecord::Base
     points_earned = 0
 
     table = Object.const_get(category.classify) # e.g. Cleanliness table
+      
     question_columns = table.user_input_columns
     # => ["kitchen", "bathroom", "common_space"]
 
@@ -113,8 +114,7 @@ class User < ActiveRecord::Base
       answer = match.send(category.singularize).send(attrb)
       points_earned += points if answer == desired_answer
     end
-
-    total_possible_points != 0 ? (points_earned / total_possible_points.to_f * 100).to_i : 1
+    total_possible_points != 0 ? (points_earned / total_possible_points.to_f * 100).to_i : 0
   end
 
   ## calculate mutual compatibility for category ##
@@ -139,11 +139,16 @@ class User < ActiveRecord::Base
   ## calculate total mutual compatibility ##
   def calculate_compatibility_score(category_scores)
     if category_scores.size == 2
-      return Math.sqrt(category_scores.first * category_scores.last.to_f).to_i
+      score = Math.sqrt(category_scores.first * category_scores.last.to_f).to_i
+      score == 0 ? 1 : score
     else
       first = category_scores.shift.to_f
       second = category_scores.shift.to_f
-      category_scores.unshift(Math.sqrt(first * second))
+      score_so_far = Math.sqrt(first * second)
+      if score_so_far == 0
+        score_so_far = 1
+      end
+      category_scores.unshift(score_so_far)
       calculate_compatibility_score(category_scores)
     end
   end

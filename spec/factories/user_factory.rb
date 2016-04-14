@@ -18,8 +18,6 @@ FactoryGirl.define do
     after(:create) do |user|
       user.email = "user#{user.id}@example.com"
       user.username = "user#{user.id}"
-      user.cleanliness = FactoryGirl.create :cleanliness
-      user.desired_cleanliness = FactoryGirl.create :desired_cleanliness
       user.schedule = FactoryGirl.create :schedule
       user.desired_schedule = FactoryGirl.create :desired_schedule
       user.habit = FactoryGirl.create :habit
