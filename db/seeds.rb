@@ -311,7 +311,107 @@ subset = all_users.pop(25)
       user.save  
     end
 
-#
+# bathroom schedule
+# -----------------
+all_users = User.all.shuffle
+# 2-i dont cares; 5-a little important; 10-somewhat important; 5-very important
+# importances = [1,1,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4]
+
+
+# before 6 seeking anything else
+subset = all_users.pop(25).each do |user|
+  user.schedule.bathroom = 1
+  user.desired_schedule.bathroom = [2,3,4,5].sample
+  user.desired_schedule.bathroom_importance = importances.sample
+  user.save
+end
+# before 6 doesnt care
+subset = all_users.pop(55).each do |user|
+  user.schedule.bathroom = 1
+  user.desired_schedule.bathroom = [1,2,3,4,5].sample
+  user.desired_schedule.bathroom_importance = [1,1,2].sample
+  user.save
+end
+
+# 6-7 seeking anything else
+subset = all_users.pop(25).each do |user|
+  user.schedule.bathroom = 2
+  user.desired_schedule.bathroom = [1,3,4,5].sample
+  user.desired_schedule.bathroom_importance = importances.sample
+  user.save
+end
+
+# 6-7 doesnt care
+subset = all_users.pop(55).each do |user|
+  user.schedule.bathroom = 2
+  user.desired_schedule.bathroom = [1,2,3,4,5].sample
+  user.desired_schedule.bathroom_importance = [1,1,2].sample
+  user.save
+end
+
+# 7-8 seeking anything else
+subset = all_users.pop(25).each do |user|
+  user.schedule.bathroom = 3
+  user.desired_schedule.bathroom = [1,2,4,5].sample
+  user.desired_schedule.bathroom_importance = importances.sample
+  user.save
+end
+
+# 7-8 doesnt care
+subset = all_users.pop(55).each do |user|
+  user.schedule.bathroom = 3
+  user.desired_schedule.bathroom = [1,2,3,4,5].sample
+  user.desired_schedule.bathroom_importance = [1,1,2].sample
+  user.save
+end
+
+# 8-10 seeking anything else
+subset = all_users.pop(25).each do |user|
+  user.schedule.bathroom = 4
+  user.desired_schedule.bathroom = [1,2,3,5].sample
+  user.desired_schedule.bathroom_importance = importances.sample
+  user.save
+end
+
+# 8-10 doesnt care
+subset = all_users.pop(55).each do |user|
+  user.schedule.bathroom = 4
+  user.desired_schedule.bathroom = [1,2,3,4,5].sample
+  user.desired_schedule.bathroom_importance = [1,1,2].sample
+  user.save
+end
+
+# later seeking anything else
+subset = all_users.pop(25).each do |user|
+  user.schedule.bathroom = 5
+  user.desired_schedule.bathroom = [1,2,3,4].sample
+  user.desired_schedule.bathroom_importance = [1,1,2].sample
+  user.save
+end
+
+# later doesnt care
+subset = all_users.pop(55).each do |user|
+  user.schedule.bathroom = 5
+  user.desired_schedule.bathroom = [1,2,3,4,5].sample
+  user.desired_schedule.bathroom_importance = [1,1,2].sample
+  user.save
+end
+
+# kitchen
+# -------
+# still random
+all_users = User.all.shuffle
+all_users.each do |user|
+  user.schedule.kitchen = [1,2,3,4,5].sample
+  user.desired_schedule.kitchen = [1,2,3,4,5].sample
+  user.desired_schedule.kitchen_importance = [1,2,3,4].sample
+  user.save
+end
+
+
+
+
+
 
 
 
