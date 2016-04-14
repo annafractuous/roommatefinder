@@ -50,7 +50,11 @@ class SchedulesController < ApplicationController
 
     def desired_answer_params_to_string
       question_columns = Schedule.user_input_columns
-      question_columns.each { |question| desired_schedule_params[question].join }
+      question_columns.each do |question| 
+        if desired_schedule_params[question]
+          desired_schedule_params[question].join
+        end
+      end
     end
 
 end

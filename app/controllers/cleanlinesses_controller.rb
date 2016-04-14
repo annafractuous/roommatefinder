@@ -53,7 +53,11 @@ class CleanlinessesController < ApplicationController
 
     def desired_answer_params_to_string
       question_columns = Cleanliness.user_input_columns
-      question_columns.each { |question| desired_cleanliness_params[question].join }
+      question_columns.each do |question| 
+        if desired_cleanliness_params[question]
+          desired_cleanliness_params[question].join
+        end
+      end
     end
 
 end

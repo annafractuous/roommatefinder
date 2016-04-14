@@ -51,7 +51,11 @@ class HabitsController < ApplicationController
 
     def desired_answer_params_to_string
       question_columns = Habit.user_input_columns
-      question_columns.each { |question| desired_habit_params[question].join }
+      question_columns.each do |question| 
+        if desired_habit_params[question]
+          desired_habit_params[question].join
+        end
+      end
     end
 
 end
