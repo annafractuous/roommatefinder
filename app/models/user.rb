@@ -119,11 +119,16 @@ class User < ActiveRecord::Base
   ## calculate total mutual compatibility ##
   def calculate_compatibility_score(category_scores)
     if category_scores.size == 2
-      return Math.sqrt(category_scores.first * category_scores.last.to_f).to_i
+      score = Math.sqrt(category_scores.first * category_scores.last.to_f).to_i
+      score == 0 ? 1 : score
     else
       first = category_scores.shift.to_f
       second = category_scores.shift.to_f
-      category_scores.unshift(Math.sqrt(first * second))
+      score_so_far = Math.sqrt(first * second)
+      if score_so_far == 0
+        score_so_far = 1
+      end
+      category_scores.unshift(score_so_far)
       calculate_compatibility_score(category_scores)
     end
   end
