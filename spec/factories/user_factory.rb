@@ -1,11 +1,10 @@
-
 FactoryGirl.define do
 
 
  factory :user do
     name { Faker::Name.name }
     birthdate { Faker::Date.between(60.years.ago, 18.years.ago) }
-    gender { ["M", "F"].sample }
+    gender { ["Male", "Female"].sample }
     email "temp@temp.com"
     username "temp"
     password { "123" }
@@ -124,7 +123,7 @@ FactoryGirl.define do
 
 
   factory :desired_match_trait do
-    gender { ["F", "M", "Any"].sample }
+    gender { ["Female", "Male", "Any"].sample }
     move_in_date { Date.today + 6.months }
     min_age { rand(18..26) }
     max_age { rand(27..49) }

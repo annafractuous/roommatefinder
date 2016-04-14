@@ -16,7 +16,7 @@
     <%= trait.date_select :move_in_date, {order: [:month, :day, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: Date.today.year, end_year: Date.today.year + 1} %><br>
 
     <%= trait.label :gender, "Preferred gender" %>
-    <%= trait.select :gender, ['M', 'F', "Other", "Any"]%><br>
+    <%= trait.select :gender, ['Male', 'Female', "Other", "Any"]%><br>
 
     <!-- dropdown -->
     <%= trait.label :min_age %>

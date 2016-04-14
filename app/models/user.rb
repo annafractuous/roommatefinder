@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   validates_presence_of :password, on: :create
   validates_confirmation_of :password
   validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/
-  validates_inclusion_of :gender, :in => %w( M F Other)
+  validates_inclusion_of :gender, :in => %w( Male Female Other)
   validates :max_rent, {:numericality => { :greater_than_or_equal_to => 0 }, :on => :update, :if => Proc.new {|c| not c.max_rent.blank?}}
 
   after_create :create_category_objects
@@ -190,10 +190,10 @@ class User < ActiveRecord::Base
   def reject_wrong_gender(set)
     set.select do |user|
       case desired_match_trait.gender
-      when "M"
-        user.gender == "M"
-      when "F"
-        user.gender == "F"
+      when "Male"
+        user.gender == "Male"
+      when "Female"
+        user.gender == "Female"
       when "Other"
         user.gender == "Other"
       else

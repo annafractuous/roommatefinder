@@ -98,7 +98,7 @@ describe "User" do
 
 
   describe '#find_matches' do
-    
+
     describe 'it builds the basic associations' do
       let!(:user) { create :user }
       let!(:match_for_user) { create :user }
@@ -127,67 +127,67 @@ describe "User" do
       let!(:seeking_too_high_rent) { create :user, max_rent: 1300 }
       let!(:seeking_acceptable_rent) { create :user, max_rent: 750 }
       let!(:slightly_over_limit) { create :user, max_rent: 900 }
-      
+
       it 'doesnt match to users who are seeking a higher rent' do
         user.find_matches
-        
+
         expect(user.matches).not_to include(seeking_too_high_rent)
       end
 
       it 'does match to users who are seeking a rent below the limit' do
         user.find_matches
-        
+
         expect(user.matches).to include(seeking_acceptable_rent)
       end
 
       it 'allows a rent over the limit but within reasonable limit' do
         user.find_matches
-        
+
         expect(user.matches).to include(slightly_over_limit)
       end
     end
 
     describe '#gender' do
-      let!(:female_user) { create :user, gender: "F" }
-      let!(:female_match) { create :user, gender: "F" }
-      let!(:male_user) { create :user, gender: "M" }
-      let!(:male_match) { create :user, gender: "M" }
+      let!(:female_user) { create :user, gender: "Female" }
+      let!(:female_match) { create :user, gender: "Female" }
+      let!(:male_user) { create :user, gender: "Male" }
+      let!(:male_match) { create :user, gender: "Male" }
       let!(:other_user) { create :user, gender: "Other" }
       let!(:other_match) { create :user, gender: "Other" }
 
       it 'matches a female seeking female to females' do
-        female_user.desired_match_trait.gender = "F"
-        
+        female_user.desired_match_trait.gender = "Female"
+
         female_user.find_matches
-        
+
         expect(female_user.matches).to include(female_match)
         expect(female_user.matches).to_not include(male_match)
       end
 
       it 'matches a female seeking a male to males' do
-        female_user.desired_match_trait.gender = "M"
-        
+        female_user.desired_match_trait.gender = "Male"
+
         female_user.find_matches
-        
+
         expect(female_user.matches).to include(male_match)
         expect(female_user.matches).to_not include(female_match)
       end
 
       it 'matches a male seeking a female to females' do
-        male_user.desired_match_trait.gender = "F"
-        
+        male_user.desired_match_trait.gender = "Female"
+
         male_user.find_matches
-        
+
         expect(male_user.matches).to include(female_match)
         expect(male_user.matches).to_not include(male_match)
       end
 
       it 'matches a male seeking a male to males' do
-        female_match = create :user, gender: "F"
-        male_user.desired_match_trait.gender = "M"
-        
+        female_match = create :user, gender: "Female"
+        male_user.desired_match_trait.gender = "Male"
+
         male_user.find_matches
-        
+
         expect(male_user.matches).to include(male_match)
         expect(male_user.matches).to_not include(female_match)
       end
@@ -195,7 +195,7 @@ describe "User" do
       it 'matches a user of either gender seeking either gender to all appropriate matches' do
         male_user.desired_match_trait.gender = "Any"
         female_user.desired_match_trait.gender = "Any"
-        
+
         male_user.find_matches
         female_user.find_matches
 
@@ -244,7 +244,7 @@ describe "User" do
         older_user.desired_match_trait.max_age = 45
         older_user.save
         older_user.find_matches
-        
+
         expect(younger_user.matches).to_not include(older_match)
         expect(older_user.matches).to_not include(younger_match)
       end
@@ -308,7 +308,7 @@ describe "User" do
 
         taking_my_time_user.save
         taking_my_time_match.save
-        
+
         in_a_hurry_match.find_matches
         in_a_hurry_user.find_matches
 
