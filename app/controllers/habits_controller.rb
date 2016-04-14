@@ -27,6 +27,7 @@ class HabitsController < ApplicationController
     habit = @user.habit
     desired_habit = @user.desired_habit
 
+    self.desired_answer_params_to_string
     if habit.update(habit_params) && desired_habit.update(desired_habit_params)
       redirect_to @user
     else
@@ -45,6 +46,11 @@ class HabitsController < ApplicationController
 
     def desired_habit_params
       params.require(:user).permit(:desired_habit_attributes =>[:drinking, :drinking_importance, :four_twenty, :four_twenty_importance, :partying, :partying_importance, :overnight_visitors, :overnight_visitors_importance, :music, :music_importance])[:desired_habit_attributes]
+    end
+
+    def desired_answer_params_to_string
+      question_columns = Habit.user_input_columns
+      question_columns.each { |question| desired_habit_params[question].join }
     end
 
 end

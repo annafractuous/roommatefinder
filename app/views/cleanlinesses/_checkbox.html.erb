@@ -1,0 +1,8 @@
+<br>
+<% object.cleanliness_quantified.each do |number_value, text| %>
+  <% response = object.send(method) %>
+  <% checked_value = true if number_value == response.to_i %>
+  <text>&nbsp&nbsp&nbsp</text>  
+  <%= f.check_box method, {checked: checked_value}, number_value, "0" %>
+  <text><%=text%></text>
+<% end %>
