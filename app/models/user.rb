@@ -50,6 +50,13 @@ class User < ActiveRecord::Base
     "#{id}-#{username.downcase}"
   end
 
+  ## display name as first name and 1st initial of last name ##
+  def display_name
+    name = name.split
+    last_initial = name.last[0] + "."
+    "#{name.first} #{last_initial}"
+  end
+
   ## get age from birthdate ##
   def convert_age
     now = Time.now.utc.to_date

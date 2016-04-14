@@ -37,6 +37,25 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @profile_percent_complete = @user.profile_percent_complete
+    @name = @user.display_name
+    @age = @user.convert_age
+    @gender = @user.gender
+    @max_rent = @user.max_rent
+    @dealbreakers = @user.dealbreakers
+    @has_apartment = @user.has_apartment
+    @desired_gender =
+      case @user.desired_match_trait.gender
+      when "Male"
+        "a man"
+      when "Female"
+        "a woman"
+      when "Other"
+        "a person of nontraditional gender"
+      when "Any"
+        "any gender"
+      end
+
   end
 
   def edit

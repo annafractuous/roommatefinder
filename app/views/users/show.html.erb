@@ -2,17 +2,17 @@
   <div class="col-sm-8 col-sm-offset-1">
     <div class="row">
       <div class="col-sm-6">
-        <h1><%= @user.name %></h1>
-        <p><em><%= @user.has_apartment ? "Has an apartment" : "Looking for an apartment" %></em></p>
+        <h1><%= @name %></h1>
+        <p><em><%= @has_apartment ? "Has an apartment" : "Looking for an apartment" %></em></p>
       </div>
       <div class="col-sm-6">
-        <p><strong>Age:</strong> <%= @user.convert_age %></p>
-        <p><strong>Gender:</strong> <%= @user.gender %></p>
+        <p><strong>Age:</strong> <%= @age %></p>
+        <p><strong>Gender:</strong> <%= @gender %></p>
         <p><small><%= link_to "Edit Your User Info", edit_user_path(@user) %></small></p>
       </div>
     </div>
     <div class="row">
-      <h4>Your profile is <%= @user.profile_percent_complete %>% complete</h4>
+      <h4>Your profile is <%= @profile_percent_complete %>% complete</h4>
     </div>
     <div class="row">
       <div class="col-sm-12 ">
@@ -26,17 +26,19 @@
     </div>
     <div class="row">
       <p><strong>Max Rent: </strong>
-      <%=@user.max_rent%> </p>
+      <%=@max_rent%> </p>
 
       <p><strong>DealBreakers</strong></p>
-      <p><%= @user.dealbreakers %></p>
+      <p><%= @dealbreakers %></p>
 
       <br><br>
       <h4>If you are happy with the information you have provided, continue to see roommates we think could be a good match for you </h4>
       <%= link_to "Show me my matches", user_matches_path(@user), class: "btn btn-lg btn-success", role: "button" %>
     </div>
   </div>
-  <div class="col-sm-3">
-
+  <div class="col-sm-3 sidebar">
+    <h3>You're looking for:</h3>
+    <%= @desired_gender %> gender
+    Ages <%= @user.desired_match_trait.min_age %> to <%= @user.desired_match_trait.max _age %>
   </div>
 </div>
