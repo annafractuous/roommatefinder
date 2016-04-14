@@ -25,9 +25,9 @@ class CleanlinessesController < ApplicationController
     cleanliness = @user.cleanliness
     desired_cleanliness = @user.desired_cleanliness
 
-    binding.pry
+    # binding.pry
     
-    self.desired_answer_params_to_string
+    desired_answer_params_to_string
     if cleanliness.update(cleanliness_params) && desired_cleanliness.update(desired_cleanliness_params)
       redirect_to user_path(@user)
     else
@@ -48,7 +48,7 @@ class CleanlinessesController < ApplicationController
     end
 
     def desired_cleanliness_params
-      params.require(:user).permit(:desired_cleanliness_attributes =>[:kitchen, :kitchen_importance, :bathroom, :bathroom_importance, :common_space, :common_space_importance])[:desired_cleanliness_attributes]
+      params.require(:user).permit![:desired_cleanliness_attributes]
     end
 
     def desired_answer_params_to_string
