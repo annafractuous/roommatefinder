@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
 
   ## display name as first name and 1st initial of last name ##
   def display_name
-    name = name.split
+    name = self.name.split
     last_initial = name.last[0] + "."
     "#{name.first} #{last_initial}"
   end

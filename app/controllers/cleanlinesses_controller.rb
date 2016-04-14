@@ -24,6 +24,8 @@ class CleanlinessesController < ApplicationController
     @user = User.find(params[:user_id])
     cleanliness = @user.cleanliness
     desired_cleanliness = @user.desired_cleanliness
+
+    binding.pry
     
     self.desired_answer_params_to_string
     if cleanliness.update(cleanliness_params) && desired_cleanliness.update(desired_cleanliness_params)
