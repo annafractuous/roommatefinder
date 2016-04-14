@@ -4,9 +4,6 @@
 <P> <%= @match.dealbreakers %> </p>
 
 
-<%=form_for @user do |f| %>
-  <%= f.fields_for :match_connections do |match_connection| %>
-     <%= match_connection.check_box :interested %>
-     <% end %>
-  <%= f.submit %>
+<%=form_for @user, url: user_match_path(@user, @match), method: 'PATCH' do |f| %>
+  <%= f.submit "Notify User You Think They May Be a Good Match!" %>
 <% end %>

@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   ## slug URL ##
 
   def notify_me_whose_interested
-    connections = MatchConnection.where('match_id = ?', self.id)
+    connections = MatchConnection.where('match_id = ? AND interested = ?', self.id, true)
     connections.map{|connection|User.find(connection.user_id)}
   end
 
