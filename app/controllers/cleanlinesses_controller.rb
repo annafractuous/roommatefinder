@@ -25,7 +25,7 @@ class CleanlinessesController < ApplicationController
     cleanliness = @user.cleanliness
     desired_cleanliness = @user.desired_cleanliness
 
-    # binding.pry
+    binding.pry
     
     self.desired_answer_params_to_string
     if cleanliness.update(cleanliness_params) && desired_cleanliness.update(desired_cleanliness_params)
