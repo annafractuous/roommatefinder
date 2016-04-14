@@ -46,6 +46,12 @@ class User < ActiveRecord::Base
   after_create :create_category_objects
 
   ## slug URL ##
+
+  def notify_me_whose_interested
+    connections = MatchConnection.where('match_id = ?', self.id)
+    connections.map{|connection|User.find(connection.user_id)}
+  end
+
   def to_param
     "#{id}-#{username.downcase}"
   end
@@ -177,7 +183,7 @@ class User < ActiveRecord::Base
       desired_cat = "desired_#{category}".singularize
       desired_answers = self.send(desired_cat).send(attrb).split('') # "45" => ["4", "5"]
       importance = self.send(desired_cat).send("#{attrb}_importance")
-      binding.pry
+
       points = conversion_hash[importance]
       total_possible_points += points
 

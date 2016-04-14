@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :desired_match_traits, only: [:edit, :update]
     get 'matches' => 'match_connections#index', as: 'matches'
     get 'matches/:match_id' => 'match_connections#show', as: 'match'
+    
   end
 
   

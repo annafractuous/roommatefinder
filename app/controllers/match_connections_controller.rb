@@ -24,7 +24,23 @@ class MatchConnectionsController < ApplicationController
   end
 
   def show
-
+    #binding.pry
+    @match = User.find(params[:match_id])
+    @user = current_user
+    @match_connection = MatchConnection.where("user_id = ? AND match_id = ?", @user.id, @match.id)
+    #@action = user_match_path(@user, @user.cleanliness)
+    #@method = "PATCH"
   end
 
+
+  def update
+    @match = User.find(params[:match_id])
+    @user = current_user
+    @match_connection = MatchConnection.where("user_id = ? AND match_id = ?", @user.id, @match.id)
+    if @match_connection.update
+      redirect_to user_match_path(@user, @match)
+    else
+      render :show
+    end
+  end
 end
