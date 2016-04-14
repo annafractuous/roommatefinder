@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160413131734) do
+ActiveRecord::Schema.define(version: 20160414144655) do
 
   create_table "cleanlinesses", force: :cascade do |t|
     t.datetime "created_at",   null: false
@@ -25,9 +25,9 @@ ActiveRecord::Schema.define(version: 20160413131734) do
   create_table "desired_cleanlinesses", force: :cascade do |t|
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.integer  "kitchen"
-    t.integer  "bathroom"
-    t.integer  "common_space"
+    t.string   "kitchen"
+    t.string   "bathroom"
+    t.string   "common_space"
     t.integer  "user_id"
     t.integer  "kitchen_importance"
     t.integer  "bathroom_importance"
@@ -37,11 +37,11 @@ ActiveRecord::Schema.define(version: 20160413131734) do
   create_table "desired_habits", force: :cascade do |t|
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
-    t.integer  "drinking"
-    t.integer  "four_twenty"
-    t.integer  "partying"
-    t.integer  "overnight_visitors"
-    t.integer  "music"
+    t.string   "drinking"
+    t.string   "four_twenty"
+    t.string   "partying"
+    t.string   "overnight_visitors"
+    t.string   "music"
     t.integer  "user_id"
     t.integer  "drinking_importance"
     t.integer  "partying_importance"
@@ -64,10 +64,10 @@ ActiveRecord::Schema.define(version: 20160413131734) do
   create_table "desired_schedules", force: :cascade do |t|
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
-    t.integer  "work"
-    t.integer  "sleep"
-    t.integer  "bathroom"
-    t.integer  "kitchen"
+    t.string   "work"
+    t.string   "sleep"
+    t.string   "bathroom"
+    t.string   "kitchen"
     t.integer  "user_id"
     t.integer  "kitchen_importance"
     t.integer  "bathroom_importance"

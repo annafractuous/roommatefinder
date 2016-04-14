@@ -24,7 +24,8 @@ class CleanlinessesController < ApplicationController
     @user = User.find(params[:user_id])
     cleanliness = @user.cleanliness
     desired_cleanliness = @user.desired_cleanliness
-
+    
+    self.desired_answer_params_to_string
     if cleanliness.update(cleanliness_params) && desired_cleanliness.update(desired_cleanliness_params)
       redirect_to user_path(@user)
     else
@@ -46,6 +47,11 @@ class CleanlinessesController < ApplicationController
 
     def desired_cleanliness_params
       params.require(:user).permit(:desired_cleanliness_attributes =>[:kitchen, :kitchen_importance, :bathroom, :bathroom_importance, :common_space, :common_space_importance])[:desired_cleanliness_attributes]
+    end
+
+    def desired_answer_params_to_string
+      question_columns = Cleanliness.user_input_columns
+      question_columns.each { |question| desired_cleanliness_params[question].join }
     end
 
 end
