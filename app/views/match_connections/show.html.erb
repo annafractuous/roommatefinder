@@ -3,7 +3,39 @@
 <p> <%= @match.gender %> </p>
 <P> <%= @match.dealbreakers %> </p>
 
+<div>
+<h2>Cleanliness</h2>
+<p>Bathroom: <%= @bathroom %> </p>
+<p>Kitchen: <%= @kitchen %> </p>
+<p>Common Space: <%= @common_space %> </p>
+</div><br>
 
-<%=form_for @user, url: user_match_path(@user, @match), method: 'PATCH' do |f| %>
-  <%= f.submit "Notify User You Think They May Be a Good Match!" %>
+<div>
+<h2>Schedule</h2>
+<p>Work: <%= @work %> </p>
+<p>Sleep: <%= @sleep %> </p>
+<p>Bathroom: <%= @bathroom_sch %> </p>
+<p>Kitchen: <%= @kitchen %> </p>
+</div><br>
+
+<div>
+<h2>Habits</h2>
+<p>Drinking: <%= @drinking %> </p>
+<p>Four-Twenty: <%= @four_twenty %> </p>
+<p>Overnight Visitors: <%= @overnight %> </p>
+<p>Partying: <%= @partying %> </p>
+<p>Music: <%= @music %> </p>
+</div><br><br>
+
+<div>
+<% connection = @user.match_connection_object_for(@match) %>
+<% if connection %>
+  <% if connection.interested %>
+    <h2>You've notified this user. Let the fires burn.</h2>
+  <% else %>
+    <%=form_for @user, url: user_match_path(@user, @match), method: 'PATCH' do |f| %>
+      <%= f.submit "Notify User You Think They May Be a Good Match!" %>
+    <% end %>
+  <% end %>
 <% end %>
+</div><br>
