@@ -181,13 +181,16 @@ class User < ActiveRecord::Base
 
     question_columns.each do |attrb|
       desired_cat = "desired_#{category}".singularize
-      desired_answers = self.send(desired_cat).send(attrb).split('') # "45" => ["4", "5"]
-      importance = self.send(desired_cat).send("#{attrb}_importance")
-      points = conversion_hash[importance]
-      total_possible_points += points
 
-      answer = match.send(category.singularize).send(attrb)
-      points_earned += points if desired_answers.include?(answer.to_s)
+      if self.send(desired_cat).send(attrb)
+        desired_answers = self.send(desired_cat).send(attrb).split('') # "45" => ["4", "5"]
+        importance = self.send(desired_cat).send("#{attrb}_importance")
+        points = conversion_hash[importance]
+        total_possible_points += points
+
+        answer = match.send(category.singularize).send(attrb)
+        points_earned += points if desired_answers.include?(answer.to_s)
+      end
     end
 
     total_possible_points != 0 ? (points_earned / total_possible_points.to_f * 100).to_i : 1
