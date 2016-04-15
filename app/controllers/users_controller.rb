@@ -26,7 +26,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      UserMailer.welcome_email(@user).deliver
+      # TEMPORARY FOR DEVELOPMENT, only send email to gmail users
+      if @user.email =~ /gmail\.com\b/
+        UserMailer.welcome_email(@user).deliver
+      end
       session[:user_id] = @user.id
       redirect_to @user, notice: "Welcome to RoomMater!"
     else

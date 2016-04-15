@@ -135,21 +135,8 @@ averagely_clean_users.pop(220).each do |user|
   user.save
 end
 
-
-
-
 # Schedule
 # ========
-
-#   clean users (240)
-#     clean seeking clean (150)
-#     clean seeking average (90)
-#   dirty users (240)
-#      dirty seeking dirty (150)
-#      dirty seeking average (90)
-#   average users (520)
-#      average seeking average (300)
-#      average seeking clean (220)
 
 all_users = User.all.shuffle
 # 2-i dont cares; 5-a little important; 10-somewhat important; 5-very important
@@ -199,6 +186,7 @@ subset = all_users.pop(150)
       user.desired_schedule.sleep_importance = importances.sample
       user.save
     end
+
 # unemployed/freelance seeking 9-5 or graveyard or workaholic
 subset = all_users.pop(150)
     # sleep responsible seeking responsible
@@ -430,9 +418,6 @@ all_users.each do |user|
   user.desired_schedule.kitchen_importance = [1,2,3,4].sample
   user.save
 end
-
-
-
 
 DesiredSchedule.where(work: nil). each do |des_sched_obj|
   des_sched_obj.delete
