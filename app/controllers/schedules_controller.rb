@@ -31,7 +31,7 @@ class SchedulesController < ApplicationController
     if schedule.update(schedule_params) && desired_schedule.update(stringified_params)
       redirect_to @user
     else
-      flash[:error] = schedule.errors.to_a + desired_schedule.errors.to_a
+      flash.now[:error] = schedule.errors.to_a + desired_schedule.errors.to_a
       @action = user_schedule_path(@user, @user.schedule)
       @method = "PATCH"
       render :edit
@@ -50,7 +50,7 @@ class SchedulesController < ApplicationController
 
     def desired_answer_params_to_string
       question_columns = Schedule.user_input_columns
-      question_columns.each do |question| 
+      question_columns.each do |question|
         if desired_schedule_params[question]
           desired_schedule_params[question] = desired_schedule_params[question].join
         end

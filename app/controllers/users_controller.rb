@@ -30,7 +30,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to @user, notice: "Welcome to RoomMater!"
     else
-      flash[:error] = @user.errors.to_a
+      flash.now[:error] = @user.errors.to_a
       redirect_to signup_path
     end
   end
@@ -58,7 +58,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to @user
     else
-      flash[:error] = @user.errors.to_a
+      flash.now[:error] = @user.errors.to_a
       render :edit
     end
   end
