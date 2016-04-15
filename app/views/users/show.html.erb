@@ -15,6 +15,15 @@
       <h4>Your profile is <%= @profile_percent_complete %>% complete</h4>
     </div>
     <div class="row">
+      <% if @user.notify_me_whos_interested.any? %>
+        <h2>You have new potential roommates!</h2>
+      <%end %>
+      <%@user.notify_me_whos_interested.each do |match|%>
+        <%= match.name %> <br>
+        <p> Send an email :<strong><%=match.email %></strong> </p>
+      <% end %>
+    </div>
+    <div class="row">
       <div class="col-sm-12 ">
         <ul class="nav nav-tabs">
           <li><%= link_to "Basic Information", edit_user_desired_match_trait_path(@user, @user.desired_match_trait) %></li>
@@ -30,18 +39,9 @@
 
       <p><strong>DealBreakers</strong></p>
       <p><%= @dealbreakers %></p>
-         <% if @user.notify_me_whose_interested.any? %>
-      <div>
-
-      <h2>You have new potential roommates!</h2>
-      <%end %>
-     
-      <%@user.notify_me_whose_interested.each do |match|%>
-       <%= match.name %> <br>
-       <p> Send an email :<strong><%=match.email %></strong> </p>
-       <% end %>
-      </div>
-
+    </div>
+    <div class="row">
+    </div>
       <br><br>
       <h4>If you are happy with the information you have provided, continue to see roommates we think could be a good match for you </h4>
       <%= link_to "Show me my matches", user_matches_path(@user), class: "btn btn-lg btn-success", role: "button" %>

@@ -18,24 +18,19 @@ class MatchConnectionsController < ApplicationController
   def index
     @user = User.find(params[:user_id])
     @matches = @user.find_matches
-    # switch to ActiveRecord SQL-y type statements
     @matches = @matches.reject { |match| @user.compatibility_with(match) < 25 }.sort_by { |match| @user.compatibility_with(match)}.reverse
     render 'index'
   end
 
   def show
-    #binding.pry
     @match = User.find(params[:match_id])
     @user = current_user
     @match_connection = @user.match_connection_object_for(@match)
-   
-    #@action = user_match_path(@user, @user.cleanliness)
-    #@method = "PATCH"
   end
 
 
   def update
-  
+
     @match = User.find(params[:match_id])
     @user = current_user
     @match_connection = @user.match_connection_object_for(@match)

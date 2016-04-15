@@ -46,12 +46,6 @@ class User < ActiveRecord::Base
   after_create :create_category_objects
 
   ## slug URL ##
-
-  def notify_me_whose_interested
-    connections = MatchConnection.where('match_id = ? AND interested = ?', self.id, true)
-    connections.map{|connection|User.find(connection.user_id)}
-  end
-
   def to_param
     "#{id}-#{username.downcase}"
   end
@@ -67,6 +61,12 @@ class User < ActiveRecord::Base
   def convert_age
     now = Time.now.utc.to_date
      now.year - self.birthdate.year - (self.birthdate.to_date.change(:year => now.year) > now ? 1 : 0)
+  end
+
+  ## show user others who selected that they were interested in a potential roommate match with them ##
+  def notify_me_whos_interested
+    connections = MatchConnection.where('match_id = ? AND interested = ?', self.id, true)
+    connections.map{|connection|User.find(connection.user_id)}
   end
 
   ## build user's associated cleanliness, desired cleanliness, etc. on user initialization ##
