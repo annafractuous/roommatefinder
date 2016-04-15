@@ -31,7 +31,7 @@ class UsersController < ApplicationController
         UserMailer.welcome_email(@user).deliver
       end
       session[:user_id] = @user.id
-      redirect_to @user, notice: "Welcome to RoomMater!"
+      redirect_to @user, notice: "Welcome to Roominate!"
     else
       flash.now[:error] = @user.errors.to_a
       redirect_to signup_path
@@ -40,16 +40,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @profile_percent_complete = @user.profile_percent_complete
-    @name = @user.display_name
-    @age = @user.convert_age
-    @gender = @user.gender
-    @max_rent = @user.max_rent
-    @dealbreakers = @user.dealbreakers
-    @has_apartment = @user.has_apartment
-    @city = @user.desired_match_trait.city
-    @desired_gender = @user.desired_match_trait.print_desired_gender
-    @desired_age = @user.desired_match_trait.print_desired_age
+    @desired_match_trait = @user.desired_match_trait
   end
 
   def edit

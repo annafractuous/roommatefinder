@@ -1,30 +1,54 @@
-<%= form_for user, url: action, method: method do |f| %>
-  <%= f.label :has_apartment, "Check if you have an apartment" %>
-  <%= f.check_box :has_apartment, {}, true, false %> <br>
-  <!-- put a field here that will show the rent in your current apt. if you have one -->
-  <%= f.label :max_rent, "Or, what's the maximum rent you're willing to pay?" %>
-  <%= f.text_field :max_rent %> <p>(We'll still show you places up to $50 over)</p> <br>
-  <%= f.label :dealbreakers, "What are your dealbreakers?" %><br>
-  <%= f.text_area :dealbreakers, placeholder:  "e.g. no Bon Jovi lovers, no dragon tattoos" %><br>
+<div id="basic-info">
+  <%= form_for user, url: action, method: method do |f| %>
+    <div id="has-apartment">
+      <%= f.label :has_apartment, "Do you have an apartment?" %>
+      <%= f.radio_button :has_apartment, true %> Yes
+      <%= f.radio_button :has_apartment, false %> No <br>
+      <!-- put a field here that will show the rent in your current apt. if you have one -->
+      <button role="button" class="btn btn-md btn-primary" id="submit-has-apartment">Continue</button>
+      <!-- <button role="button" class="btn btn-md btn-info" id="skip-has-apartment">Skip</button> -->
+    </div>
+    <div id="max-rent">
+      <%= f.label :max_rent, "Or, what's the maximum rent you're willing to pay?" %>
+      <%= f.text_field :max_rent %> <p>(We'll still show you places up to $50 over)</p><br>
+      <button role="button" class="btn btn-md btn-primary" id="submit-max-rent">Continue</button>
+      <!-- <button role="button" class="btn btn-md btn-info" id="skip-max-rent">Skip</button> -->
+    </div>
+    <div id="dealbreakers">
+      <%= f.label :dealbreakers, "What are your dealbreakers?" %><br>
+      <%= f.text_area :dealbreakers, placeholder:  "e.g. no Bon Jovi lovers, no dragon tattoos" %><br>
+      <button role="button" class="btn btn-md btn-primary" id="submit-dealbreakers">Continue</button>
+      <!-- <button role="button" class="btn btn-md btn-skip" id="submit-dealbreakers">Skip</button> -->
+    </div>
+    <%= f.fields_for :desired_match_trait do |trait| %>
+    <div id="city-and-move-in">
+      <h3>Where and when do you want to move?</h3>
+        <%= trait.label :city %>
+        <%= trait.text_field :city %><br>
+        <%= trait.label :move_in_date, "Move in by" %>
+        <%= trait.date_select :move_in_date, {order: [:month, :day, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: Date.today.year, end_year: Date.today.year + 1} %><br>
+        <button role="button" class="btn btn-md btn-primary" id="submit-city-and-move-in">Continue</button>
+        <!-- <button role="button" class="btn btn-md btn-skip" id="submit-city-and-move-in">Skip</button> -->
+    </div>
+    <div id="preferred-gender">
+      <%= trait.label :gender, "Do you have a gender preference?" %>
+      <%= trait.select :gender, ['Male', 'Female', "Other", "Any"]%><br>
+      <button role="button" class="btn btn-md btn-primary" id="submit-preferred-gender">Continue</button>
+      <!-- <button role="button" class="btn btn-md btn-skip" id="submit-preferred-gender">Skip</button> -->
+    </div>
+    <div id="preferred-age">
+      <!-- dropdown -->
+      <%= trait.label :min_age %>
+      <%= trait.select :min_age, 18..99 %>
 
-  <h3>Tell us more about what you're looking for</h3>
-  <%= f.fields_for :desired_match_trait do |trait| %>
-    <%= trait.label :city %>
-    <%= trait.text_field :city %><br>
-
-    <%= trait.label :move_in_date, "Move in by" %>
-    <%= trait.date_select :move_in_date, {order: [:month, :day, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: Date.today.year, end_year: Date.today.year + 1} %><br>
-
-    <%= trait.label :gender, "Preferred gender" %>
-    <%= trait.select :gender, ['Male', 'Female', "Other", "Any"]%><br>
-
-    <!-- dropdown -->
-    <%= trait.label :min_age %>
-    <%= trait.select :min_age, 18..99 %>
-
-    <%= trait.label :max_age %>
-    <%= trait.select :max_age, 18..99 %><br>
-
+      <%= trait.label :max_age %>
+      <%= trait.select :max_age, 18..99 %><br>
+      <button role="button" class="btn btn-md btn-primary" id="submit-preferred-age">Continue</button>
+      <!-- <button role="button" class="btn btn-md btn-skip" id="submit-preferred-age">Skip</button> -->
+    </div>
+    <% end %>
+    <div id="submit-basic-info">
+      <%= f.submit "All Set", class: "btn btn-lg btn-success" %>
+    </div>
   <% end %>
-  <%= f.submit "All Set"%>
-<% end %>
+</div>

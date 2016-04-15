@@ -2,23 +2,23 @@
   <div class="col-sm-8 col-sm-offset-1">
     <div class="row">
       <div class="col-sm-6">
-        <h1><%= @name %></h1>
-        <p><em><%= @has_apartment ? "Has an apartment" : "Looking for an apartment" %></em></p>
+        <h1><%= @user.display_name %></h1>
+        <p><em><%= @user.has_apartment ? "Has an apartment" : "Looking for an apartment" %></em></p>
       </div>
       <div class="col-sm-6">
-        <p><strong>Age:</strong> <%= @age %></p>
-        <p><strong>Gender:</strong> <%= @gender %></p>
+        <p><strong>Age:</strong> <%= @user.convert_age %></p>
+        <p><strong>Gender:</strong> <%= @user.gender %></p>
         <p><small><%= link_to "Edit Your User Info", edit_user_path(@user) %></small></p>
       </div>
     </div>
     <div class="row">
-      <h4>Your profile is <%= @profile_percent_complete %>% complete</h4>
+      <h4>Your profile is <%= @user.profile_percent_complete %>% complete</h4>
     </div>
     <div class="row">
       <% if @user.notify_me_whos_interested.any? %>
         <h2>You have new potential roommates!</h2>
       <%end %>
-      <%@user.notify_me_whos_interested.each do |match|%>
+      <% @user.notify_me_whos_interested.each do |match| %>
         <%= match.name %> <br>
         <p> Send an email :<strong><%=match.email %></strong> </p>
       <% end %>
@@ -35,10 +35,10 @@
     </div>
     <div class="row">
       <p><strong>Max Rent: </strong>
-      <%=@max_rent%> </p>
+      <%=@user.max_rent%> </p>
 
       <p><strong>DealBreakers</strong></p>
-      <p><%= @dealbreakers %></p>
+      <p><%= @user.dealbreakers %></p>
     </div>
     <div class="row">
       <br><br>
@@ -48,8 +48,8 @@
   </div>
   <div class="col-sm-3 sidebar">
     <h3>You're looking for someone:</h3>
-    <p><%= "in #{@city}" %></p>
-    <p><%= @desired_age %></p>
-    <p><%= @desired_gender %></p>
+    <p><%= "in #{@desired_match_trait.city}" %></p>
+    <p><%= @desired_match_trait.print_desired_age %></p>
+    <p><%= @desired_match_trait.print_desired_gender %></p>
   </div>
 </div>

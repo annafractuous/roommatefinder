@@ -3,45 +3,53 @@
   <h3>How do you describe yourself</h3>
   <h4>What is your schedule usually like for</h4>
   <%= f.fields_for :schedule do |schedule_form| %>
-
-    <!-- dropdown -->
-    <%= schedule_form.label :work %>
-    <%= render "dropdown", method: :work, object: user.schedule, quantified_method: :work_schedule_quantified, f: schedule_form %>
-     
-    <!-- dropdown --> 
-    <%= schedule_form.label :sleep %>
-    <%= render "dropdown", method: :sleep, object: user.schedule, quantified_method: :sleep_schedule_quantified, f: schedule_form %>
-    
-    <!-- dropdown -->
-    <%= schedule_form.label :bathroom %>
-    <%= render "dropdown", method: :bathroom, object: user.schedule, quantified_method: :bathroom_schedule_quantified, f: schedule_form %>
-    
-    <!-- dropdown -->
-    <%= schedule_form.label :kitchen %>
-    <%= render "dropdown", method: :kitchen, object: user.schedule, quantified_method: :kitchen_schedule_quantified, f: schedule_form %>
+    <div id="work-schedule">
+      <!-- dropdown -->
+      <%= schedule_form.label :work %>
+      <%= render "dropdown", method: :work, object: user.schedule, quantified_method: :work_schedule_quantified, f: schedule_form %>
+      <button role="button" class="btn btn-md btn-primary" id="submit-work-schedule">Continue</button>
+    </div>
+    <div id="sleep-schedule">
+      <!-- dropdown -->
+      <%= schedule_form.label :sleep %>
+      <%= render "dropdown", method: :sleep, object: user.schedule, quantified_method: :sleep_schedule_quantified, f: schedule_form %>
+      <button role="button" class="btn btn-md btn-primary" id="submit-sleep-schedule">Continue</button>
+    </div>
+    <div id="bathroom-schedule">
+      <!-- dropdown -->
+      <%= schedule_form.label :bathroom %>
+      <%= render "dropdown", method: :bathroom, object: user.schedule, quantified_method: :bathroom_schedule_quantified, f: schedule_form %>
+      <button role="button" class="btn btn-md btn-primary" id="submit-bathroom-schedule">Continue</button>
+    </div>
+    <div id="kitchen-schedule">
+      <!-- dropdown -->
+      <%= schedule_form.label :kitchen %>
+      <%= render "dropdown", method: :kitchen, object: user.schedule, quantified_method: :kitchen_schedule_quantified, f: schedule_form %>
+      <button role="button" class="btn btn-md btn-primary" id="submit-kitchen-schedule">Continue</button>
+    </div>
   <% end %><br>
-  
+
   <h3>What answers are acceptable for someone else to respond with</h3>
   <h4>and how important is their response to you</h4>
   <%= f.fields_for :desired_schedule do |desired_schedule_form| %>
-    
+
     <!-- checkbox -->
     <%= desired_schedule_form.label :work %>
     <%= render "checkbox", method: :work, object: user.desired_schedule, quantified_method: :work_schedule_quantified, f: desired_schedule_form %>
     <!-- radio buttons -->
     <%= render "importance", user: user, method: :work_importance, f: desired_schedule_form %>
-    
+
     <!-- checkbox -->
     <%= desired_schedule_form.label :sleep %>
     <%= render "checkbox", method: :sleep, object: user.desired_schedule, quantified_method: :sleep_schedule_quantified, f: desired_schedule_form %>
     <!-- radio buttons -->
     <%= render "importance", user: user, method: :sleep_importance, f: desired_schedule_form %>
-    
+
     <!-- checkbox -->
     <%= desired_schedule_form.label :bathroom %>
     <%= render "checkbox", method: :bathroom, object: user.desired_schedule, quantified_method: :bathroom_schedule_quantified, f: desired_schedule_form %>
     <%= render "importance", user: user, method: :bathroom_importance, f: desired_schedule_form %>
-    
+
     <!-- checkbox -->
     <%= desired_schedule_form.label :kitchen %>
     <%= render "checkbox", method: :kitchen, object: user.desired_schedule, quantified_method: :kitchen_schedule_quantified, f: desired_schedule_form %>
