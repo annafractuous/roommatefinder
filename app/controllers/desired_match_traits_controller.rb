@@ -29,7 +29,7 @@ class DesiredMatchTraitsController < ApplicationController
     if @user.update(extra_params) && desired_match_trait.update(desired_match_params)
       redirect_to user_path(@user)
     else
-      flash[:error] = @user.errors.to_a + desired_match_trait.errors.to_a
+      flash.now[:error] = @user.errors.to_a + desired_match_trait.errors.to_a
       @action = user_desired_match_trait_path(@user, desired_match_trait)
       @method = "PATCH"
       render :edit

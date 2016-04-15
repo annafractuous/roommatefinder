@@ -28,11 +28,11 @@ class HabitsController < ApplicationController
     desired_habit = @user.desired_habit
 
     stringified_params = desired_answer_params_to_string
-    
+
     if habit.update(habit_params) && desired_habit.update(stringified_params)
       redirect_to @user
     else
-      flash[:error] = habit.errors.to_a + desired_habit.errors.to_a
+      flash.now[:error] = habit.errors.to_a + desired_habit.errors.to_a
       @action = user_habit_path(@user, @user.habit)
       @method = "PATCH"
       render :edit
@@ -51,7 +51,7 @@ class HabitsController < ApplicationController
 
     def desired_answer_params_to_string
       question_columns = Habit.user_input_columns
-      question_columns.each do |question| 
+      question_columns.each do |question|
         if desired_habit_params[question]
           desired_cleanliness_params[question] = desired_habit_params[question].join
         end
