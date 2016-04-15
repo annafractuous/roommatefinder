@@ -19,4 +19,31 @@ class DesiredMatchTrait < ActiveRecord::Base
   include Validatable
   extend InputColumnable::ClassMethods
   include InputColumnable
+
+  def print_desired_gender
+    case self.gender
+      when "Male"
+        "male"
+      when "Female"
+        "female"
+      when "Other"
+        "of nontraditional gender"
+      when "Any"
+        "of any gender"
+      else
+        "You haven't entered a preferred gender"
+    end
+  end
+
+  def print_desired_age
+    if !(min_age && max_age)
+      "You haven't entered a preferred age range"
+    elsif min_age && !max_age
+      "over the age of #{min_age}"
+    elsif !min_age && max_age
+      "under the age of #{max_age}"
+    else
+      "aged #{min_age} – #{max_age}"
+    end
+  end
 end

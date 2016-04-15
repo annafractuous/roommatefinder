@@ -44,21 +44,9 @@ class UsersController < ApplicationController
     @max_rent = @user.max_rent
     @dealbreakers = @user.dealbreakers
     @has_apartment = @user.has_apartment
-    @desired_gender =
-      case @user.desired_match_trait.gender
-      when "Male"
-        "a man"
-      when "Female"
-        "a woman"
-      when "Other"
-        "a person of nontraditional gender"
-      when "Any"
-        "any gender"
-      else
-        "You haven't entered a preferred gender"
-      end
-      
-
+    @city = @user.desired_match_trait.city
+    @desired_gender = @user.desired_match_trait.print_desired_gender
+    @desired_age = @user.desired_match_trait.print_desired_age
   end
 
   def edit

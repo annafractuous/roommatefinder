@@ -110,7 +110,7 @@ class User < ActiveRecord::Base
     set.each do |match|
       category_compat_scores = all_category_compatibility_scores(match) # => [63, 45, 87]
       compatibility_score = self.calculate_compatibility_score(category_compat_scores)
-      unless compatibility_score == 0
+      unless compatibility_score <= 1
         connection = self.match_connections.new(match: match)
         if !connection.save # e.g. if connection already exists
           connection = self.match_connection_object_for(match)

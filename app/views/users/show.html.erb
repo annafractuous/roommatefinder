@@ -37,8 +37,9 @@
     </div>
   </div>
   <div class="col-sm-3 sidebar">
-    <h3>You're looking for:</h3>
-    <%= @desired_gender %> gender
-    Ages <%= @user.desired_match_trait.min_age %> to <%= @user.desired_match_trait.max_age %>
+    <h3>You're looking for someone:</h3>
+    <p><%= "in #{@city}" %></p>
+    <p><%= @desired_age %></p>
+    <p><%= @desired_gender %></p>
   </div>
 </div>
