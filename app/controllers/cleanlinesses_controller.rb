@@ -27,7 +27,6 @@ class CleanlinessesController < ApplicationController
 
     # binding.pry
     
-    desired_answer_params_to_string
     if cleanliness.update(cleanliness_params) && desired_cleanliness.update(desired_cleanliness_params)
       redirect_to user_path(@user)
     else

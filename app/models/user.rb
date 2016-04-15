@@ -177,7 +177,6 @@ class User < ActiveRecord::Base
       desired_cat = "desired_#{category}".singularize
       desired_answers = self.send(desired_cat).send(attrb).split('') # "45" => ["4", "5"]
       importance = self.send(desired_cat).send("#{attrb}_importance")
-      binding.pry
       points = conversion_hash[importance]
       total_possible_points += points
 

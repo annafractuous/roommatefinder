@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414134748) do
-
+ActiveRecord::Schema.define(version: 20160414144655) do
 
   create_table "cleanlinesses", force: :cascade do |t|
     t.datetime "created_at",   null: false

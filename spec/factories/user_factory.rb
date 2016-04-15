@@ -17,8 +17,6 @@ FactoryGirl.define do
     after(:create) do |user|
       user.email = "user#{user.id}@example.com"
       user.username = "user#{user.id}"
-      user.schedule = FactoryGirl.create :schedule
-      user.desired_schedule = FactoryGirl.create :desired_schedule
       user.habit = FactoryGirl.create :habit
       user.desired_habit = FactoryGirl.create :desired_habit
       user.desired_match_trait = FactoryGirl.create :desired_match_trait
@@ -108,15 +106,15 @@ FactoryGirl.define do
   end
 
   factory :desired_habit do
-    drinking { rand(1..5) }
+    drinking { (1..5).to_a.sample(rand(2..4)).join }
     drinking_importance { rand(1..4) }
-    four_twenty { rand(1..5) }
+    four_twenty { (1..5).to_a.sample(rand(2..4)).join }
     four_twenty_importance { rand(1..4) }
-    partying { rand(1..5) }
+    partying { (1..5).to_a.sample(rand(2..4)).join }
     partying_importance  { rand(1..4) }
-    overnight_visitors { rand(1..5) }
+    overnight_visitors { (1..5).to_a.sample(rand(2..4)).join }
     overnight_visitors_importance  { rand(1..4) }
-    music { rand(1..5) }
+    music { (1..5).to_a.sample(rand(2..4)).join }
     music_importance  { rand(1..4) }
   end
 

@@ -26,8 +26,8 @@ class SchedulesController < ApplicationController
     schedule = @user.schedule
     desired_schedule = @user.desired_schedule
 
-    desired_answer_params_to_string
-    
+    binding.pry
+
     if schedule.update(schedule_params) && desired_schedule.update(desired_schedule_params)
       redirect_to @user
     else

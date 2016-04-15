@@ -26,8 +26,6 @@ class HabitsController < ApplicationController
     @user = User.find(params[:user_id])
     habit = @user.habit
     desired_habit = @user.desired_habit
-
-    desired_answer_params_to_string
     
     if habit.update(habit_params) && desired_habit.update(desired_habit_params)
       redirect_to @user

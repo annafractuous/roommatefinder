@@ -1,6 +1,9 @@
 <br>
 <% object.send(quantified_method).each do |number_value, text| %>
-  <% responses = object.send(method).split("").map { |num| num.to_i} %>
+  <% responses = [] %>
+  <% if object.send(method) %>
+    <% responses = object.send(method).split("").map { |num| num.to_i} %>
+  <% end %>
   <% checked_value = "checked='checked'" if responses.include?(number_value)%>
   <text>&nbsp&nbsp&nbsp</text>
   <%= check_box_tag "user[desired_habit_attributes]#{method}[]", number_value, checked_value%>
