@@ -30,6 +30,17 @@
 
       <p><strong>DealBreakers</strong></p>
       <p><%= @dealbreakers %></p>
+         <% if @user.notify_me_whose_interested.any? %>
+      <div>
+
+      <h2>You have new potential roommates!</h2>
+      <%end %>
+     
+      <%@user.notify_me_whose_interested.each do |match|%>
+       <%= match.name %> <br>
+       <p> Send an email :<strong><%=match.email %></strong> </p>
+       <% end %>
+      </div>
 
       <br><br>
       <h4>If you are happy with the information you have provided, continue to see roommates we think could be a good match for you </h4>

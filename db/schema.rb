@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20160414144655) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "compatibility"
+    t.boolean  "interested"
   end
 
   create_table "schedules", force: :cascade do |t|

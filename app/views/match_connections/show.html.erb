@@ -1,0 +1,9 @@
+<h1><%=@match.username%></h1>
+<h2><%= @match.name %></h2>
+<p> <%= @match.gender %> </p>
+<P> <%= @match.dealbreakers %> </p>
+
+
+<%=form_for @user, url: user_match_path(@user, @match), method: 'PATCH' do |f| %>
+  <%= f.submit "Notify User You Think They May Be a Good Match!" %>
+<% end %>
