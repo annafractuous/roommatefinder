@@ -15,12 +15,12 @@
       <h4>Your profile is <%= @profile_percent_complete %>% complete</h4>
     </div>
     <div class="row">
-      <% if @user.notify_me_whos_interested.any? %>
+      <% if @interested_matches %>
         <h2>You have new potential roommates!</h2>
-      <%end %>
-      <%@user.notify_me_whos_interested.each do |match|%>
-        <%= match.name %> <br>
+        <% @interested_matches.each do |match|%>
+          <%= match.display_name %> <br>
         <p> Send an email :<strong><%=match.email %></strong> </p>
+        <% end %>
       <% end %>
     </div>
     <div class="row">

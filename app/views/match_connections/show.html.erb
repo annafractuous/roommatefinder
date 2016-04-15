@@ -1,5 +1,5 @@
 <h1><%= @match.username %></h1>
-<h2><%= @match.name %></h2>
+<h2><%= @match.display_name %></h2>
 <p> <%= @match.gender %> </p>
 <P> <%= @match.dealbreakers %> </p>
 
@@ -31,10 +31,11 @@
 <% connection = @user.match_connection_object_for(@match) %>
 <% if connection %>
   <% if connection.interested %>
-    <h2>You've notified this user. Let the fires burn.</h2>
+    <h4>You've selected <%=@match.display_name%> as a good potential roommate.</h4>
   <% else %>
+    <h4>Do you think <%= @match.username %> would be a good roommate?</h4>
     <%=form_for @user, url: user_match_path(@user, @match), method: 'PATCH' do |f| %>
-      <%= f.submit "Notify User You Think They May Be a Good Match!" %>
+      <%= f.submit "Let Them Know!", class: "btn btn-lg btn-success", role: "button" %>
     <% end %>
   <% end %>
 <% end %>

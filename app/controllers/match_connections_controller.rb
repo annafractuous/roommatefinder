@@ -55,12 +55,6 @@ class MatchConnectionsController < ApplicationController
     @music = Habit.music_quantified[music]
 
 
-
-
-    sleep
-    bathroom_sch
-    kitchen
-
   end
 
 
@@ -70,7 +64,7 @@ class MatchConnectionsController < ApplicationController
     @user = current_user
     @match_connection = @user.match_connection_object_for(@match)
     if @match_connection.update(interested: true)
-      redirect_to user_matches_path(@user)
+      redirect_to user_match_path(@user, @match), notice: "You've sent a message to #{@user.username}."
     else
       render :show
     end

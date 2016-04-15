@@ -18,6 +18,7 @@
 
 class UsersController < ApplicationController
   before_action :authorize, only: [:edit, :update]
+  include ActionView::Helpers::TextHelper
 
   def new
     @user = User.new
@@ -50,6 +51,13 @@ class UsersController < ApplicationController
     @city = @user.desired_match_trait.city
     @desired_gender = @user.desired_match_trait.print_desired_gender
     @desired_age = @user.desired_match_trait.print_desired_age
+
+    if @user.interested_matches
+      @interested_matches = @user.interested_matches
+      size = @interested_matches.size
+      flash.now[:message] = "#{pluralize(size, 'user')} thinks you could make great roommates!"
+      render :show
+    end 
   end
 
   def edit
