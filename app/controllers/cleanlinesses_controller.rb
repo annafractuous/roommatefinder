@@ -25,10 +25,9 @@ class CleanlinessesController < ApplicationController
     cleanliness = @user.cleanliness
     desired_cleanliness = @user.desired_cleanliness
 
-    # binding.pry
+    stringified_params = desired_answer_params_to_string
     
-    desired_answer_params_to_string
-    if cleanliness.update(cleanliness_params) && desired_cleanliness.update(desired_cleanliness_params)
+    if cleanliness.update(cleanliness_params) && desired_cleanliness.update(stringified_params)
       redirect_to user_path(@user)
     else
       flash[:error] = cleanliness.errors.to_a + desired_cleanliness.errors.to_a
@@ -55,9 +54,10 @@ class CleanlinessesController < ApplicationController
       question_columns = Cleanliness.user_input_columns
       question_columns.each do |question| 
         if desired_cleanliness_params[question]
-          desired_cleanliness_params[question].join
+          desired_cleanliness_params[question] = desired_cleanliness_params[question].join
         end
       end
+      desired_cleanliness_params
     end
 
 end

@@ -26,9 +26,9 @@ class SchedulesController < ApplicationController
     schedule = @user.schedule
     desired_schedule = @user.desired_schedule
 
-    desired_answer_params_to_string
-    
-    if schedule.update(schedule_params) && desired_schedule.update(desired_schedule_params)
+    stringified_params = desired_answer_params_to_string
+
+    if schedule.update(schedule_params) && desired_schedule.update(stringified_params)
       redirect_to @user
     else
       flash[:error] = schedule.errors.to_a + desired_schedule.errors.to_a
@@ -52,9 +52,10 @@ class SchedulesController < ApplicationController
       question_columns = Schedule.user_input_columns
       question_columns.each do |question| 
         if desired_schedule_params[question]
-          desired_schedule_params[question].join
+          desired_schedule_params[question] = desired_schedule_params[question].join
         end
       end
+      desired_schedule_params
     end
 
 end
