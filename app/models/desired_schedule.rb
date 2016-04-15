@@ -1,4 +1,4 @@
-include ChoicesQuantifiable::Cleanliness
+extend ChoicesQuantifiable::Cleanliness
 # == Schema Information
 #
 # Table name: desired_schedules
@@ -19,7 +19,7 @@ include ChoicesQuantifiable::Cleanliness
 
 class DesiredSchedule < ActiveRecord::Base
   include HowImportantToYouAble
-  include ChoicesQuantifiable::Schedule
+  extend ChoicesQuantifiable::Schedule
   include Validatable
   extend InputColumnable::ClassMethods
   include InputColumnable

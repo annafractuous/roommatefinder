@@ -16,7 +16,7 @@
 
 class DesiredCleanliness < ActiveRecord::Base
   include HowImportantToYouAble
-  include ChoicesQuantifiable::Cleanliness
+  extend ChoicesQuantifiable::Cleanliness
   include Validatable
   extend InputColumnable::ClassMethods
   include InputColumnable

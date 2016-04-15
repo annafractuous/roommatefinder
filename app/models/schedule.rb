@@ -13,7 +13,7 @@
 #
 
 class Schedule < ActiveRecord::Base
-  include ChoicesQuantifiable::Schedule
+  extend ChoicesQuantifiable::Schedule
   include Validatable
   extend InputColumnable::ClassMethods
   include InputColumnable

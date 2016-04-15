@@ -12,7 +12,7 @@
 #
 
 class Cleanliness < ActiveRecord::Base
-  include ChoicesQuantifiable::Cleanliness
+  extend ChoicesQuantifiable::Cleanliness
   include Validatable
   extend InputColumnable::ClassMethods
   include InputColumnable
