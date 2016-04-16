@@ -5,12 +5,14 @@
       <%= render 'layouts/questions_navbar', user: @user %>
     </div>
     <ul class="list-inline text-center">
+      <strong>You:</strong>
       <li>Apartment Status</li> —
       <li>Max Rent</li> —
       <li>Dealbreakers</li> —
-      <li>City and Move-In Date</li> —
-      <li>Preferred Gender</li> —
-      <li>Preferred Age</li>
+      <li>City and Move-In Date</li> <br>
+      <strong>Your Ideal Roommate:</strong>
+      <li>Gender</li> —
+      <li>Age</li>
     </ul>
     <h1>Basic Information</h1>
     <%= render "form", user: @user, method: @method, action: @action %>

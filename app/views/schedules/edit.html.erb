@@ -4,17 +4,19 @@
     <div class="row">
       <%= render 'layouts/questions_navbar', user: @user %>
     </div>
-    <ul class="list-inline text-center">
+    <h1>Schedule</h1>
+    <ul class="list-inline">
+      <strong>You:</strong>
       <li>Work</li> —
       <li>Sleep</li> —
       <li>Bathroom</li> —
-      <li>Kitchen</li> —
-      <li>Preferred Work</li> —
-      <li>Preferred Sleep</li> —
-      <li>Preferred Bathroom</li> —
-      <li>Preferred Kitchen</li>
+      <li>Kitchen</li> <br>
+      <strong>Your Ideal Roommate:</strong>
+      <li>Work</li> —
+      <li>Sleep</li> —
+      <li>Bathroom</li> —
+      <li>Kitchen</li>
     </ul>
-    <h1>Schedule</h1>
     <%= render "form", user: @user, method: @method, action: @action %>
   </div>
   <div class="col-sm-3">
