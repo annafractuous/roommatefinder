@@ -18,6 +18,7 @@ class DesiredMatchTraitsController < ApplicationController
 
   def edit
     @user = User.find(params[:user_id])
+    @desired_match_trait = @user.desired_match_trait
     @action = user_desired_match_trait_path(@user, @user.desired_match_trait)
     @method = "PATCH"
   end

@@ -4,8 +4,22 @@
     <div class="row">
       <%= render 'layouts/questions_navbar', user: @user %>
     </div>
-    <div class="row">
-      <h1>Habits</h1>
-      <%= render "form", user: @user, method: @method, action: @action %>
+    <ul class="list-inline text-center">
+      <li>Partying</li> —
+      <li>Drinking</li> —
+      <li>420</li> —
+      <li>Overnight Visitors</li> —
+      <li>Music</li> —
+      <li>Preferred Partying</li> —
+      <li>Preferred Drinking</li> —
+      <li>Preferred 420</li> —
+      <li>Preferred Overnight Visitors</li> —
+      <li>Preferred Music</li>
+    </ul>
+    <h1>Habits</h1>
+    <%= render "form", user: @user, method: @method, action: @action %>
+  </div>
+  <div class="col-sm-3">
+    <%= render 'layouts/sidebar', desired_match_trait: @desired_match_trait %>
   </div>
 </div>

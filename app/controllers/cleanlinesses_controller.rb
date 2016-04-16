@@ -16,6 +16,7 @@ class CleanlinessesController < ApplicationController
 
   def edit
     @user = User.find(params[:user_id])
+    @desired_match_trait = @user.desired_match_trait
     @action = user_cleanliness_path(@user, @user.cleanliness)
     @method = "PATCH"
   end

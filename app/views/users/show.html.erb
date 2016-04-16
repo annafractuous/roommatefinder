@@ -26,10 +26,7 @@
       <%= link_to "Show me my matches", user_matches_path(@user), class: "btn btn-lg btn-success", role: "button" %>
     </div>
   </div>
-  <div class="col-sm-3 sidebar">
-    <h3>You're looking for someone:</h3>
-    <p><%= "in #{@desired_match_trait.city}" %></p>
-    <p><%= @desired_match_trait.print_desired_age %></p>
-    <p><%= @desired_match_trait.print_desired_gender %></p>
+  <div class="col-sm-3">
+    <%= render 'layouts/sidebar', desired_match_trait: @desired_match_trait %>
   </div>
 </div>

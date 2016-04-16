@@ -4,8 +4,18 @@
     <div class="row">
       <%= render 'layouts/questions_navbar', user: @user %>
     </div>
-    <div class="row">
-      <h1>Basic Information</h1>
-      <%= render "form", user: @user, method: @method, action: @action %>
+    <ul class="list-inline text-center">
+      <li>Apartment Status</li> —
+      <li>Max Rent</li> —
+      <li>Dealbreakers</li> —
+      <li>City and Move-In Date</li> —
+      <li>Preferred Gender</li> —
+      <li>Preferred Age</li>
+    </ul>
+    <h1>Basic Information</h1>
+    <%= render "form", user: @user, method: @method, action: @action %>
+  </div>
+  <div class="col-sm-3">
+    <%= render 'layouts/sidebar', desired_match_trait: @desired_match_trait %>
   </div>
 </div>

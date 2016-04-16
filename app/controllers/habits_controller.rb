@@ -18,6 +18,7 @@ class HabitsController < ApplicationController
 
   def edit
     @user = User.find(params[:user_id])
+    @desired_match_trait = @user.desired_match_trait
     @action = user_habit_path(@user, @user.habit)
     @method = "PATCH"
   end
