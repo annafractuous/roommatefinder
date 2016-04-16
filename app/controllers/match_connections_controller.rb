@@ -53,13 +53,10 @@ class MatchConnectionsController < ApplicationController
     @partying = Habit.wildness_quantified[partying]
     music = @match.habit.music
     @music = Habit.music_quantified[music]
-
-
   end
 
 
   def update
-
     @match = User.find(params[:match_id])
     @user = current_user
     @match_connection = @user.match_connection_object_for(@match)

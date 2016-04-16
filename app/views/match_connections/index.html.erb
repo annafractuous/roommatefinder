@@ -1,6 +1,6 @@
 <h2>Your Matches</h2>
 <ul>
 <% @matches.each do |match|%>
-  <li>You are a <%= @user.compatibility_with(match) %>% match with <%= link_to match.username, user_match_path(@user, match) %></li>
+  <li> <%= image_tag(match.photo.url(:thumbnail)) %> <text>You are a <%= @user.compatibility_with(match) %>% match with <%= link_to match.username, user_match_path(@user, match) %></text></li>
 <% end %>
 </ul>
