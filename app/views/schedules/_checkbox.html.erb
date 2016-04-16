@@ -1,5 +1,5 @@
 <br>
-<% object.send(quantified_method).each do |number_value, text| %>
+<% Schedule.send(quantified_method).each do |number_value, text| %>
   <% responses = [] %>
   <% if object.send(method) %>
     <% responses = object.send(method).split("").map { |num| num.to_i} %>

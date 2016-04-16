@@ -20,7 +20,7 @@
 
 class DesiredHabit < ActiveRecord::Base
   include HowImportantToYouAble
-  include ChoicesQuantifiable::Habit
+  extend ChoicesQuantifiable::Habit
   include Validatable
   extend InputColumnable::ClassMethods
   include InputColumnable

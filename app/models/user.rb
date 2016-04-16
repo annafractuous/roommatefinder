@@ -64,9 +64,9 @@ class User < ActiveRecord::Base
   end
 
   ## show user others who selected that they were interested in a potential roommate match with them ##
-  def notify_me_whos_interested
+  def interested_matches
     connections = MatchConnection.where('match_id = ? AND interested = ?', self.id, true)
-    connections.map{|connection|User.find(connection.user_id)}
+    connections.map { |connection| User.find(connection.user_id) }
   end
 
   ## build user's associated cleanliness, desired cleanliness, etc. on user initialization ##

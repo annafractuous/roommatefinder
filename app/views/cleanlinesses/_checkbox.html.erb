@@ -1,11 +1,11 @@
 <br>
-<% object.cleanliness_quantified.each do |number_value, text| %>
+<% Cleanliness.cleanliness_quantified.each do |number_value, text| %>
   <% responses = [] %>
   <% if object.send(method) %>
     <% responses = object.send(method).split("").map { |num| num.to_i } %>
   <% end %>
-  <% checked_value = "checked='checked'" if responses.include?(number_value) %>
+  <% checked_value = "checked='checked'" if responses.include?(number_value)%>
   <text>&nbsp&nbsp&nbsp</text>
-  <%= check_box_tag "user[desired_cleanliness_attributes]#{method}[]", number_value, checked_value %>
+  <%= check_box_tag "user[desired_cleanliness_attributes]#{method}[]", number_value, checked_value%>
   <text><%=text%></text>
 <% end %>

@@ -14,7 +14,7 @@
 #
 
 class Habit < ActiveRecord::Base
-  include ChoicesQuantifiable::Habit
+  extend ChoicesQuantifiable::Habit
   include Validatable
   extend InputColumnable::ClassMethods
   include InputColumnable

@@ -18,6 +18,7 @@
 
 class UsersController < ApplicationController
   before_action :authorize, only: [:edit, :update]
+  include ActionView::Helpers::TextHelper
 
   def new
     @user = User.new
@@ -28,7 +29,7 @@ class UsersController < ApplicationController
     if @user.save
       # TEMPORARY FOR DEVELOPMENT, only send email to gmail users
       if @user.email =~ /gmail\.com\b/
-        UserMailer.welcome_email(@user).deliver
+        UserMailer.welcome_email(@user).deliver_now
       end
       session[:user_id] = @user.id
       redirect_to @user, notice: "Welcome to Roominate!"
@@ -41,6 +42,13 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @desired_match_trait = @user.desired_match_trait
+
+    if @user.interested_matches
+      @interested_matches = @user.interested_matches
+      size = @interested_matches.size
+      flash.now[:message] = "#{pluralize(size, 'user')} thinks you could make great roommates!"
+      render :show
+    end
   end
 
   def edit
