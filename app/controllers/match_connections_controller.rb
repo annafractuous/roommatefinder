@@ -31,12 +31,13 @@ class MatchConnectionsController < ApplicationController
   def show
     @match = User.find(params[:match_id])
     @user = current_user
-
+    @total_compatibility = @user.compatibility_with(@match)
     @match_cleanliness = @match.cleanliness.convert_cleanliness(@match.cleanliness)
-    
+    @cleanliness_compatibility = @user.compatibility_percentage_per_category("cleanliness", @match)
     @match_schedule = @match.schedule.convert_schedule(@match.schedule)
-    
+    @schedule_compatibility = @user.compatibility_percentage_per_category("schedule", @match)
     @match_habit = @match.habit.convert_habit(@match.habit)
+    @habit_compatibility = @user.compatibility_percentage_per_category("habit", @match)
   
   end
 

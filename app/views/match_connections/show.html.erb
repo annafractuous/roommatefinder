@@ -1,12 +1,15 @@
 <h1><%= @match.username %></h1>
 <h2><%= @match.display_name %></h2>
+<h3>You and <%=@match.display_name%> are <%=@total_compatibility%>% compatible! </h3>
 <%= image_tag(@match.photo.url(:small)) %>
 <p> <%= @match.gender %> </p>
 <p> <%= @match.dealbreakers %> </p>
 
 
+
 <div class = "category" id="cleanliness">
 <h2>Cleanliness</h2>
+<h3>You are <%=@habit_compatibility%>% compatible!</h3>
 <%@match_cleanliness.each do |key, value| %>
   <%key = key.split('_').join(" ")%>
   <p> <%=key.capitalize%>: <%=value%></p>
@@ -15,6 +18,7 @@
 
 <div class = "category" id="schedule">
 <h2>Schedule</h2>
+<h3>You are <%=@schedule_compatibility%>% compatible!</h3>
 <% @match_schedule.each do |key, value| %>
    <p> <%=key.capitalize%>: <%=value%></p>
 <% end %>
@@ -22,6 +26,7 @@
 
 <div class = "category" id="habits">
 <h2>Habits</h2>
+<h3>You are <%=@habit_compatibility%>% compatible!</h3>
 <% @match_habit.each do |key, value| %>
     <%key = key.split('_').join(" ")%>
     <p> <%=key.capitalize%>: <%=value%></p>
