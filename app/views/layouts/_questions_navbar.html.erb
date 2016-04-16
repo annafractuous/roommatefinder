@@ -1,0 +1,8 @@
+<div class="col-sm-12 ">
+  <ul class="nav nav-tabs">
+    <li><%= link_to "Basic Information", edit_user_desired_match_trait_path(user, user.desired_match_trait), id: "basic-info-section" %></li>
+    <li><%= link_to "Schedule", edit_user_schedule_path(user, user.schedule), id: "schedule-section" %></li>
+    <li><%= link_to "Cleanliness", edit_user_cleanliness_path(user, user.cleanliness), id: "cleanliness-section" %></li>
+    <li><%= link_to "Habits", edit_user_habit_path(user, user.habit), id: "habit-section" %></li>
+  </ul>
+</div>

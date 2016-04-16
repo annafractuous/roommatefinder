@@ -53,7 +53,7 @@ class HabitsController < ApplicationController
       question_columns = Habit.user_input_columns
       question_columns.each do |question|
         if desired_habit_params[question]
-          desired_cleanliness_params[question] = desired_habit_params[question].join
+          desired_habit_params[question] = desired_habit_params[question].join
         end
       end
       desired_habit_params
