@@ -106,10 +106,12 @@ class User < ActiveRecord::Base
  ############################# MATCHING ALGORITHMS #############################
 
   def find_matches
+   
     set = User.all.where.not(id: self.id)
+    #.where("age < ? AND age > ?", self.desired_match_trait.max_age, self.desired_match_trait.min_age)
     set = self.reject_wrong_gender(set) if self.desired_match_trait.gender
     set = self.reject_wrong_rent(set) if self.max_rent
-    set = self.reject_wrong_age(set) if self.desired_match_trait.min_age && self.desired_match_trait.max_age
+    #set = self.reject_wrong_age(set) if self.desired_match_trait.min_age && self.desired_match_trait.max_age
     set = self.reject_wrong_city(set) if self.desired_match_trait.city
     set = self.reject_wrong_move_in_date(set) if self.desired_match_trait.move_in_date
 
@@ -194,27 +196,33 @@ class User < ActiveRecord::Base
   end
 
   def reject_wrong_rent(set)
-    set.reject do |match|
-      (self.max_rent + 200) < match.max_rent if self.max_rent && match.max_rent
-    end
+   
+    set.where("max_rent < ?", (self.max_rent + 201))
+    # set.reject do |match|
+    #   (self.max_rent + 200) < match.max_rent if self.max_rent && match.max_rent
+    # end
   end
 
   def reject_wrong_gender(set)
-    set.select do |user|
-      case desired_match_trait.gender
-      when "Male"
-        user.gender == "Male"
-      when "Female"
-        user.gender == "Female"
-      when "Other"
-        user.gender == "Other"
-      else
-        user
-      end
-    end
+  
+    set.where("gender = ? OR gender = ?", self.desired_match_trait.gender, "Any")
+   
+    # set.select do |user|
+    #   case desired_match_trait.gender
+    #   when "Male"
+    #     user.gender == "Male"
+    #   when "Female"
+    #     user.gender == "Female"
+    #   when "Other"
+    #     user.gender == "Other"
+    #   else
+    #     user
+    #   end
+    # end
   end
 
   def reject_wrong_age(set)
+
     age_range = (self.desired_match_trait.min_age..self.desired_match_trait.max_age)
     set.select do |user|
       age_range.include?(user.convert_age)
@@ -222,8 +230,10 @@ class User < ActiveRecord::Base
   end
 
   def reject_wrong_city(set)
-    set.select do |user|
-      user.desired_match_trait.city == self.desired_match_trait.city
+    #binding.pry
+    #    set.joins(:desired_match_trait).where("desired_match_trait.city = ?", self.desired_match_trait.city)
+   set.select do |user|
+    user.desired_match_trait.city == self.desired_match_trait.city
     end
   end
 

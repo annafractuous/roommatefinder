@@ -16,9 +16,11 @@ class MatchConnectionsController < ApplicationController
   end
 
   def index
+    #binding.pry
     @user = User.find(params[:user_id])
     @matches = @user.find_matches
-    @matches = @matches.reject { |match| @user.compatibility_with(match) < 25 }.sort_by { |match| @user.compatibility_with(match)}.reverse
+    #@matchers.where("compatibility > 25").order("compatibility DESC")
+    #@matches = @matches.reject { |match| @user.compatibility_with(match) < 25 }.sort_by { |match| @user.compatibility_with(match)}.reverse
     render 'index'
   end
 
