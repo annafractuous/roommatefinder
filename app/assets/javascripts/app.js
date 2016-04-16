@@ -17,4 +17,6 @@ $(function() {
   app.cleanlinesses.controller.edit();
   app.habits.controller.edit();
 
+  app.schedules.controller.show();
+
 });

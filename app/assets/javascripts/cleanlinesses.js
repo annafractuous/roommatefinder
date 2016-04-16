@@ -1,5 +1,5 @@
 app.cleanlinesses.controller = {
-  edit: function(event) {
+  edit: function() {
     // cleanliness question page elements
     var cleanliness_items = ['kitchen-cleanliness', 'bathroom-cleanliness', 'common-space-cleanliness',
     'roommate-kitchen-cleanliness', 'roommate-bathroom-cleanliness', 'roommate-common-space-cleanliness',
