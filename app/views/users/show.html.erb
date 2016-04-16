@@ -1,25 +1,12 @@
 <div class="container">
   <div class="col-sm-8 col-sm-offset-1">
     <%= render 'layouts/user_header_section', user: @user %>
-    <div class="row">
-      <% if @interested_matches %>
-        <h2>You have new potential roommates!</h2>
-        <% @interested_matches.each do |match|%>
-          <%= match.display_name %> <br>
-          <p> Send an email: <strong><%=match.email %></strong> </p>
-        <% end %>
-      <% end %>
-    </div>
+
+
     <div class="row">
       <%= render 'layouts/questions_navbar', user: @user %>
     </div>
-    <div class="row">
-      <p><strong>Max Rent: </strong>
-      <%=@user.max_rent%> </p>
-
-      <p><strong>DealBreakers</strong></p>
-      <p><%= @user.dealbreakers %></p>
-    </div>
+ 
     <div class="row">
       <br><br>
       <h4>If you are happy with the information you have provided, continue to see roommates we think could be a good match for you </h4>
@@ -29,4 +16,8 @@
   <div class="col-sm-3">
     <%= render 'layouts/sidebar', desired_match_trait: @desired_match_trait %>
   </div>
+
+  <!-- <div class="row">
+    <div class="col-sm-12" padding = 100px></div>
+  </div> -->
 </div>

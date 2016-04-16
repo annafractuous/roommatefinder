@@ -3,4 +3,14 @@
   <p><%= "in #{@desired_match_trait.city}" %></p>
   <p><%= @desired_match_trait.print_desired_age %></p>
   <p><%= @desired_match_trait.print_desired_gender %></p>
+
+  <div>
+      <% if @interested_matches%>
+        <h3>You have new potential roommates!</h3>
+        <% @interested_matches.each do |match|%>
+          <%= match.display_name %> <br>
+          <p> Send an email: <strong><%=match.email %></strong> </p>
+        <% end %>
+      <% end %>
+    </div>
 </div>

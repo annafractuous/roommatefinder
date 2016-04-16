@@ -16,9 +16,15 @@ class MatchConnectionsController < ApplicationController
   end
 
   def index
+    #binding.pry
     @user = User.find(params[:user_id])
     @matches = @user.find_matches
+
+    #@matchers.where("compatibility > 25").order("compatibility DESC")
+    #@matches = @matches.reject { |match| @user.compatibility_with(match) < 25 }.sort_by { |match| @user.compatibility_with(match)}.reverse
+
     @matches = @matches.reject { |match| @user.compatibility_with(match) < 25 }.sort_by { |match| @user.compatibility_with(match) }.reverse
+
     render 'index'
   end
 
@@ -53,13 +59,10 @@ class MatchConnectionsController < ApplicationController
     @partying = Habit.wildness_quantified[partying]
     music = @match.habit.music
     @music = Habit.music_quantified[music]
-
-
   end
 
 
   def update
-
     @match = User.find(params[:match_id])
     @user = current_user
     @match_connection = @user.match_connection_object_for(@match)

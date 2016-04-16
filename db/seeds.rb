@@ -6,7 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-
 # 500 users with default City of New York
 500.times do
   FactoryGirl.create :user
@@ -18,6 +17,23 @@ end
   user.desired_match_trait.city = "Rancho Cucamonga"
   user.save
 end
+
+# Profile Pics
+# ============
+profile_pics = (1..15).to_a.map do |n|
+  "db/profile_pics/user#{n}.jpg"
+end
+
+5.times do 
+  profile_pics.push("db/profile_pics/blank_user.png")
+end
+
+all_users = User.all.shuffle
+all_users.each do |user|
+  user.photo = File.new(profile_pics.sample)
+  user.save
+end
+
 
 # Cleanliness
 # ===========
