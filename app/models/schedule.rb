@@ -20,4 +20,13 @@ class Schedule < ActiveRecord::Base
   validate :cannot_select_pick_one
 
   belongs_to :user
+
+
+  def convert_schedule(match_schedule)
+    schedule_hash = Schedule.user_input_columns.each_with_object({}) do |col, hash|
+    hash[col] = Schedule.send("#{col}_schedule_quantified")[match_schedule.send(col)]
+    end
+    schedule_hash
+  end
+
 end

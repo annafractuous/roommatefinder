@@ -110,10 +110,11 @@ class User < ActiveRecord::Base
  ############################# MATCHING ALGORITHMS #############################
 
   def find_matches
-   
+  
     set = User.where.not(id: self.id)
     #.where("age < ? AND age > ?", self.desired_match_trait.max_age, self.desired_match_trait.min_age)
     set = self.reject_wrong_gender(set) if self.desired_match_trait.gender
+
     set = self.reject_wrong_rent(set) if self.max_rent
     set = self.reject_wrong_age(set) if self.desired_match_trait.min_age && self.desired_match_trait.max_age
     set = self.reject_wrong_city(set) if self.desired_match_trait.city
@@ -209,8 +210,15 @@ class User < ActiveRecord::Base
 
   def reject_wrong_gender(set)
     your_gender = self.desired_match_trait.gender
-    set.where("users.gender = ?", your_gender) unless your_gender == "Any"
-  end
+    if your_gender == "Any"
+      set
+    else
+    set.where("users.gender = ?", your_gender) 
+     end
+   end
+
+    
+ 
 
   def reject_wrong_age(set)
     min_birth_year = DateTime.now - (self.desired_match_trait.min_age.years - 1.years)

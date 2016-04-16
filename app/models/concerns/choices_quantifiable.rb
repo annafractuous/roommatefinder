@@ -8,7 +8,14 @@ module ChoicesQuantifiable
 
   module Habit
     # use for drinking, four_twenty, and partying
-    def wildness_quantified
+    def drinking_quantified
+      {1 => "Never", 2 => "Rarely", 3 => "Occasionally", 4 => "Regularly", 5 => "like Fear and Loathing"}
+    end
+
+    def four_twenty_quantified
+      {1 => "Never", 2 => "Rarely", 3 => "Occasionally", 4 => "Regularly", 5 => "like Fear and Loathing"}
+    end
+    def partying_quantified
       {1 => "Never", 2 => "Rarely", 3 => "Occasionally", 4 => "Regularly", 5 => "like Fear and Loathing"}
     end
 
@@ -18,9 +25,11 @@ module ChoicesQuantifiable
     end
 
     # use for overnight_visitors
-    def visitors_quantified
+    def overnight_visitors_quantified
        {1 => "Never", 2 => "Rarely", 3 => "Occasionally", 4 => "Regularly", 5 => "Never Alone"}
     end
+  
+
   end
 
   module Schedule
