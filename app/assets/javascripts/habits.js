@@ -1,5 +1,5 @@
 app.habits.controller = {
-  edit: function(event) {
+  edit: function() {
     // habit question page elements
     var habit_items = ['partying-habit', 'drinking-habit', 'four-twenty-habit', 'overnight-visitors-habit',
     'music-habit', 'roommate-partying-habit', 'roommate-drinking-habit', 'roommate-four-twenty-habit',

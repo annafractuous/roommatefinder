@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   has_attached_file :photo, styles: { med: "300x300", thumbnail: "32x32", small: "200x200"}
   validates_attachment_content_type :photo, content_type: /\Aimage/
   validates_attachment_file_name :photo, matches: [/png\Z/, /jpe?g\Z/]
-  
+
   has_one :cleanliness
   has_one :desired_cleanliness
   has_one :schedule
@@ -110,7 +110,7 @@ class User < ActiveRecord::Base
  ############################# MATCHING ALGORITHMS #############################
 
   def find_matches
-   
+
     set = User.where.not(id: self.id)
     #.where("age < ? AND age > ?", self.desired_match_trait.max_age, self.desired_match_trait.min_age)
     set = self.reject_wrong_gender(set) if self.desired_match_trait.gender
@@ -204,28 +204,28 @@ class User < ActiveRecord::Base
 
   def reject_wrong_rent(set)
     max_rent_with_cushion = self.max_rent + 200
-    set.where("max_rent <= ?", max_rent_with_cushion) 
+    set.where("max_rent <= ?", max_rent_with_cushion)
   end
 
   def reject_wrong_gender(set)
     your_gender = self.desired_match_trait.gender
-    set.where("users.gender = ?", your_gender) unless your_gender == "Any"
+    your_gender == "Any" ? set : set.where("users.gender = ?", your_gender)
   end
 
   def reject_wrong_age(set)
     min_birth_year = DateTime.now - (self.desired_match_trait.min_age.years - 1.years)
     max_birth_year =  DateTime.now - (self.desired_match_trait.max_age.years + 1.years)
-    set.where("birthdate < ? AND birthdate > ?",min_birth_year, max_birth_year) 
+    set.where("birthdate < ? AND birthdate > ?",min_birth_year, max_birth_year)
   end
 
   def reject_wrong_city(set)
-    set.joins(:desired_match_trait).where("desired_match_traits.city = ?", self.desired_match_trait.city) 
+    set.joins(:desired_match_trait).where("desired_match_traits.city = ?", self.desired_match_trait.city)
   end
 
   def reject_wrong_move_in_date(set)
     min_date = desired_match_trait.move_in_date - 61.days
     max_date = desired_match_trait.move_in_date + 61.days
-    set.joins(:desired_match_trait).where("desired_match_traits.move_in_date > ? AND desired_match_traits.move_in_date < ?", min_date, max_date) 
+    set.joins(:desired_match_trait).where("desired_match_traits.move_in_date > ? AND desired_match_traits.move_in_date < ?", min_date, max_date)
   end
 
  private

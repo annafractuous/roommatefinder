@@ -1,5 +1,5 @@
 app.schedules.controller = {
-  edit: function(event) {
+  edit: function() {
     // schedule question page elements
     var schedule_items = ['work-schedule', 'sleep-schedule', 'bathroom-schedule', 'kitchen-schedule',
     'roommate-work-schedule', 'roommate-sleep-schedule', 'roommate-bathroom-schedule', 'roommate-kitchen-schedule',
@@ -39,6 +39,12 @@ app.schedules.controller = {
         }
         $('.current-question').delay(600).fadeIn(500);
       });
+    });
+  },
+  show: function(){
+    $('a#schedule-section').on("click", function(event){
+      event.preventDefault();
+      alert('hi');
     });
   }
 }

@@ -1,5 +1,5 @@
 app.desired_match_traits.controller = {
-  edit: function(event) {
+  edit: function() {
     // basic info question page elements
     var basic_info_items = ['has-apartment', 'max-rent', 'dealbreakers', 'city-and-move-in',
     'preferred-age', 'preferred-gender', 'submit-basic-info'];
