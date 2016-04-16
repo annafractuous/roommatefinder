@@ -1,25 +1,43 @@
 app.habits.controller = {
   edit: function(event) {
     // habit question page elements
-    var habit_questions = ['partying-habit', 'drinking-habit', 'four-twenty-habit', 'overnight-visitors-habit',
+    var habit_items = ['partying-habit', 'drinking-habit', 'four-twenty-habit', 'overnight-visitors-habit',
     'music-habit', 'roommate-partying-habit', 'roommate-drinking-habit', 'roommate-four-twenty-habit',
     'roommate-overnight-visitors-habit', 'roommate-music-habit', 'submit-habit-questions'];
 
-    habit_questions.forEach(function(element){
+    habit_items.forEach(function(element){
       $('#' + element).hide();
     });
-    $('#' + habit_questions[0]).show();
+    $('#' + habit_items[0]).show();
+    $('#' + habit_items[0]).addClass("current-question");
 
-    habit_questions.forEach(function(element, index, element_arr){
+    habit_items.forEach(function(element, index, element_arr){
       $('#submit-' + element).on("click", function(event){
         event.preventDefault();
         if (index != element_arr.length - 1) {
-          $('#' + element).fadeOut(400);
-          $('#' + element_arr[index + 1]).delay(600).fadeIn(500);
-          if (index === Math.floor(element_arr.length / 2) - 1) {
+          $('.current-question').fadeOut(400);
+          $('.current-question').removeClass("current-question");
+          $('#' + element_arr[index + 1]).addClass("current-question");
+          if ($('.current-question').attr('id').split('-')[0] === "roommate") {
             $('.questions-heading').text("Tell Us About Your Ideal Roommate's Habits");
           }
+          $('.current-question').delay(600).fadeIn(500);
         }
+      });
+    });
+
+    habit_items.forEach(function(element, index, element_arr){
+      $('#go-to-' + element).on("click", function(event){
+        $('.current-question').fadeOut(400);
+        $('.current-question').removeClass("current-question");
+        $('#' + element).addClass("current-question");
+        if ($('.current-question').attr('id').split('-')[0] === "roommate") {
+          $('.questions-heading').text("Tell Us About Your Ideal Roommate's Habits");
+        }
+        else {
+          $('.questions-heading').text("Tell Us About Yourself");
+        }
+        $('.current-question').delay(600).fadeIn(500);
       });
     });
   }

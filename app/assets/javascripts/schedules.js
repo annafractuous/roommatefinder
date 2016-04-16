@@ -1,25 +1,43 @@
 app.schedules.controller = {
   edit: function(event) {
     // schedule question page elements
-    var schedule_questions = ['work-schedule', 'sleep-schedule', 'bathroom-schedule', 'kitchen-schedule',
+    var schedule_items = ['work-schedule', 'sleep-schedule', 'bathroom-schedule', 'kitchen-schedule',
     'roommate-work-schedule', 'roommate-sleep-schedule', 'roommate-bathroom-schedule', 'roommate-kitchen-schedule',
     'submit-schedule-questions'];
 
-    schedule_questions.forEach(function(element){
+    schedule_items.forEach(function(element){
       $('#' + element).hide();
     });
-    $('#' + schedule_questions[0]).show();
+    $('#' + schedule_items[0]).show();
+    $('#' + schedule_items[0]).addClass("current-question");
 
-    schedule_questions.forEach(function(element, index, element_arr){
+    schedule_items.forEach(function(element, index, element_arr){
       $('#submit-' + element).on("click", function(event){
         event.preventDefault();
         if (index != element_arr.length - 1) {
-          $('#' + element).fadeOut(400);
-          $('#' + element_arr[index + 1]).delay(600).fadeIn(500);
-          if (index === Math.floor(element_arr.length / 2) - 1) {
+          $('.current-question').fadeOut(400);
+          $('.current-question').removeClass("current-question");
+          $('#' + element_arr[index + 1]).addClass("current-question");
+          if ($('.current-question').attr('id').split('-')[0] === "roommate") {
             $('.questions-heading').text("Tell Us About Your Ideal Roommate's Schedule");
           }
+          $('.current-question').delay(600).fadeIn(500);
         }
+      });
+    });
+
+    schedule_items.forEach(function(element, index, element_arr){
+      $('#go-to-' + element).on("click", function(event){
+        $('.current-question').fadeOut(400);
+        $('.current-question').removeClass("current-question");
+        $('#' + element).addClass("current-question");
+        if ($('.current-question').attr('id').split('-')[0] === "roommate") {
+          $('.questions-heading').text("Tell Us About Your Ideal Roommate's Schedule");
+        }
+        else {
+          $('.questions-heading').text("Tell Us About Yourself");
+        }
+        $('.current-question').delay(600).fadeIn(500);
       });
     });
   }
