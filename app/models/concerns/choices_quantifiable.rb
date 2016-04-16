@@ -9,7 +9,7 @@ module ChoicesQuantifiable
   module Habit
     # use for drinking, four_twenty, and partying
     def wildness_quantified
-      {1 => "Never", 2 => "Rarely", 3 => "Occasionally", 4 => "Regularly", 5 => "Fear and Loathing"}
+      {1 => "Never", 2 => "Rarely", 3 => "Occasionally", 4 => "Regularly", 5 => "like Fear and Loathing"}
     end
 
     # use for music
@@ -27,9 +27,9 @@ module ChoicesQuantifiable
     def work_schedule_quantified
       {1 => "Unemployed", 2=> "Remote/Freelance", 3 => "9-5", 4 => "Graveyard Shift", 5 => "Workaholic"}
     end
-    
+
     def sleep_schedule_quantified
-      {1 => "Responsible Adult", 2 => "Late Riser", 3 => "Nocturnal", 4 => "Daytime Sleeper", 5 => "Never Sleep"}
+      {1 => "Responsible Adult", 2 => "Late Riser", 3 => "Night Owl", 4 => "Daytime Sleeper", 5 => "Never Sleep"}
     end
 
     def bathroom_schedule_quantified
@@ -37,7 +37,7 @@ module ChoicesQuantifiable
     end
 
     def kitchen_schedule_quantified
-      {1 => "Never Cook", 2 => "Prepared Foods", 3 => "Sometimes", 4 => "Most Nights", 5 => "Anthony Bourdain"}
+      {1 => "Never", 2 => "Prepared Foods", 3 => "Sometimes", 4 => "Most Nights", 5 => "like Anthony Bourdain"}
     end
   end
 end

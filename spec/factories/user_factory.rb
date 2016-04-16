@@ -19,6 +19,8 @@ FactoryGirl.define do
       user.username = "user#{user.id}"
       user.habit = FactoryGirl.create :habit
       user.desired_habit = FactoryGirl.create :desired_habit
+      user.schedule = FactoryGirl.create :schedule
+      user.desired_schedule = FactoryGirl.create :desired_schedule
       user.desired_match_trait = FactoryGirl.create :desired_match_trait
       user.save
     end
@@ -86,13 +88,13 @@ FactoryGirl.define do
   end
 
   factory :desired_schedule do
-    kitchen { rand(1..5) }
+    kitchen { (1..5).to_a.sample(rand(2..4)).join }
     kitchen_importance { rand(1..4) }
-    bathroom { rand(1..5) }
+    bathroom { (1..5).to_a.sample(rand(2..4)).join }
     bathroom_importance { rand(1..4) }
-    work { rand(1..5) }
+    work { (1..5).to_a.sample(rand(2..4)).join }
     work_importance  { rand(1..4) }
-    sleep { rand(1..5) }
+    sleep { (1..5).to_a.sample(rand(2..4)).join }
     sleep_importance  { rand(1..4) }
   end
 

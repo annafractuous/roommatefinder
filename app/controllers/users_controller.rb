@@ -18,6 +18,7 @@
 
 class UsersController < ApplicationController
   before_action :authorize, only: [:edit, :update]
+  include ActionView::Helpers::TextHelper
 
   def new
     @user = User.new
@@ -26,27 +27,28 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      UserMailer.welcome_email(@user).deliver
+      # TEMPORARY FOR DEVELOPMENT, only send email to gmail users
+      if @user.email =~ /gmail\.com\b/
+        UserMailer.welcome_email(@user).deliver_now
+      end
       session[:user_id] = @user.id
-      redirect_to @user, notice: "Welcome to RoomMater!"
+      redirect_to @user, notice: "Welcome to Roominate!"
     else
-      flash[:error] = @user.errors.to_a
+      flash.now[:error] = @user.errors.to_a
       redirect_to signup_path
     end
   end
 
   def show
     @user = User.find(params[:id])
-    @profile_percent_complete = @user.profile_percent_complete
-    @name = @user.display_name
-    @age = @user.convert_age
-    @gender = @user.gender
-    @max_rent = @user.max_rent
-    @dealbreakers = @user.dealbreakers
-    @has_apartment = @user.has_apartment
-    @city = @user.desired_match_trait.city
-    @desired_gender = @user.desired_match_trait.print_desired_gender
-    @desired_age = @user.desired_match_trait.print_desired_age
+    @desired_match_trait = @user.desired_match_trait
+
+    if @user.interested_matches
+      @interested_matches = @user.interested_matches
+      size = @interested_matches.size
+      flash.now[:message] = "#{pluralize(size, 'user')} thinks you could make great roommates!"
+      render :show
+    end
   end
 
   def edit
@@ -58,7 +60,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to @user
     else
-      flash[:error] = @user.errors.to_a
+      flash.now[:error] = @user.errors.to_a
       render :edit
     end
   end

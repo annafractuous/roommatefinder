@@ -1,2 +1,2 @@
 
-<%= f.select method, options_for_select(object.send(quantified_method).map { |k,v| [v,k]}.unshift(["Pick One", 0]), :selected => object.send(method))%><br>
+<%= f.select method, options_for_select(Habit.send(quantified_method).map { |k,v| [v,k]}.unshift(["Pick One", 0]), :selected => object.send(method))%><br>

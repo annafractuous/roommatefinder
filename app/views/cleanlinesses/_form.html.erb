@@ -1,45 +1,54 @@
-
-<%= form_for user,  url: action, method: method do |f| %>
-  <h3>How do you describe yourself</h3>
-  <h4>How Clean are you in the</h4>
-  <%= f.fields_for :cleanliness do |cleanliness_form| %>
-    
-    <!-- dropdown -->
-   <%= cleanliness_form.label :kitchen %>
-   <%= render "dropdown", method: :kitchen, object: user.cleanliness, f: cleanliness_form %>
-
-    <!-- dropdown -->
-    <%= cleanliness_form.label :bathroom %>
-    <%= render "dropdown", method: :bathroom, object: user.cleanliness, f: cleanliness_form %>
-
-    <!-- dropdown -->
-    <%= cleanliness_form.label :common_space %>
-    <%= render "dropdown", method: :common_space, object: user.cleanliness, f: cleanliness_form %>
-  <% end %><br>
-
-  <h3>What answers are acceptable for someone else to respond with</h3>
-  <h4>and how important is their response to you</h4>
-  
-  <%= f.fields_for :desired_cleanliness do |desired_cleanliness_form| %>
-    
-    <!-- checkbox -->
-    <%= desired_cleanliness_form.label :kitchen %>
-    <%= render "checkbox", method: :kitchen, object: user.desired_cleanliness, f: desired_cleanliness_form %>
-    <!-- radio buttons -->
-    <%= render "importance", user: user, method: :kitchen_importance, f: desired_cleanliness_form %>
-
-    <!-- checkbox -->
-    <%= desired_cleanliness_form.label :bathroom %>
-    <%= render "checkbox", method: :bathroom, object: user.desired_cleanliness, f: desired_cleanliness_form %>
-    <!-- radio buttons -->
-    <%= render "importance", user: user, method: :bathroom_importance, f: desired_cleanliness_form %>
-    
-    <!-- checkbox -->
-    <%= desired_cleanliness_form.label :common_space %>
-    <%= render "checkbox", method: :common_space, object: user.desired_cleanliness, f: desired_cleanliness_form %>
-    <!-- radio buttons -->
-    <%= render "importance", user: user, method: :common_space_importance, f: desired_cleanliness_form %>
-  <% end %><br>
-  <%= f.submit "All Set"%>
-<% end %>
-
+<div id="cleanliness-questions">
+  <%= form_for user,  url: action, method: method do |f| %>
+    <h3 class="questions-heading">Tell Us About Yourself</h3>
+    <%= f.fields_for :cleanliness do |cleanliness_form| %>
+      <div id="kitchen-cleanliness">
+        <!-- dropdown -->
+        <%= cleanliness_form.label :kitchen, "How clean are you in the kitchen?" %><br>
+        <%= render "dropdown", method: :kitchen, object: user.cleanliness, f: cleanliness_form %><br>
+        <button role="button" class="btn btn-md btn-primary" id="submit-kitchen-cleanliness">Continue</button>
+      </div>
+      <div id="bathroom-cleanliness">
+        <!-- dropdown -->
+        <%= cleanliness_form.label :bathroom, "How clean do you keep the bathroom?" %><br>
+        <%= render "dropdown", method: :bathroom, object: user.cleanliness, f: cleanliness_form %><br>
+        <button role="button" class="btn btn-md btn-primary" id="submit-bathroom-cleanliness">Continue</button>
+      </div>
+      <div id="common-space-cleanliness">
+        <!-- dropdown -->
+        <%= cleanliness_form.label :common_space, "How tidy are you with common spaces?" %><br>
+        <%= render "dropdown", method: :common_space, object: user.cleanliness, f: cleanliness_form %><br>
+        <button role="button" class="btn btn-md btn-primary" id="submit-common-space-cleanliness">Continue</button>
+      </div>
+    <% end %><br>
+    <%= f.fields_for :desired_cleanliness do |desired_cleanliness_form| %>
+      <div id="roommate-kitchen-cleanliness">
+        <!-- checkbox -->
+        <%= desired_cleanliness_form.label :kitchen, "How clean should your roommate be in the kitchen?" %>
+        <%= render "checkbox", method: :kitchen, object: user.desired_cleanliness, f: desired_cleanliness_form %><br>
+        <!-- radio buttons -->
+        <%= render "importance", user: user, method: :kitchen_importance, f: desired_cleanliness_form %>
+        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-kitchen-cleanliness">Continue</button>
+      </div>
+      <div id="roommate-bathroom-cleanliness">
+        <!-- checkbox -->
+        <%= desired_cleanliness_form.label :bathroom, "How clean should your roommate keep the bathroom?"  %>
+        <%= render "checkbox", method: :bathroom, object: user.desired_cleanliness, f: desired_cleanliness_form %><br>
+        <!-- radio buttons -->
+        <%= render "importance", user: user, method: :bathroom_importance, f: desired_cleanliness_form %>
+        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-bathroom-cleanliness">Continue</button>
+      </div>
+      <div id="roommate-common-space-cleanliness">
+        <!-- checkbox -->
+        <%= desired_cleanliness_form.label :common_space, "How tidy should your roommate keep common areas?"  %>
+        <%= render "checkbox", method: :common_space, object: user.desired_cleanliness, f: desired_cleanliness_form %><br>
+        <!-- radio buttons -->
+        <%= render "importance", user: user, method: :common_space_importance, f: desired_cleanliness_form %>
+        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-common-space-cleanliness">Continue</button>
+      </div>
+    <% end %>
+    <div id="submit-cleanliness-questions">
+      <%= f.submit "All Set", class: "btn btn-lg btn-success" %>
+    </div>
+  <% end %>
+</div>

@@ -1,31 +1,21 @@
 <div class="container">
   <div class="col-sm-8 col-sm-offset-1">
+    <%= render 'layouts/user_header_section', user: @user %>
     <div class="row">
-      <div class="col-sm-6">
-        <h1><%= @user.name %></h1>
-        <p><em><%= @user.has_apartment ? "Has an apartment" : "Looking for an apartment" %></em></p>
-      </div>
-      <div class="col-sm-6">
-        <p><strong>Age:</strong> <%= @user.convert_age %></p>
-        <p><strong>Gender:</strong> <%= @user.gender %></p>
-        <p><small><%= link_to "Edit Your User Info", edit_user_path(@user) %></small></p>
-      </div>
+      <%= render 'layouts/questions_navbar', user: @user %>
     </div>
-    <div class="row">
-      <h4>Your profile is <%= @user.profile_percent_complete %>% complete</h4>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 ">
-        <ul class="nav nav-tabs">
-          <li><%= link_to "Basic Information", edit_user_desired_match_trait_path(@user, @user.desired_match_trait) %></li>
-          <li><%= link_to "Schedule", edit_user_schedule_path(@user, @user.schedule)%></li>
-          <li><%= link_to "Cleanliness", edit_user_cleanliness_path(@user, @user.cleanliness)%></li>
-          <li><%= link_to "Habits", edit_user_habit_path(@user, @user.habit)%></li>
-        </ul>
-      </div>
-    </div>
-    <div class="row">
-      <h1>Cleanliness</h1>
-      <%= render "form", user: @user, method: @method, action: @action %>
+    <ul class="list-inline text-center">
+      <li>Kitchen</li> —
+      <li>Bathroom</li> —
+      <li>Common Areas</li> —
+      <li>Preferred Kitchen</li> —
+      <li>Preferred Bathroom</li> —
+      <li>Preferred Common Areas</li>
+    </ul>
+    <h1>Cleanliness</h1>
+    <%= render "form", user: @user, method: @method, action: @action %>
+  </div>
+  <div class="col-sm-3">
+    <%= render 'layouts/sidebar', desired_match_trait: @desired_match_trait %>
   </div>
 </div>

@@ -12,7 +12,7 @@ private
 
   def authorize
     if !current_user
-      flash[:alert] = "You must be logged in."
+      flash.now[:alert] = "You must be logged in."
       redirect_to login_path
     end
   end

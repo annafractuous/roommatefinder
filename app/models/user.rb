@@ -64,9 +64,9 @@ class User < ActiveRecord::Base
   end
 
   ## show user others who selected that they were interested in a potential roommate match with them ##
-  def notify_me_whos_interested
+  def interested_matches
     connections = MatchConnection.where('match_id = ? AND interested = ?', self.id, true)
-    connections.map{|connection|User.find(connection.user_id)}
+    connections.map { |connection| User.find(connection.user_id) }
   end
 
   ## build user's associated cleanliness, desired cleanliness, etc. on user initialization ##
@@ -183,13 +183,16 @@ class User < ActiveRecord::Base
 
     question_columns.each do |attrb|
       desired_cat = "desired_#{category}".singularize
-      desired_answers = self.send(desired_cat).send(attrb).split('') # "45" => ["4", "5"]
-      importance = self.send(desired_cat).send("#{attrb}_importance")
-      points = conversion_hash[importance]
-      total_possible_points += points
 
-      answer = match.send(category.singularize).send(attrb)
-      points_earned += points if desired_answers.include?(answer.to_s)
+      if self.send(desired_cat).send(attrb)
+        desired_answers = self.send(desired_cat).send(attrb).split('') # "45" => ["4", "5"]
+        importance = self.send(desired_cat).send("#{attrb}_importance")
+        points = conversion_hash[importance]
+        total_possible_points += points
+
+        answer = match.send(category.singularize).send(attrb)
+        points_earned += points if desired_answers.include?(answer.to_s)
+      end
     end
 
     total_possible_points != 0 ? (points_earned / total_possible_points.to_f * 100).to_i : 1

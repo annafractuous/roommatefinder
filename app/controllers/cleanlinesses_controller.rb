@@ -16,6 +16,7 @@ class CleanlinessesController < ApplicationController
 
   def edit
     @user = User.find(params[:user_id])
+    @desired_match_trait = @user.desired_match_trait
     @action = user_cleanliness_path(@user, @user.cleanliness)
     @method = "PATCH"
   end
@@ -26,11 +27,11 @@ class CleanlinessesController < ApplicationController
     desired_cleanliness = @user.desired_cleanliness
 
     stringified_params = desired_answer_params_to_string
-    
+
     if cleanliness.update(cleanliness_params) && desired_cleanliness.update(stringified_params)
       redirect_to user_path(@user)
     else
-      flash[:error] = cleanliness.errors.to_a + desired_cleanliness.errors.to_a
+      flash.now[:error] = cleanliness.errors.to_a + desired_cleanliness.errors.to_a
       @action = user_cleanliness_path(@user, @user.cleanliness)
       @method = "PATCH"
       render :edit
@@ -52,7 +53,7 @@ class CleanlinessesController < ApplicationController
 
     def desired_answer_params_to_string
       question_columns = Cleanliness.user_input_columns
-      question_columns.each do |question| 
+      question_columns.each do |question|
         if desired_cleanliness_params[question]
           desired_cleanliness_params[question] = desired_cleanliness_params[question].join
         end
