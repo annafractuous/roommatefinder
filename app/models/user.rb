@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
+  has_attached_file :photo, styles: { med: "300x300", thumbnail: "32x32", small: "200x200"}
+  validates_attachment_content_type :photo, content_type: /\Aimage/
+  validates_attachment_file_name :photo, matches: [/png\Z/, /jpe?g\Z/]
+  
   has_one :cleanliness
   has_one :desired_cleanliness
   has_one :schedule

@@ -43,10 +43,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @desired_match_trait = @user.desired_match_trait
 
-    if @user.interested_matches
+    if @user.interested_matches.size > 0
       @interested_matches = @user.interested_matches
       size = @interested_matches.size
-      flash.now[:message] = "#{pluralize(size, 'user')} thinks you could make great roommates!"
+      flash.now[:message] = "#{pluralize(size, 'user')} think(s) you could make great roommates!"
       render :show
     end
   end
@@ -68,7 +68,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :username, :name, :birthdate, :gender)
+      params.require(:user).permit(:email, :password, :password_confirmation, :username, :name, :birthdate, :gender, :photo)
     end
 
 end

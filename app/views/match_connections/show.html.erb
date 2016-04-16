@@ -1,7 +1,9 @@
 <h1><%= @match.username %></h1>
 <h2><%= @match.display_name %></h2>
+<%= image_tag(@match.photo.url(:small)) %>
 <p> <%= @match.gender %> </p>
-<P> <%= @match.dealbreakers %> </p>
+<p> <%= @match.dealbreakers %> </p>
+
 
 <div class = "category" id="cleanliness">
 <h2>Cleanliness</h2>

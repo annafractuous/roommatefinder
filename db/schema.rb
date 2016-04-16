@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414144655) do
+ActiveRecord::Schema.define(version: 20160416134003) do
 
   create_table "cleanlinesses", force: :cascade do |t|
     t.datetime "created_at",   null: false
@@ -112,11 +112,15 @@ ActiveRecord::Schema.define(version: 20160414144655) do
     t.string   "gender"
     t.text     "dealbreakers"
     t.boolean  "has_apartment"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "password_digest"
     t.string   "username"
     t.integer  "max_rent"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
 end
