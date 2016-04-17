@@ -43,8 +43,8 @@ app.schedules.controller = {
   },
   show: function(){
     $('a#schedule-section').on("click", function(event){
-      event.preventDefault();
-      alert('hi');
+      // event.preventDefault();
+      // alert('hi');
     });
   }
 }

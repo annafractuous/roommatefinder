@@ -5,25 +5,25 @@
       <div id="partying-habit">
         <!-- dropdown -->
         <%= habit_form.label :partying, "How often do you like having parties?" %><br>
-        <%= render "dropdown", method: :partying, object: user.habit, quantified_method: :wildness_quantified, f: habit_form %><br>
+        <%= render "dropdown", method: :partying, object: user.habit, quantified_method: :partying_quantified, f: habit_form %><br>
         <button role="button" class="btn btn-md btn-primary" id="submit-partying-habit">Continue</button>
       </div>
       <div id="drinking-habit">
         <!-- dropdown -->
         <%= habit_form.label :drinking, "How often do you imbibe?" %><br>
-        <%= render "dropdown", method: :drinking, object: user.habit, quantified_method: :wildness_quantified, f: habit_form %><br>
+        <%= render "dropdown", method: :drinking, object: user.habit, quantified_method: :drinking_quantified, f: habit_form %><br>
         <button role="button" class="btn btn-md btn-primary" id="submit-drinking-habit">Continue</button>
       </div>
       <div id="four-twenty-habit">
         <!-- dropdown -->
         <%= habit_form.label :four_twenty, "How 420-enthusiastic are you? You smoke:" %><br>
-        <%= render "dropdown", method: :four_twenty, object: user.habit, quantified_method: :wildness_quantified, f: habit_form %><br>
+        <%= render "dropdown", method: :four_twenty, object: user.habit, quantified_method: :four_twenty_quantified, f: habit_form %><br>
         <button role="button" class="btn btn-md btn-primary" id="submit-four-twenty-habit">Continue</button>
       </div>
       <div id="overnight-visitors-habit">
         <!-- dropdown -->
         <%= habit_form.label :overnight_visitors, "Overnight visitors: 'my home is my space', or 'open door policy'? You have guests over:" %><br>
-        <%= render "dropdown", method: :overnight_visitors, object: user.habit, quantified_method: :visitors_quantified, f: habit_form %><br>
+        <%= render "dropdown", method: :overnight_visitors, object: user.habit, quantified_method: :overnight_visitors_quantified, f: habit_form %><br>
         <button role="button" class="btn btn-md btn-primary" id="submit-overnight-visitors-habit">Continue</button>
       </div>
       <div id="music-habit">
@@ -37,7 +37,7 @@
       <div id="roommate-partying-habit">
         <!-- checkbox -->
         <%= desired_habit_form.label :partying, "How big of a partier should your roommate be?" %>
-        <%= render "checkbox", method: :partying, object: user.desired_habit, quantified_method: :wildness_quantified, f: desired_habit_form %>
+        <%= render "checkbox", method: :partying, object: user.desired_habit, quantified_method: :partying_quantified, f: desired_habit_form %>
         <!-- radio buttons -->
         <%= render "importance", user: user, method: :partying_importance, f: desired_habit_form %><br>
         <button role="button" class="btn btn-md btn-primary" id="submit-roommate-partying-habit">Continue</button>
@@ -45,7 +45,7 @@
       <div id="roommate-drinking-habit">
         <!-- checkbox -->
         <%= desired_habit_form.label :drinking, "How frequently would your ideal roommate imbibe?" %>
-        <%= render "checkbox", method: :drinking, object: user.desired_habit, quantified_method: :wildness_quantified, f: desired_habit_form %>
+        <%= render "checkbox", method: :drinking, object: user.desired_habit, quantified_method: :drinking_quantified, f: desired_habit_form %>
         <!-- radio buttons -->
         <%= render "importance", user: user, method: :drinking_importance, f: desired_habit_form %><br>
         <button role="button" class="btn btn-md btn-primary" id="submit-roommate-drinking-habit">Continue</button>
@@ -53,7 +53,7 @@
       <div id="roommate-four-twenty-habit">
         <!-- checkbox -->
         <%= desired_habit_form.label :four_twenty, "How 420-friendly should your roommate be?" %>
-        <%= render "checkbox", method: :four_twenty, object: user.desired_habit, quantified_method: :wildness_quantified, f: desired_habit_form %>
+        <%= render "checkbox", method: :four_twenty, object: user.desired_habit, quantified_method: :four_twenty_quantified, f: desired_habit_form %>
         <!-- radio buttons -->
         <%= render "importance", user: user, method: :four_twenty_importance, f: desired_habit_form %><br>
         <button role="button" class="btn btn-md btn-primary" id="submit-roommate-four-twenty-habit">Continue</button>
@@ -61,7 +61,7 @@
       <div id="roommate-overnight-visitors-habit">
         <!-- checkbox -->
         <%= desired_habit_form.label :overnight_visitors, "Your ideal roommate would have visitors over:" %>
-        <%= render "checkbox", method: :overnight_visitors, object: user.desired_habit, quantified_method: :visitors_quantified, f: desired_habit_form %>
+        <%= render "checkbox", method: :overnight_visitors, object: user.desired_habit, quantified_method: :overnight_visitors_quantified, f: desired_habit_form %>
         <!-- radio buttons -->
         <%= render "importance", user: user, method: :overnight_visitors_importance, f: desired_habit_form %><br>
         <button role="button" class="btn btn-md btn-primary" id="submit-roommate-overnight-visitors-habit">Continue</button>
