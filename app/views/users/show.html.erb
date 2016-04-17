@@ -17,7 +17,34 @@
     <%= render 'layouts/sidebar', desired_match_trait: @desired_match_trait %>
   </div>
 
-  <!-- <div class="row">
-    <div class="col-sm-12" padding = 100px></div>
-  </div> -->
+
+
+  </div>
+</div>
+
+ <!-- Modal -->
+<div id="edit-photo-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update Your Profile Picture</h4>
+                </div>
+                <div class="modal-body">
+                  <%= image_tag(@user.photo.url(:small)) %>
+                </div>
+                <div class="modal-footer">
+                    <%= form_for @user, html: { multipart: true } do |f| %>
+    
+                      <%= f.file_field :photo %>
+                      <%= f.submit "Update Photo", class: "btn btn-success"%>
+                    <% end %>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close Window</button>
+                </div>
+            </div>
+
+        </div>
+
 </div>

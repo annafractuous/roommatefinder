@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-4" >
     <%= image_tag(@user.photo.url(:small)) %>
-     <em style="clear: both;" ><%= link_to "edit your picture", edit_user_path(user) %></em>
+     <em style="clear: both;" ><%= link_to "edit your picture", "#edit-photo-modal",  {id: "edit-photo", "data-toggle": "modal", "data-target":"#edit-photo-modal"}%></em>
   </div>
   <div class="col-md-4">
     <h1><%= user.display_name %></h1>

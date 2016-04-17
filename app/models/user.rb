@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  has_attached_file :photo, styles: { med: "300x300", thumbnail: "32x32", small: "200x200"}
+  has_attached_file :photo, styles: { thumbnail: "32x32", small: "200x200"}
   validates_attachment_content_type :photo, content_type: /\Aimage/
   validates_attachment_file_name :photo, matches: [/png\Z/, /jpe?g\Z/]
 
@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   validates_inclusion_of :gender, :in => %w( Male Female Other)
   validates :max_rent, {:numericality => { :greater_than_or_equal_to => 0 }, :on => :update, :if => Proc.new {|c| not c.max_rent.blank?}}
 
-  after_create :create_category_objects
+  after_create :create_category_objects, :assign_blank_profile_pic
 
   ## slug URL ##
   def to_param
@@ -76,6 +76,11 @@ class User < ActiveRecord::Base
   ## build user's associated cleanliness, desired cleanliness, etc. on user initialization ##
   def create_category_objects
     User.question_tables.each { |table| self.send("create_#{table.singularize}") }
+  end
+
+  ## assign a new user a blank profile picture ##
+  def assign_blank_profile_pic
+    self.photo = File.new("../assets/images/blank_user.png")
   end
 
   ## calculate percentage of profile that's complete ##
