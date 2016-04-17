@@ -45,13 +45,6 @@ class UsersController < ApplicationController
 
     if @user.interested_matches.size > 0
       @interested_matches = @user.interested_matches
-      
-      # make sure a match connection object exists in the opposite direction
-      # after a match has shown interest in a user so that the link
-      # to the match show page works
-      @interested_matches.each do |match|
-        MatchConnection.find_or_create_by(user: @user, match: match)
-      end
       size = @interested_matches.size
       flash.now[:message] = "#{pluralize(size, 'user')} think(s) you could make great roommates!"
       render :show

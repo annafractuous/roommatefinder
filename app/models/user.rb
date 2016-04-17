@@ -126,19 +126,23 @@ class User < ActiveRecord::Base
     set = self.reject_wrong_move_in_date(set) if self.desired_match_trait.move_in_date
 
     set.each do |match|
-      category_compat_scores = all_category_compatibility_scores(match) # => [63, 45, 87]
-      compatibility_score = self.calculate_compatibility_score(category_compat_scores)
-      unless compatibility_score <= 1
-        connection = self.match_connections.new(match: match)
-        if !connection.save # e.g. if connection already exists
-          connection = self.match_connection_object_for(match)
-        end
-        connection.compatibility = compatibility_score
-        connection.save
-      end
+      run_match_calculations(match)
     end
 
     self.matches
+  end
+
+  def run_match_calculations(match)
+    category_compat_scores = all_category_compatibility_scores(match) # => [63, 45, 87]
+    compatibility_score = self.calculate_compatibility_score(category_compat_scores)
+    unless compatibility_score <= 1
+      connection = self.match_connections.new(match: match)
+      if !connection.save # e.g. if connection already exists
+        connection = self.match_connection_object_for(match)
+      end
+      connection.compatibility = compatibility_score
+      connection.save
+    end
   end
 
   ## calculate total mutual compatibility ##
