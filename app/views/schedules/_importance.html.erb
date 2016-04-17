@@ -1,5 +1,6 @@
 
 <div class= "importance" id="<%method.to_s%>" >
+<strong>How important is their response to you? </strong><br>
 <% user.desired_schedule.how_important_options.each do |k,v| %>
   <%= f.radio_button method, k %>
   <%= f.label method, v %><br>
