@@ -2,23 +2,19 @@
   <div class="col-sm-8 col-sm-offset-1">
     <%= render 'layouts/user_header_section', user: @user %>
 
-
     <div class="row">
       <%= render 'layouts/questions_navbar', user: @user %>
     </div>
- 
+
     <div class="row">
       <br><br>
       <h4>If you are happy with the information you have provided, continue to see roommates we think could be a good match for you </h4>
       <%= link_to "Show me my matches", user_matches_path(@user), class: "btn btn-lg btn-success", role: "button" %>
     </div>
+
   </div>
   <div class="col-sm-3">
     <%= render 'layouts/sidebar', desired_match_trait: @desired_match_trait %>
-  </div>
-
-
-
   </div>
 </div>
 
@@ -26,25 +22,25 @@
 <div id="edit-photo-modal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Update Your Profile Picture</h4>
-                </div>
-                <div class="modal-body">
-                  <%= image_tag(@user.photo.url(:small)) %>
-                </div>
-                <div class="modal-footer">
-                    <%= form_for @user, html: { multipart: true } do |f| %>
-    
-                      <%= f.file_field :photo %>
-                      <%= f.submit "Update Photo", class: "btn btn-success"%>
-                    <% end %>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close Window</button>
-                </div>
-            </div>
+      <!-- Modal content-->
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Update Your Profile Picture</h4>
+          </div>
+          <div class="modal-body">
+            <%= image_tag(@user.photo.url(:small)) %>
+          </div>
+          <div class="modal-footer">
+              <%= form_for @user, html: { multipart: true } do |f| %>
 
-        </div>
+                <%= f.file_field :photo %>
+                <%= f.submit "Update Photo", class: "btn btn-success"%>
+              <% end %>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close Window</button>
+          </div>
+      </div>
+
+  </div>
 
 </div>

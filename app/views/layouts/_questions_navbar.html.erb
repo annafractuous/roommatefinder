@@ -1,34 +1,34 @@
 <div class="row">
   <ul class="nav nav-tabs">
-    <div class = "col-sm-3 centerBlock"> 
-    <li id="additional-details-tab"> 
+    <div class = "col-sm-3 centerBlock">
+    <li id="additional-details-tab">
       <div class="centerBlock">
          <%= image_tag 'additional.svg', class: "icon white-icon" %><br>
       </div>
       <%= link_to "Basic Information", edit_user_desired_match_trait_path(user, user. desired_match_trait), id: "basic-info-section", class: "centerBlock whiteText" %>
     </div>
   </li>
-  
+
   <div class = "col-sm-3 centerBlock">
-    <li id="schedule-tab"> 
+    <li id="schedule-tab">
       <div class="centerBlock">
         <%= image_tag 'schedule.svg', class: "icon white-icon" %><br>
       </div>
       <%= link_to "Schedule", edit_user_schedule_path(user, user.schedule), id: "schedule-section", class: "centerBlock whiteText" %>
     </div>
   </li>
-  
+
   <div class = "col-sm-3 centerBlock">
-    <li id="cleanliness-tab"> 
+    <li id="cleanliness-tab">
       <div class="centerBlock">
         <%= image_tag 'cleanliness.svg', class: "icon white-icon" %><br>
       </div>
       <%= link_to "Cleanliness", edit_user_cleanliness_path(user, user.cleanliness), id: "cleanliness-section", class: "centerBlock whiteText"%></li>
       </div>
     </li>
-  
+
   <div class = "col-sm-3 centerBlock">
-    <li id="habit-tab"> 
+    <li id="habit-tab">
     <div class="centerBlock">
       <%= image_tag 'habit.svg', class: "icon white-icon" %><br>
     </div>

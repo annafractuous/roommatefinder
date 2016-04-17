@@ -54,6 +54,11 @@ class User < ActiveRecord::Base
     "#{id}-#{username.downcase}"
   end
 
+  ## assign a new user a blank profile picture ##
+  def assign_blank_profile_pic
+    self.photo = File.new("app/assets/images/blank_user.png")
+  end
+
   ## display name as first name and 1st initial of last name ##
   def display_name
     name = self.name.split
@@ -76,11 +81,6 @@ class User < ActiveRecord::Base
   ## build user's associated cleanliness, desired cleanliness, etc. on user initialization ##
   def create_category_objects
     User.question_tables.each { |table| self.send("create_#{table.singularize}") }
-  end
-
-  ## assign a new user a blank profile picture ##
-  def assign_blank_profile_pic
-    self.photo = File.new("../assets/images/blank_user.png")
   end
 
   ## calculate percentage of profile that's complete ##
