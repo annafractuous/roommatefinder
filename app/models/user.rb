@@ -132,6 +132,9 @@ class User < ActiveRecord::Base
     self.matches
   end
 
+  ## had to break this into another method because needs to be run
+  ## on a single match in match_connections_controller when one
+  ## user selects interst in another
   def run_match_calculations(match)
     category_compat_scores = all_category_compatibility_scores(match) # => [63, 45, 87]
     compatibility_score = self.calculate_compatibility_score(category_compat_scores)
