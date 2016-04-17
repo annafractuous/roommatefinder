@@ -1,2 +1,88 @@
-<h1> Welcome to Roominate! </h1>
-<li><%= link_to "Login", login_path %> </li>
+<!-- Header -->
+<header id="top" class="header">
+    <div class="text-vertical-center">
+        <h1>Roominate</h1>
+        <h3>Find Your New Roommate</h3>
+        <br>
+        <%= link_to "Get Started", signup_path, class: "btn btn-lg btn-primary" %>
+    </div>
+</header>
+
+<!-- About -->
+<section id="about" class="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Like OKCupid, but for finding roommates.</h2>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+</section>
+
+<!-- Services -->
+<section id="services" class="services bg-primary">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-10 col-lg-offset-1">
+                <h2>Match Compatibility On:</h2>
+                <hr class="small">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="service-item">
+                            <span class="fa-stack fa-4x">
+                            <%= image_tag 'additional.svg', class: "icon white-icon" %>
+                        </span>
+                            <h4>
+                                <strong>Basic Info</strong>
+                            </h4>
+                            <p>City, maximum rent, age range and gender.</p>
+                            <a href="#" class="btn btn-light">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="service-item">
+                            <span class="fa-stack fa-4x">
+                            <%= image_tag 'schedule.svg', class: "icon white-icon" %>
+                        </span>
+                            <h4>
+                                <strong>Schedule</strong>
+                            </h4>
+                            <p>Work and sleep, plus your peak hours in the bathroom and kitchen.</p>
+                            <a href="#" class="btn btn-light">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="service-item">
+                            <span class="fa-stack fa-4x">
+                            <%= image_tag 'cleanliness.svg', class: "icon white-icon" %>
+                        </span>
+                            <h4>
+                                <strong>Cleanliness</strong>
+                            </h4>
+                            <p>How neat you like the kitchen, bathroom and common areas.</p>
+                            <a href="#" class="btn btn-light">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="service-item">
+                            <span class="fa-stack fa-4x">
+                            <%= image_tag 'habit.svg', class: "icon white-icon" %>
+                        </span>
+                            <h4>
+                                <strong>Habits</strong>
+                            </h4>
+                            <p>Your preferences on guests, parties, drinking and music volume.</p>
+                            <a href="#" class="btn btn-light">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row (nested) -->
+            </div>
+            <!-- /.col-lg-10 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+</section>
