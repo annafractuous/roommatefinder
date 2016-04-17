@@ -1,4 +1,4 @@
-<%= form_for @user, html: { multipart: true } do |f| %>
+<%= form_for @user do |f| %>
   <%= f.label :username %><br>
   <%= f.text_field :username, {required: true} %><br>
   <%= f.label :email %><br>
@@ -16,8 +16,5 @@
   <%= f.label :gender %>
   <%= f.select :gender, ['Male', 'Female', "Other"], {required: true} %><br>
 
-  <%= f.label :photo %>
-  <%= f.file_field :photo %>
-  <br/>
   <%= f.submit %>
 <% end %>
