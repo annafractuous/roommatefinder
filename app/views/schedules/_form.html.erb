@@ -2,67 +2,74 @@
   <%= form_for user,  url: action, method: method do |f| %>
     <%= f.fields_for :schedule do |schedule_form| %>
       <h3 class="questions-heading">Tell Us About Yourself</h3>
-      <div id="work-schedule">
+      <div class="question-div" id="work-schedule">
         <!-- dropdown -->
         <%= schedule_form.label :work, "What's your work schedule?" %><br>
         <%= render "dropdown", method: :work, object: user.schedule, quantified_method: :work_schedule_quantified, f: schedule_form %><br>
-        <button role="button" class="btn btn-md btn-primary" id="submit-work-schedule">Continue</button>
+        <center><button role="button" class="btn btn-md btn-primary" id="submit-work-schedule">Continue</button></center>
       </div>
-      <div id="sleep-schedule">
+      <div class="question-div" id="sleep-schedule">
         <!-- dropdown -->
         <%= schedule_form.label :sleep, "What's your sleep schedule?" %><br>
         <%= render "dropdown", method: :sleep, object: user.schedule, quantified_method: :sleep_schedule_quantified, f: schedule_form %><br>
-        <button role="button" class="btn btn-md btn-primary" id="submit-sleep-schedule">Continue</button>
+        <center><button role="button" class="btn btn-md btn-info" id="back-sleep-schedule">Back</button>
+        <button role="button" class="btn btn-md btn-primary" id="submit-sleep-schedule">Continue</button></center>
       </div>
-      <div id="bathroom-schedule">
+      <div class="question-div" id="bathroom-schedule">
         <!-- dropdown -->
         <%= schedule_form.label :bathroom, "What's your peak bathroom time?" %><br>
         <%= render "dropdown", method: :bathroom, object: user.schedule, quantified_method: :bathroom_schedule_quantified, f: schedule_form %><br>
-        <button role="button" class="btn btn-md btn-primary" id="submit-bathroom-schedule">Continue</button>
+        <center><button role="button" class="btn btn-md btn-info" id="back-bathroom-schedule">Back</button>
+        <button role="button" class="btn btn-md btn-primary" id="submit-bathroom-schedule">Continue</button></center>
       </div>
-      <div id="kitchen-schedule">
+      <div class="question-div" id="kitchen-schedule">
         <!-- dropdown -->
         <%= schedule_form.label :kitchen, "How much time do you spend in the kitchen?" %><br>
         <%= render "dropdown", method: :kitchen, object: user.schedule, quantified_method: :kitchen_schedule_quantified, f: schedule_form %><br>
-        <button role="button" class="btn btn-md btn-primary" id="submit-kitchen-schedule">Continue</button>
+        <center><button role="button" class="btn btn-md btn-info" id="back-kitchen-schedule">Back</button>
+        <button role="button" class="btn btn-md btn-primary" id="submit-kitchen-schedule">Continue</button></center>
       </div>
     <% end %><br>
 
     <%= f.fields_for :desired_schedule do |desired_schedule_form| %>
-      <div id="roommate-work-schedule">
+      <div class="question-div" id="roommate-work-schedule">
         <!-- checkbox -->
         <%= desired_schedule_form.label :work, "Your ideal roommate's work schedule is:" %>
         <%= render "checkbox", method: :work, object: user.desired_schedule, quantified_method: :work_schedule_quantified, f: desired_schedule_form %><br>
         <!-- radio buttons -->
         <%= render "importance", user: user, method: :work_importance, f: desired_schedule_form %>
-        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-work-schedule">Continue</button>
+        <center><button role="button" class="btn btn-md btn-info" id="back-roommate-work-schedule">Back</button>
+        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-work-schedule">Continue</button></center>
       </div>
-      <div id="roommate-sleep-schedule">
+      <div class="question-div" id="roommate-sleep-schedule">
         <!-- checkbox -->
         <%= desired_schedule_form.label :sleep, "Your ideal roommate's sleep schedule is:" %>
         <%= render "checkbox", method: :sleep, object: user.desired_schedule, quantified_method: :sleep_schedule_quantified, f: desired_schedule_form %><br>
         <!-- radio buttons -->
         <%= render "importance", user: user, method: :sleep_importance, f: desired_schedule_form %>
-        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-sleep-schedule">Continue</button>
+        <center><button role="button" class="btn btn-md btn-info" id="back-roommate-sleep-schedule">Back</button>
+        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-sleep-schedule">Continue</button></center>
       </div>
-      <div id="roommate-bathroom-schedule">
+      <div class="question-div" id="roommate-bathroom-schedule">
         <!-- checkbox -->
         <%= desired_schedule_form.label :bathroom, "You'd prefer a roommate whose peak bathroom hours are:" %>
         <%= render "checkbox", method: :bathroom, object: user.desired_schedule, quantified_method: :bathroom_schedule_quantified, f: desired_schedule_form %><br>
         <!-- radio buttons -->
         <%= render "importance", user: user, method: :bathroom_importance, f: desired_schedule_form %>
-        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-bathroom-schedule">Continue</button>
+        <center><button role="button" class="btn btn-md btn-info" id="back-roommate-bathroom-schedule">Back</button>
+        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-bathroom-schedule">Continue</button></center>
       </div>
-      <div id="roommate-kitchen-schedule">
+      <div class="question-div" id="roommate-kitchen-schedule">
         <!-- checkbox -->
         <%= desired_schedule_form.label :kitchen, "You'd prefer a roommate who cooks:" %>
         <%= render "checkbox", method: :kitchen, object: user.desired_schedule, quantified_method: :kitchen_schedule_quantified, f: desired_schedule_form %><br>
         <!-- radio buttons -->
         <%= render "importance", user: user, method: :kitchen_importance, f: desired_schedule_form %>
-        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-kitchen-schedule">Continue</button>
+        <center><button role="button" class="btn btn-md btn-info" id="back-roommate-kitchen-schedule">Back</button>
+        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-kitchen-schedule">Continue</button></center>
       </div>
-      <div id="submit-schedule-questions">
-        <%= f.submit "All Set", class: "btn btn-lg btn-success" %>
+      <div class="question-div" id="submit-schedule-questions">
+        <center><%= f.submit "All Set", class: "btn btn-lg btn-success" %></center>
       </div>
     <% end %>
   <% end %>

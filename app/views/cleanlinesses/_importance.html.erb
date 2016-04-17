@@ -1,6 +1,8 @@
+<br>
 <div class= "importance" id="<%method.to_s%>" >
-<strong>How important is their response to you? </strong><br>
-<% user.desired_cleanliness.how_important_options.each do |k,v| %>
-  <%= f.radio_button method, k %>
-  <%= f.label method, v %><br>
-<% end%></div><br>
+  <label>How important is their response to you? </label><br>
+  <% user.desired_cleanliness.how_important_options.each do |k,v| %>
+    <%= f.radio_button method, k %>
+    <%= f.label method, v, class: "checkbox-option" %><br>
+  <% end%>
+</div><br>

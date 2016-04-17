@@ -13,12 +13,20 @@ app.desired_match_traits.controller = {
     basic_info_items.forEach(function(element, index, element_arr){
       $('#submit-' + element).on("click", function(event){
         event.preventDefault();
-        if (index != element_arr.length - 1) {
-          $('.current-question').fadeOut(400);
-          $('.current-question').removeClass("current-question");
-          $('#' + element_arr[index + 1]).addClass("current-question");
-          $('.current-question').delay(600).fadeIn(500);
-        }
+        $('.current-question').fadeOut(400);
+        $('.current-question').removeClass("current-question");
+        $('#' + element_arr[index + 1]).addClass("current-question");
+        $('.current-question').delay(600).fadeIn(500);
+      });
+    });
+
+    basic_info_items.forEach(function(element, index, element_arr){
+      $('#back-' + element).on("click", function(event){
+        event.preventDefault();
+        $('.current-question').fadeOut(400);
+        $('.current-question').removeClass("current-question");
+        $('#' + element_arr[index - 1]).addClass("current-question");
+        $('.current-question').delay(600).fadeIn(500);
       });
     });
 
