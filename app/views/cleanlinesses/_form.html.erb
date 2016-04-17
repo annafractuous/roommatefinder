@@ -2,53 +2,58 @@
   <%= form_for user,  url: action, method: method do |f| %>
     <h3 class="questions-heading">Tell Us About Yourself</h3>
     <%= f.fields_for :cleanliness do |cleanliness_form| %>
-      <div id="kitchen-cleanliness">
+      <div class="question-div" id="kitchen-cleanliness">
         <!-- dropdown -->
         <%= cleanliness_form.label :kitchen, "How clean are you in the kitchen?" %><br>
         <%= render "dropdown", method: :kitchen, object: user.cleanliness, f: cleanliness_form %><br>
-        <button role="button" class="btn btn-md btn-primary" id="submit-kitchen-cleanliness">Continue</button>
+        <center><button role="button" class="btn btn-md btn-primary" id="submit-kitchen-cleanliness">Continue</button></center>
       </div>
-      <div id="bathroom-cleanliness">
+      <div class="question-div" id="bathroom-cleanliness">
         <!-- dropdown -->
         <%= cleanliness_form.label :bathroom, "How clean do you keep the bathroom?" %><br>
         <%= render "dropdown", method: :bathroom, object: user.cleanliness, f: cleanliness_form %><br>
-        <button role="button" class="btn btn-md btn-primary" id="submit-bathroom-cleanliness">Continue</button>
+        <center><button role="button" class="btn btn-md btn-info" id="back-bathroom-cleanliness">Back</button>
+        <button role="button" class="btn btn-md btn-primary" id="submit-bathroom-cleanliness">Continue</button></center>
       </div>
-      <div id="common-space-cleanliness">
+      <div class="question-div" id="common-space-cleanliness">
         <!-- dropdown -->
         <%= cleanliness_form.label :common_space, "How tidy are you with common spaces?" %><br>
         <%= render "dropdown", method: :common_space, object: user.cleanliness, f: cleanliness_form %><br>
-        <button role="button" class="btn btn-md btn-primary" id="submit-common-space-cleanliness">Continue</button>
+        <center><button role="button" class="btn btn-md btn-info" id="back-common-space-cleanliness">Back</button>
+        <button role="button" class="btn btn-md btn-primary" id="submit-common-space-cleanliness">Continue</button></center>
       </div>
     <% end %><br>
     <%= f.fields_for :desired_cleanliness do |desired_cleanliness_form| %>
-      <div id="roommate-kitchen-cleanliness">
+      <div class="question-div" id="roommate-kitchen-cleanliness">
         <!-- checkbox -->
         <%= desired_cleanliness_form.label :kitchen, "How clean should your roommate be in the kitchen?" %>
         <%= render "checkbox", method: :kitchen, object: user.desired_cleanliness, f: desired_cleanliness_form %><br>
         <!-- radio buttons -->
         <%= render "importance", user: user, method: :kitchen_importance, f: desired_cleanliness_form %>
-        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-kitchen-cleanliness">Continue</button>
+        <center><button role="button" class="btn btn-md btn-info" id="back-roommate-kitchen-cleanliness">Back</button>
+        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-kitchen-cleanliness">Continue</button></center>
       </div>
-      <div id="roommate-bathroom-cleanliness">
+      <div class="question-div" id="roommate-bathroom-cleanliness">
         <!-- checkbox -->
         <%= desired_cleanliness_form.label :bathroom, "How clean should your roommate keep the bathroom?"  %>
         <%= render "checkbox", method: :bathroom, object: user.desired_cleanliness, f: desired_cleanliness_form %><br>
         <!-- radio buttons -->
         <%= render "importance", user: user, method: :bathroom_importance, f: desired_cleanliness_form %>
-        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-bathroom-cleanliness">Continue</button>
+        <center><button role="button" class="btn btn-md btn-info" id="back-roommate-bathroom-cleanliness">Back</button>
+        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-bathroom-cleanliness">Continue</button></center>
       </div>
-      <div id="roommate-common-space-cleanliness">
+      <div class="question-div" id="roommate-common-space-cleanliness">
         <!-- checkbox -->
         <%= desired_cleanliness_form.label :common_space, "How tidy should your roommate keep common areas?"  %>
         <%= render "checkbox", method: :common_space, object: user.desired_cleanliness, f: desired_cleanliness_form %><br>
         <!-- radio buttons -->
         <%= render "importance", user: user, method: :common_space_importance, f: desired_cleanliness_form %>
-        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-common-space-cleanliness">Continue</button>
+        <center><button role="button" class="btn btn-md btn-info" id="back-roommate-common-space-cleanliness">Back</button>
+        <button role="button" class="btn btn-md btn-primary" id="submit-roommate-common-space-cleanliness">Continue</button></center>
       </div>
     <% end %>
-    <div id="submit-cleanliness-questions">
-      <%= f.submit "All Set", class: "btn btn-lg btn-success" %>
+    <div class="question-div" id="submit-cleanliness-questions">
+      <center><%= f.submit "All Set", class: "btn btn-lg btn-success" %></center>
     </div>
   <% end %>
 </div>
