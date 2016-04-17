@@ -6,10 +6,11 @@
 
   <div>
       <% if @interested_matches%>
-        <h3>You have new potential roommates!</h3>
+        <h3>Roominaters who are interested in you:</h3>
         <% @interested_matches.each do |match|%>
+          <%= image_tag(match.photo.url(:thumbnail)) %>
           <%= link_to "#{match.display_name}", user_match_path(@user, match)%>
-          <p> Send an email: <strong><%=match.email %></strong> </p>
+          <p> Send them an email: <strong><%=match.email %></strong> </p>
         <% end %>
       <% end %>
     </div>
