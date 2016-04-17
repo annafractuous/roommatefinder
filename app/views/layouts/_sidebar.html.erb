@@ -8,7 +8,7 @@
       <% if @interested_matches%>
         <h3>You have new potential roommates!</h3>
         <% @interested_matches.each do |match|%>
-          <%= match.display_name %> <br>
+          <%= link_to "#{match.display_name}", user_match_path(@user, match)%>
           <p> Send an email: <strong><%=match.email %></strong> </p>
         <% end %>
       <% end %>

@@ -33,11 +33,11 @@ class MatchConnectionsController < ApplicationController
     @user = current_user
     @total_compatibility = @user.compatibility_with(@match)
     @match_cleanliness = @match.cleanliness.convert_cleanliness(@match.cleanliness)
-    @cleanliness_compatibility = @user.compatibility_percentage_per_category("cleanliness", @match)
+    @cleanliness_compatibility = @user.mutual_compatibility_score_per_category("cleanliness", @match)
     @match_schedule = @match.schedule.convert_schedule(@match.schedule)
-    @schedule_compatibility = @user.compatibility_percentage_per_category("schedule", @match)
+    @schedule_compatibility = @user.mutual_compatibility_score_per_category("schedule", @match)
     @match_habit = @match.habit.convert_habit(@match.habit)
-    @habit_compatibility = @user.compatibility_percentage_per_category("habit", @match)
+    @habit_compatibility = @user.mutual_compatibility_score_per_category("habit", @match)
   
   end
 
@@ -47,7 +47,7 @@ class MatchConnectionsController < ApplicationController
     @user = current_user
     @match_connection = @user.match_connection_object_for(@match)
     if @match_connection.update(interested: true)
-      redirect_to user_match_path(@user, @match), notice: "You've sent a message to #{@user.username}."
+      redirect_to user_match_path(@user, @match), notice: "You've sent a message to #{@match.username}."
     else
       render :show
     end
