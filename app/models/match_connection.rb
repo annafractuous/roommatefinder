@@ -17,7 +17,12 @@ class MatchConnection < ActiveRecord::Base
   validates_uniqueness_of :user_id, :scope => :match_id
 
   def self.most_popular_users
-    self.where(interested: true).group(:match_id).first(3).map { |connection| connection.match}
+    # edge case for first ever user to click find_matches
+    if MatchConnection.all.size > 0
+      self.where(interested: true).group(:match_id).first(3).map { |connection| connection.match}
+    else
+      User.all.sample(3)
+    end
   end
 
 
