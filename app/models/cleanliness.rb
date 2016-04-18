@@ -26,4 +26,13 @@ class Cleanliness < ActiveRecord::Base
     cleanliness_hash
   end
 
+  def self.print_category_score(user, match)
+    score = user.mutual_compatibility_score_per_category(self.name.downcase, match)
+    if score == -1
+      "One of you hasn't answered any questions in this category"
+    else
+      "You are #{score}% compatible in this category!"
+    end
+  end
+
 end

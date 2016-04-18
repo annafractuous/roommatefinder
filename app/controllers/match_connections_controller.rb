@@ -20,6 +20,7 @@ class MatchConnectionsController < ApplicationController
     @user.find_matches
     connections = MatchConnection.where("user_id = ? AND compatibility >= ?", @user.id, 25).order(compatibility: :desc)
     @matches = connections.map { |connection| connection.match }
+    @mutually_interested_matches = @user.mutually_interested_matches
     if @matches.size == 0
       @top_users = MatchConnection.most_popular_users
       @top_users.each do |match|
@@ -36,29 +37,39 @@ class MatchConnectionsController < ApplicationController
     @total_compatibility = @user.compatibility_with(@match)
 
     @match_cleanliness = @match.cleanliness.convert_cleanliness(@match.cleanliness)
-    @cleanliness_compatibility = @user.mutual_compatibility_score_per_category("cleanliness", @match)
+    @cleanliness_compatibility = Cleanliness.print_category_score(@user, @match)
     
     @match_schedule = @match.schedule.convert_schedule(@match.schedule)
-    @schedule_compatibility = @user.mutual_compatibility_score_per_category("schedule", @match)
+    @schedule_compatibility = Schedule.print_category_score(@user, @match)
     
     @match_habit = @match.habit.convert_habit(@match.habit)
-    @habit_compatibility = @user.mutual_compatibility_score_per_category("habit", @match)
-  
+    @habit_compatibility = Habit.print_category_score(@user, @match)
+    
   end
 
 
   def update
+<<<<<<< HEAD
    
+=======
+    binding.pry
+>>>>>>> d4b8552cb932b9fdf1cc853d92b6a1507bcfcf75
     @match = User.find(params[:match_id])
     @user = current_user
     @match_connection = @user.match_connection_object_for(@match)
-    if @match_connection.update(interested: true)
+    if @match_connection.update
       # create the opposite match so user can click link to this users match show page
       connection = MatchConnection.find_or_create_by(user_id: @match.id, match_id: @user.id)
       @match.run_match_calculations(@user)
-      redirect_to user_match_path(@user, @match), notice: "You've sent a message to #{@match.username}."
+      redirect_to user_match_path(@user, @match), notice: "You've sent a message to #{@match.display_name}."
     else
       render :show
     end
+  end
+
+  private
+
+  def match_connection_params
+    params.require(:match_connection).permit(:interested)
   end
 end

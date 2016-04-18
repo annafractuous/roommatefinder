@@ -1,16 +1,9 @@
-app.user.controller = {
+app.users.controller = {
   init: {
-    $.ajax({
-      // url: '/boards/'+ window.location.href.substring(29),
-      // method: 'GET',
-      // dataType: "JSON",
-      // success: (function(data){
-
-      })
   }
 }
 
-app.user.model = {
+app.users.model = {
   new: (function(){
     function User(name, username, email, birthdate, gender, dealbreakers, has_apartment, max_rent, photo){
       this.name = name;
@@ -26,5 +19,3 @@ app.user.model = {
     return User;
   })()
 }
-
-

@@ -86,7 +86,9 @@ class User < ActiveRecord::Base
   end
 
   def mutually_interested_matches
+
     self.interested_matches.select{|match| self.mutually_interested_match?(match)}
+
   end
 
   def mutually_interested_match?(match)
@@ -94,7 +96,7 @@ class User < ActiveRecord::Base
   end
 
   def is_interested(match)
-    MatchConnection.where('match_id = ? AND user_id = ? AND interested = ?',match.id ,self.id, true).size > 0
+    MatchConnection.where('match_id = ? AND user_id = ? AND interested = ?', match.id, self.id, true).size > 0
   end
 
   ## build user's associated cleanliness, desired cleanliness, etc. on user initialization ##
@@ -154,8 +156,9 @@ class User < ActiveRecord::Base
   ## user selects interst in another
   def run_match_calculations(match)
     category_compat_scores = all_category_compatibility_scores(match) # => [63, 45, 87]
+    category_compat_scores = blank_category_sanitizer(category_compat_scores)
     compatibility_score = self.calculate_compatibility_score(category_compat_scores)
-    
+
     connection = self.match_connections.find_or_create_by(match: match)
     connection.compatibility = compatibility_score
     connection.save
@@ -183,11 +186,7 @@ class User < ActiveRecord::Base
     categories = User.question_tables.reject { |table| table.starts_with?("desired") }
     # => ["cleanlinesses", "habits", "schedules"]
     categories.each_with_object([]) do |category, compat_scores|
-      if self.send(category.singularize).all_input_columns_nil?
-        compat_scores << 0
-      else
-        compat_scores << self.mutual_compatibility_score_per_category(category, match)
-      end
+      compat_scores << self.mutual_compatibility_score_per_category(category, match)
     end
   end
 
@@ -196,7 +195,12 @@ class User < ActiveRecord::Base
     user_to_match_percentage = self.compatibility_percentage_per_category(category, match)
     match_to_user_percentage = match.compatibility_percentage_per_category(category, self)
 
-    compatibility = Math.sqrt(user_to_match_percentage * match_to_user_percentage).to_i
+    if user_to_match_percentage == -1 || match_to_user_percentage == -1
+       # -1 is a flag that the category has not been filled out at all
+      return -1
+    else
+      compatibility = Math.sqrt(user_to_match_percentage * match_to_user_percentage).to_i
+    end
   end
 
   ## check one-way compatibility for a single category ##
@@ -209,25 +213,42 @@ class User < ActiveRecord::Base
 
     table = Object.const_get(category.classify) # e.g. Cleanliness table
     
-   
-
+    if self.send(category.singularize).all_input_columns_nil?
+      # -1 is a flag that the category has not been filled out at all
+      return -1
+    else
       question_columns = table.user_input_columns
       # => ["kitchen", "bathroom", "common_space"]
       question_columns.each do |attrb|
         desired_cat = "desired_#{category}".singularize
-  
+
         if self.send(desired_cat).send(attrb)
           desired_answers = self.send(desired_cat).send(attrb).split('') # "45" => ["4", "5"]
           importance = self.send(desired_cat).send("#{attrb}_importance")
           points = conversion_hash[importance]
           total_possible_points += points
-  
+
           answer = match.send(category.singularize).send(attrb)
           points_earned += points if desired_answers.include?(answer.to_s)
         end
       end
-
       total_possible_points != 0 ? (points_earned / total_possible_points.to_f * 100).to_i : 1
+    end
+  end
+
+
+  def blank_category_sanitizer(scores_array)
+    scores_array.reject! { |score| score == -1 }
+    if scores_array.size == 0
+      scores_array = [1]
+      scores_array
+    elsif scores_array.size <= 2
+      # penalty applied to score if you havent filled out all categories
+      scores_array.map { |score| (score * 0.33).to_i}
+    else
+      scores_array
+    end
+
   end
 
   def reject_wrong_rent(set)

@@ -30,7 +30,7 @@
         <%= image_tag 'cleanliness.svg', class: "icon" %><br>
       </div>
       <h2>Cleanliness</h2>
-      <h4>You are <%=@habit_compatibility%>% compatible in this category!</h4>
+      <h4><%=@cleanliness_compatibility%></h4>
       <%@match_cleanliness.each do |key, value| %>
         <%key = key.split('_').join(" ")%>
         <p> <%=key.capitalize%>: <%=value%></p>
@@ -44,7 +44,7 @@
         <%= image_tag 'schedule.svg', class: "icon" %><br>
       </div>
       <h2>Schedule</h2>
-      <h4>You are <%=@schedule_compatibility%>% compatible in this category!</h4>
+      <h4><%=@schedule_compatibility%></h4>
       <% @match_schedule.each do |key, value| %>
          <p> <%=key.capitalize%>: <%=value%></p>
       <% end %>
@@ -57,7 +57,7 @@
         <%= image_tag 'habit.svg', class: "icon" %><br>
       </div>
       <h2>Habits</h2>
-      <h4>You are <%=@habit_compatibility%>% compatible in this category!</h4>
+      <h4><%=@habit_compatibility%></h4>
       <% @match_habit.each do |key, value| %>
         <%key = key.split('_').join(" ")%>
         <p> <%=key.capitalize%>: <%=value%></p>
