@@ -41,14 +41,14 @@ class MatchConnectionsController < ApplicationController
     @total_compatibility = @user.compatibility_with(@match)
 
     @match_cleanliness = @match.cleanliness.convert_cleanliness(@match.cleanliness)
-    @cleanliness_compatibility = @user.mutual_compatibility_score_per_category("cleanliness", @match)
-
+    @cleanliness_compatibility = Cleanliness.print_category_score(@user, @match)
+    
     @match_schedule = @match.schedule.convert_schedule(@match.schedule)
-    @schedule_compatibility = @user.mutual_compatibility_score_per_category("schedule", @match)
-
+    @schedule_compatibility = Schedule.print_category_score(@user, @match)
+    
     @match_habit = @match.habit.convert_habit(@match.habit)
-    @habit_compatibility = @user.mutual_compatibility_score_per_category("habit", @match)
-
+    @habit_compatibility = Habit.print_category_score(@user, @match)
+    
   end
 
 

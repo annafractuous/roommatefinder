@@ -40,7 +40,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    binding.pry
     @user = User.find(params[:id])
     @desired_match_trait = @user.desired_match_trait
 
