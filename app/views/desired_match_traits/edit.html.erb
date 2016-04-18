@@ -1,15 +1,10 @@
-<<<<<<< HEAD
-  <div id="basicInfoShow">
-=======
+
+
 <div class="container body">
   <div class="col-sm-8 ">
-    <%= render 'layouts/user_header_section', user: @user %>
-    <div class="row">
-      <%= render 'layouts/questions_navbar', user: @user %>
-    </div>
->>>>>>> 10a8ec409a0e417cfd7fd02403a603cf20237440
-    <h2>Basic Information</h2>
-    <ul class="list-inline navigate-category-questions">
+      <div id="basicInfoShow">
+      <h2>Basic Information</h2>
+      <ul class="list-inline navigate-category-questions">
       <strong>You:</strong>
       <li id="go-to-has-apartment">Apartment Status</li> —
       <li id="go-to-max-rent">Max Rent</li> —
@@ -18,14 +13,8 @@
       <strong>Your Ideal Roommate:</strong>
       <li id="go-to-preferred-age">Age</li> —
       <li id="go-to-preferred-gender">Gender</li>
-    </ul>
-    <%= render "form", user: @user, method: @method, action: @action %>
-  </div>
-<<<<<<< HEAD
-  
-=======
-  <div class="col-sm-4">
-    <%= render 'layouts/sidebar', desired_match_trait: @desired_match_trait %>
+      </ul>
+      <%= render "form", user: @user, method: @method, action: @action %>
+      </div>
   </div>
 </div>
->>>>>>> 10a8ec409a0e417cfd7fd02403a603cf20237440
