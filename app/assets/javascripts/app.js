@@ -3,7 +3,8 @@ app = {
   cleanlinesses: {},
   schedules: {},
   habits: {},
-  users: {}
+  users: {},
+  match_connections: {}
 };
 
 $(function() {
@@ -13,7 +14,7 @@ $(function() {
   //   $('.email').toggle();
   // });
 
-  
+
 
   app.desired_match_traits.controller.edit();
   app.schedules.controller.edit();
@@ -21,5 +22,6 @@ $(function() {
   app.habits.controller.edit();
 
   app.schedules.controller.show();
+  app.match_connections.controller.show();
 
 });
