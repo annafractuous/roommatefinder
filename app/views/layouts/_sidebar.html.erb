@@ -17,8 +17,15 @@
         <%= match.convert_age %>, <%= match.gender %> <br>
         $<%= match.max_rent %> max. rent <br><br>
         <!-- <p> Send an email: <strong><%=match.email %></strong></p> -->
-        <%= link_to "No Thanks", '#', method: 'PATCH', class: "btn btn-sm btn-info" %>
-        <%= link_to "I'm Interested", user_match_path(@user, match), method: 'PATCH', class: "btn btn-sm btn-success" %>
+        <%= form_for @user.match_connection_object_for(match), url: user_match_path(@user, match), method: 'PATCH' do |f| %>
+          <%= f.hidden_field :interested, value: false %>
+          <%= f.submit "No Thanks", class: "btn btn-sm btn-info" %>
+        <% end %>
+        <%= form_for @user.match_connection_object_for(match), url: user_match_path(@user, match), method: 'PATCH' do |f| %>
+          <%= f.hidden_field :interested, value: true %>
+          <%= f.submit "I'm Interested", class: "btn btn-sm btn-success" %>
+        <% end %>
+
       </div>
     <% end %>
   </div>

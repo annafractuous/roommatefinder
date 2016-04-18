@@ -22,11 +22,8 @@ class SchedulesController < ApplicationController
     @interested_matches = @user.interested_matches if @user.interested_matches.size > 0
     @action = user_schedule_path(@user, @user.schedule)
     @method = "PATCH"
-   
-     render :edit, :layout => false
 
-# render json with jquer + rails
-# render view without layout
+   render :edit, :layout => false
   end
 
   def update

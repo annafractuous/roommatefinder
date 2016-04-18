@@ -48,22 +48,23 @@ class MatchConnectionsController < ApplicationController
 
     @match_habit = @match.habit.convert_habit(@match.habit)
     @habit_compatibility = @user.mutual_compatibility_score_per_category("habit", @match)
-
   end
 
 
   def update
-    binding.pry
     @match = User.find(params[:match_id])
     @user = current_user
-    @match_connection = @user.match_connection_object_for(@match)
-    if @match_connection.update
-      # create the opposite match so user can click link to this users match show page
-      connection = MatchConnection.find_or_create_by(user_id: @match.id, match_id: @user.id)
-      @match.run_match_calculations(@user)
-      redirect_to user_match_path(@user, @match), notice: "You've sent a message to #{@match.display_name}."
-    else
-      render :show
+    @user_to_match_connection = @user.match_connection_object_for(@match)
+    match_to_user_connection = MatchConnection.find_or_create_by(user_id: @match.id, match_id: @user.id)
+
+    if @user_to_match_connection.update(match_connection_params)
+      if params[:match_connection][:interested] == "true"
+        @match.run_match_calculations(@user)
+        render "users/show", notice: "You've sent a message to #{@match.display_name}. You can see this match now at the top of your matches page."
+      else
+        binding.pry
+        redirect_to user_path(@user), notice: "You've removed this person from your potential matches sidebar."
+      end
     end
   end
 
