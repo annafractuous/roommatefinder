@@ -79,13 +79,17 @@ class User < ActiveRecord::Base
     connections.map { |connection| User.find(connection.user_id) }
   end
 
-   def mutually_interested_match?(match)
-    self.is_interested(match) && match.is_interested(self)
-   end
+  def mutually_interested_matches
+    
+  end
 
-   def is_interested(match)
+  def mutually_interested_match?(match)
+    self.is_interested(match) && match.is_interested(self)
+  end
+
+  def is_interested(match)
     MatchConnection.where('match_id = ? AND user_id = ? AND interested = ?',match.id ,self.id, true).size > 0
-   end
+  end
 
   ## build user's associated cleanliness, desired cleanliness, etc. on user initialization ##
   def create_category_objects
