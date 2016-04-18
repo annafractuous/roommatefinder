@@ -83,7 +83,6 @@ class User < ActiveRecord::Base
     self.matches.select { |m| self.mutually_interested_match?(m) }
   end
 
-
   def mutually_interested_match?(match)
     self.is_interested(match) && match.is_interested(self)
   end
