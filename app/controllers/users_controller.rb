@@ -42,7 +42,6 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @desired_match_trait = @user.desired_match_trait
-
     @interested_matches = @user.interested_matches if @user.interested_matches.size > 0
   end
 
