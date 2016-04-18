@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  has_attached_file :photo, styles: { thumbnail: "32x32", small: "200x200"}
+  has_attached_file :photo, styles: { small: "200x200"}
   validates_attachment_content_type :photo, content_type: /\Aimage/
   validates_attachment_file_name :photo, matches: [/png\Z/, /jpe?g\Z/]
 
@@ -123,11 +123,9 @@ class User < ActiveRecord::Base
  ############################# MATCHING ALGORITHMS #############################
 
   def find_matches
-
     set = User.where.not(id: self.id)
 
     set = self.reject_wrong_gender(set) if self.desired_match_trait.gender
-
     set = self.reject_wrong_rent(set) if self.max_rent
     set = self.reject_wrong_age(set) if self.desired_match_trait.min_age && self.desired_match_trait.max_age
     set = self.reject_wrong_city(set) if self.desired_match_trait.city
@@ -146,11 +144,8 @@ class User < ActiveRecord::Base
   def run_match_calculations(match)
     category_compat_scores = all_category_compatibility_scores(match) # => [63, 45, 87]
     compatibility_score = self.calculate_compatibility_score(category_compat_scores)
-    unless compatibility_score <= 1
-      connection = self.match_connections.new(match: match)
-      if !connection.save # e.g. if connection already exists
-        connection = self.match_connection_object_for(match)
-      end
+    if compatibility_score > 1
+      connection = self.match_connections.find_or_create_by(match: match)
       connection.compatibility = compatibility_score
       connection.save
     end
@@ -164,7 +159,7 @@ class User < ActiveRecord::Base
     else
       first = category_scores.shift.to_f
       second = category_scores.shift.to_f
-      score_so_far = Math.sqrt(first * second)
+      score_so_far = Math.sqrt(first * second).to_i
       if score_so_far == 0
         score_so_far = 1
       end

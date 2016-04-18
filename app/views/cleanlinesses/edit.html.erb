@@ -1,4 +1,13 @@
+<<<<<<< HEAD
   <div id="cleanlinessShow">
+=======
+<div class="container body">
+  <div class="col-sm-8 ">
+    <%= render 'layouts/user_header_section', user: @user %>
+    <div class="row">
+      <%= render 'layouts/questions_navbar', user: @user %>
+    </div>
+>>>>>>> 10a8ec409a0e417cfd7fd02403a603cf20237440
     <h1>Cleanliness</h1>
     <ul class="list-inline navigate-category-questions">
       <strong>You:</strong>
@@ -12,5 +21,12 @@
     </ul>
     <%= render "form", user: @user, method: @method, action: @action %>
   </div>
+<<<<<<< HEAD
   
 
+=======
+  <div class="col-sm-4">
+    <%= render 'layouts/sidebar', desired_match_trait: @desired_match_trait %>
+  </div>
+</div>
+>>>>>>> 10a8ec409a0e417cfd7fd02403a603cf20237440

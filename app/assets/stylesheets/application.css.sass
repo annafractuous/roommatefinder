@@ -23,9 +23,45 @@ html, body
 
 body
   margin-bottom: 100px
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif
+
+.body
+  margin-top: 20px
+/* Header */
+
+.header
+  color: white
+  text-shadow: 1px -2px 2px rgba(150, 150, 150, 1)
+  display: table
+  position: relative
+  width: 100%
+  height: 100%
+  background: linear-gradient( rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5) ), image-url("skyline-buildings-new-york-skyscrapers.jpg") no-repeat center center
+  -webkit-background-size: cover
+  -moz-background-size: cover
+  background-size: cover
+  -o-background-size: cover
+
+/* About */
+
+.about
+  padding: 50px 0
+
+/* Services */
+
+.services
+  padding: 50px 0
+
+.service-item
+  margin-bottom: 30px
+
+/* Navigation (main, question categories, and questions for each form) */
+.navbar
+  background-color: #fff8f6
+  margin-bottom: 0 !important
 
 .nav-tabs
-  margin: 20px 0
+  margin: 20px 10px
 
 .nav-tabs li
   border-color: #e5e5e5 #eee #eee
@@ -54,9 +90,19 @@ body
 .question-div button
   margin-top: 15px
 
-#sidebar
+.sidebar
   background-color: rgb(194,209,216)
+  border-radius: 10px
+  margin: 0 0 10px 10px
   padding: 10px 20px
+
+.potential-roommates-pic
+  border-radius: 20px
+  height: auto
+  width: 60px
+
+.category-compatibility
+  min-height: 327px
 
 a:hover
   text-decoration: none
@@ -92,6 +138,10 @@ a:hover
 #overall-match-compatibility
   margin-top: 4em
 
+
+.overall-compatibilty
+  padding-top: 200px
+
 #cleanliness
   background-color: rgba(145,197,169,0.6)
   padding: 10px 20px
@@ -104,8 +154,25 @@ a:hover
   background-color: rgba(119,91,163,0.6)
   padding: 10px 20px
 
+
 .whiteText
   color: white
 
 .img-center
   margin: 0 auto
+
+.text-vertical-center
+  display: table-cell
+  text-align: center
+  vertical-align: middle
+
+.text-vertical-center h1
+  margin: 0
+  padding: 0
+  font-size: 4.5em
+  font-weight: 700
+
+/* Custom Horizontal Rule */
+
+hr.small
+  max-width: 100px

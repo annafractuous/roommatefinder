@@ -16,9 +16,9 @@ $(function() {
   
 
   app.desired_match_traits.controller.show();
-
+  //app.cleanlinesses.controller.edit();
   app.schedules.controller.show();
-    app.habits.controller.show();
+  app.habits.controller.show();
   //app.schedules.controller.edit();
   app.cleanlinesses.controller.show();
 

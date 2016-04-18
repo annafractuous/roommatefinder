@@ -14,7 +14,7 @@
   <%= f.date_select :birthdate, {order: [:month, :day, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: Date.today.year - 18, end_year: Date.today.year - 100}, {required: true} %><br>
 
   <%= f.label :gender %>
-  <%= f.select :gender, ['Male', 'Female', "Other"], {required: true} %><br>
+  <%= f.select :gender, ['Male', 'Female', "Other"], {required: true} %><br><br>
 
-  <%= f.submit %>
+  <center><%= f.submit "Let's Go!", class: "btn btn-lg btn-primary" %></center>
 <% end %>

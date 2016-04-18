@@ -4,7 +4,8 @@
   <title>Roominate</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => false %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
-  <%= csrf_meta_tags %>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400|Josefin+Slab:300,400|Josefin+Sans:300,400' rel='stylesheet' type='text/css'>
+<%= csrf_meta_tags %>
 </head>
 <body "data-no-turbolink">
 
@@ -52,10 +53,9 @@
       <% end %>
     <% end %>
   <% end %>
-
-  <%= yield %>
-
 </div>
+
+<%= yield %>
 
 </body>
 </html>

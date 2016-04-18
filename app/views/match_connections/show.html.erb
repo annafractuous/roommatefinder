@@ -1,67 +1,68 @@
-<div class="row">
-  <div class="col-sm-3">
-    <h2><%= @match.display_name %></h2>
-    <%= image_tag(@match.photo.url(:small)) %>
-    <p> <%= @match.gender %> </p>
-    <p> <%= @match.dealbreakers %> </p>
-  </div>
+<div class="container body">
+  <div class="row">
+    <div class="col-sm-3">
+      <h2><%= @match.display_name %></h2>
+      <h4><%= @match.username %></h4>
+      <%= image_tag(@match.photo.url(:small)) %>
+      <p> <%= @match.dealbreakers %> </p>
+    </div>
 
-  <div class="col-md-9" id="overall-match-compatibility">
-  <h3>You and <%=@match.display_name%> are <%=@total_compatibility%>% compatible overall! </h3>
-  <% connection = @user.match_connection_object_for(@match) %>
-  <% if connection %>
-    <% if connection.interested %>
-      <h4>You've selected <%=@match.display_name%> as a good potential roommate.</h4>
-    <% else %>
-      <h4>Do you think they would be a good roommate?</h4>
-      <%=form_for @user, url: user_match_path(@user, @match), method: 'PATCH' do |f| %>
-        <%= f.submit "Let Them Know!", class: "btn btn-lg btn-success", role: "button" %>
+    <div class="col-md-9" id="overall-match-compatibility">
+    <h3>You and <%=@match.display_name%> are <%=@total_compatibility%>% compatible overall! </h3>
+    <% connection = @user.match_connection_object_for(@match) %>
+    <% if connection %>
+      <% if connection.interested %>
+        <h4>You've selected <%=@match.display_name%> as a good potential roommate.</h4>
+      <% else %>
+        <h4>Do you think they would be a good roommate?</h4>
+        <%=form_for @user, url: user_match_path(@user, @match), method: 'PATCH' do |f| %>
+          <%= f.submit "Let Them Know!", class: "btn btn-lg btn-success", role: "button" %>
+        <% end %>
       <% end %>
     <% end %>
-  <% end %>
-  </div>
-</div>
-
-<div class="row" id="compatibility-per-cat">
-  <div class="col-sm-4">
-    <div class="category" id="cleanliness">
-    <div class="centerBlock">
-      <%= image_tag 'cleanliness.svg', class: "icon" %><br>
-    </div>
-    <h2>Cleanliness</h2>
-    <h4>You are <%=@habit_compatibility%>% compatible in this category!</h4>
-    <%@match_cleanliness.each do |key, value| %>
-      <%key = key.split('_').join(" ")%>
-      <p> <%=key.capitalize%>: <%=value%></p>
-    <% end %>
     </div>
   </div>
 
-  <div class="col-sm-4">
-    <div class="category" id="schedule">
-    <div class="centerBlock">
-      <%= image_tag 'schedule.svg', class: "icon" %><br>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="category-compatibility" id="cleanliness">
+      <div class="centerBlock">
+        <%= image_tag 'cleanliness.svg', class: "icon" %><br>
+      </div>
+      <h2>Cleanliness</h2>
+      <h4>You are <%=@habit_compatibility%>% compatible in this category!</h4>
+      <%@match_cleanliness.each do |key, value| %>
+        <%key = key.split('_').join(" ")%>
+        <p> <%=key.capitalize%>: <%=value%></p>
+      <% end %>
+      </div>
     </div>
-    <h2>Schedule</h2>
-    <h4>You are <%=@schedule_compatibility%>% compatible in this category!</h4>
-    <% @match_schedule.each do |key, value| %>
-       <p> <%=key.capitalize%>: <%=value%></p>
-    <% end %>
+
+    <div class="col-sm-4">
+      <div class="category-compatibility" id="schedule">
+      <div class="centerBlock">
+        <%= image_tag 'schedule.svg', class: "icon" %><br>
+      </div>
+      <h2>Schedule</h2>
+      <h4>You are <%=@schedule_compatibility%>% compatible in this category!</h4>
+      <% @match_schedule.each do |key, value| %>
+         <p> <%=key.capitalize%>: <%=value%></p>
+      <% end %>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="category-compatibility" id="habits">
+      <div class="centerBlock">
+        <%= image_tag 'habit.svg', class: "icon" %><br>
+      </div>
+      <h2>Habits</h2>
+      <h4>You are <%=@habit_compatibility%>% compatible in this category!</h4>
+      <% @match_habit.each do |key, value| %>
+        <%key = key.split('_').join(" ")%>
+        <p> <%=key.capitalize%>: <%=value%></p>
+      <% end %>
+      </div>
     </div>
   </div>
-
-  <div class="col-sm-4">
-    <div class="category" id="habits">
-    <div class="centerBlock">
-      <%= image_tag 'habit.svg', class: "icon" %><br>
-    </div>
-    <h2>Habits</h2>
-    <h4>You are <%=@habit_compatibility%>% compatible in this category!</h4>
-    <% @match_habit.each do |key, value| %>
-      <%key = key.split('_').join(" ")%>
-      <p> <%=key.capitalize%>: <%=value%></p>
-    <% end %>
-    </div>
-  </div>
-
 </div>
