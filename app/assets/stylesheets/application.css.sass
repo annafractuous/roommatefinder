@@ -25,11 +25,13 @@ body
   margin-bottom: 100px
   font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif
 
+.body
+  margin-top: 20px
 /* Header */
 
 .header
   color: white
-  text-shadow: -1px 0px 2px rgba(150, 150, 150, 1)
+  text-shadow: 1px -2px 2px rgba(150, 150, 150, 1)
   display: table
   position: relative
   width: 100%
@@ -40,28 +42,26 @@ body
   background-size: cover
   -o-background-size: cover
 
-
 /* About */
 
 .about
   padding: 50px 0
-
 
 /* Services */
 
 .services
   padding: 50px 0
 
-
 .service-item
   margin-bottom: 30px
 
 /* Navigation (main, question categories, and questions for each form) */
 .navbar
+  background-color: #fff8f6
   margin-bottom: 0 !important
 
 .nav-tabs
-  margin: 20px 0
+  margin: 20px 10px
 
 .nav-tabs li
   border-color: #e5e5e5 #eee #eee
@@ -90,9 +90,19 @@ body
 .question-div button
   margin-top: 15px
 
-#sidebar
+.sidebar
   background-color: rgb(194,209,216)
+  border-radius: 10px
+  margin: 0 0 10px 10px
   padding: 10px 20px
+
+.potential-roommates-pic
+  border-radius: 20px
+  height: auto
+  width: 60px
+
+.category-compatibility
+  min-height: 327px
 
 a:hover
   text-decoration: none
@@ -150,7 +160,6 @@ a:hover
   display: table-cell
   text-align: center
   vertical-align: middle
-
 
 .text-vertical-center h1
   margin: 0

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container body">
   <div class="row">
     <div class="col-sm-3">
       <h2><%= @match.display_name %></h2>
@@ -23,9 +23,9 @@
     </div>
   </div>
 
-  <div class="row" id="compatibility-per-cat">
+  <div class="row">
     <div class="col-sm-4">
-      <div class="category" id="cleanliness">
+      <div class="category-compatibility" id="cleanliness">
       <div class="centerBlock">
         <%= image_tag 'cleanliness.svg', class: "icon" %><br>
       </div>
@@ -39,7 +39,7 @@
     </div>
 
     <div class="col-sm-4">
-      <div class="category" id="schedule">
+      <div class="category-compatibility" id="schedule">
       <div class="centerBlock">
         <%= image_tag 'schedule.svg', class: "icon" %><br>
       </div>
@@ -52,7 +52,7 @@
     </div>
 
     <div class="col-sm-4">
-      <div class="category" id="habits">
+      <div class="category-compatibility" id="habits">
       <div class="centerBlock">
         <%= image_tag 'habit.svg', class: "icon" %><br>
       </div>

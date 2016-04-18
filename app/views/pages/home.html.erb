@@ -4,7 +4,11 @@
         <h1>Roominate</h1>
         <h3>Find Your New Roommate</h3>
         <br>
-        <%= link_to "Get Started", signup_path, class: "btn btn-lg btn-primary" %>
+        <% if !current_user %>
+          <%= link_to "Get Started", signup_path, class: "btn btn-lg btn-primary" %>
+        <% else %>
+          <%= link_to "Get Started", user_path(current_user), class: "btn btn-lg btn-primary" %>
+        <% end %>
     </div>
 </header>
 
