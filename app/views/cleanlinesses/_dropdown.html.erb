@@ -1,1 +1,1 @@
-<%= f.select method, options_for_select(Cleanliness.cleanliness_quantified.map { |k,v| [v,k]}.unshift(["Pick One", 0]), :selected => object.send(method))%><br>
+<%= f.select method, options_for_select(Cleanliness.cleanliness_quantified.map { |k,v| [v,k]}.unshift(["Pick One", '']), :selected => object.send(method))%><br>

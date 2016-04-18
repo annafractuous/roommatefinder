@@ -46,4 +46,12 @@ class DesiredMatchTrait < ActiveRecord::Base
       "aged #{min_age} – #{max_age}"
     end
   end
+
+  def print_desired_city
+    if self.city
+      "in #{self.city}"
+    else
+      "You haven't entered a city you are looking in"
+    end
+  end
 end
