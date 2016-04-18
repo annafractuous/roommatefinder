@@ -1,10 +1,12 @@
 <div class="container body">
   <div class="row">
     <div class="col-sm-3">
+   
       <h2><%= @match.display_name %></h2>
       <h4><%= @match.username %></h4>
       <%= image_tag(@match.photo.url(:small)) %>
       <p> <%= @match.dealbreakers %> </p>
+
     </div>
 
     <div class="col-md-9" id="overall-match-compatibility">

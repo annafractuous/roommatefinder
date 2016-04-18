@@ -34,6 +34,32 @@ class DesiredMatchTrait < ActiveRecord::Base
         "You haven't entered a preferred gender"
     end
   end
+  def convert_move_in_date
+    case self.move_in_date
+    when 'As soon as possible'
+      DateTime.now + 14.days
+    when 'Within the Month'
+      DateTime.now + 30.days
+    when "Within Two Months"
+      DateTime.now + 2.Months
+    when "Within Three Months"
+      DateTime.now + 3.Months
+    when "Within Six Months"
+      DateTime.now + 6.Months
+    else
+      DateTime.now
+    end
+  end
+
+  def print_move_in_date
+    if self.convert_move_in_date == DateTime.now
+      "Not currently seeking a roommate!"
+    else
+      "Seeking to move by #{self.convert_move_in_date}"
+    end
+  end
+
+  ['As soon as possible', 'Within the Month', "Within Two Months", "Within Three Months", "Within Six Months", "Not Actively Seeking Roommate"]
 
   def print_desired_age
     if !(min_age && max_age)
