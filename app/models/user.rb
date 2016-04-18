@@ -79,13 +79,18 @@ class User < ActiveRecord::Base
     connections.map { |connection| User.find(connection.user_id) }
   end
 
-   def mutually_interested_match?(match)
-    self.is_interested(match) && match.is_interested(self)
-   end
+  def mutually_interested_matches
+    self.matches.select { |m| self.mutually_interested_match?(m) }
+  end
 
-   def is_interested(match)
-    MatchConnection.where('match_id = ? AND user_id = ? AND interested = ?',match.id ,self.id, true).size > 0
-   end
+
+  def mutually_interested_match?(match)
+    self.is_interested(match) && match.is_interested(self)
+  end
+
+  def is_interested(match)
+    MatchConnection.where('match_id = ? AND user_id = ? AND interested = ?', match.id, self.id, true).size > 0
+  end
 
   ## build user's associated cleanliness, desired cleanliness, etc. on user initialization ##
   def create_category_objects
@@ -145,7 +150,7 @@ class User < ActiveRecord::Base
   def run_match_calculations(match)
     category_compat_scores = all_category_compatibility_scores(match) # => [63, 45, 87]
     compatibility_score = self.calculate_compatibility_score(category_compat_scores)
-    
+
     connection = self.match_connections.find_or_create_by(match: match)
     connection.compatibility = compatibility_score
     connection.save
@@ -198,20 +203,20 @@ class User < ActiveRecord::Base
     points_earned = 0
 
     table = Object.const_get(category.classify) # e.g. Cleanliness table
-    
-   
+
+
 
       question_columns = table.user_input_columns
       # => ["kitchen", "bathroom", "common_space"]
       question_columns.each do |attrb|
         desired_cat = "desired_#{category}".singularize
-  
+
         if self.send(desired_cat).send(attrb)
           desired_answers = self.send(desired_cat).send(attrb).split('') # "45" => ["4", "5"]
           importance = self.send(desired_cat).send("#{attrb}_importance")
           points = conversion_hash[importance]
           total_possible_points += points
-  
+
           answer = match.send(category.singularize).send(attrb)
           points_earned += points if desired_answers.include?(answer.to_s)
         end

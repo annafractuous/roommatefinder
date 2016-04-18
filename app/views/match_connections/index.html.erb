@@ -1,24 +1,29 @@
 <div class="container body">
 
   <h2 class="page-header">Mutual Matches</h2>
-  <div id="mutual-matches-outer">
-    <div class="well" id="mutual-matches">
-      <div class="row">
-          <% @matches.pop(5).each do |match| %>
-          <div class="col-lg-1 text-center">
-              <%= link_to user_match_path(@user, match) do %>
-                <%= image_tag match.photo.url(:small), class: "img-circle img-responsive img-center" %>
-              <% end %>
-              <h5><%= link_to match.display_name, user_match_path(@user, match) %>
-                  <small><%= @user.compatibility_with(match) %>% match</small>
-              </h5>
-              <p><%= match.convert_age %>, <%= match.gender %></p>
-              <p>Max Rent: $<%= match.max_rent %></p>
-          </div>
-          <% end %>
+  <% if @mutually_interested_matches.any? %>
+    <div id="mutual-matches-outer">
+      <div class="well" id="mutual-matches">
+        <div class="row">
+            <% @mutually_interested_matches.each do |match| %>
+            <div class="col-lg-1 text-center">
+                <%= link_to user_match_path(@user, match) do %>
+                  <%= image_tag match.photo.url(:small), class: "img-circle img-responsive img-center" %>
+                <% end %>
+                <h5><%= link_to match.display_name, user_match_path(@user, match) %>
+                    <small><%= @user.compatibility_with(match) %>% match</small>
+                </h5>
+                <p><%= match.convert_age %>, <%= match.gender %></p>
+                <p>Max Rent: $<%= match.max_rent %></p>
+            </div>
+            <% end %>
+        </div>
       </div>
     </div>
-  </div>
+  <% else %>
+    <p class="text-center">You don't have any mutually interested potential roommates!<br>
+    Try checking out some matches below, and tell them you're interested.</p>
+  <% end %>
 
   <div class="row" id="show-matches">
     <div class="col-lg-12">
@@ -46,7 +51,7 @@
         <% end %>
       </div>
     <% else %>
-      <% @matches.each do |match| %>
+      <% (@matches - @mutually_interested_matches).each do |match| %>
         <div class="col-lg-4 col-sm-6 text-center">
           <%= link_to user_match_path(@user, match) do %>
             <%= image_tag match.photo.url(:small), class: "img-circle img-responsive img-center" %>
