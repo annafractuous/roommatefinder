@@ -22,6 +22,15 @@ class MatchConnectionsController < ApplicationController
 
     connections = MatchConnection.where("user_id = ? AND compatibility >= ?", @user.id, 25).order(compatibility: :desc)
     @matches = connections.map { |connection| connection.match }
+    
+    if @matches.size == 0
+      @top_users = MatchConnection.most_popular_users
+      @top_users.each do |match|
+        MatchConnection.find_or_create_by(user_id: @user.id, match_id: match.id)
+        @user.run_match_calculations(match)
+      end
+    end
+    
     render 'index'
   end
 

@@ -16,5 +16,9 @@ class MatchConnection < ActiveRecord::Base
   # validations
   validates_uniqueness_of :user_id, :scope => :match_id
 
+  def self.most_popular_users
+    self.where(interested: true).group(:match_id).first(3).map { |connection| connection.match}
+  end
+
 
 end

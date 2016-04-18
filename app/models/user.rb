@@ -57,6 +57,7 @@ class User < ActiveRecord::Base
   ## assign a new user a blank profile picture ##
   def assign_blank_profile_pic
     self.photo = File.new("app/assets/images/blank_user.png")
+    self.save
   end
 
   ## display name as first name and 1st initial of last name ##
@@ -144,11 +145,10 @@ class User < ActiveRecord::Base
   def run_match_calculations(match)
     category_compat_scores = all_category_compatibility_scores(match) # => [63, 45, 87]
     compatibility_score = self.calculate_compatibility_score(category_compat_scores)
-    if compatibility_score > 1
-      connection = self.match_connections.find_or_create_by(match: match)
-      connection.compatibility = compatibility_score
-      connection.save
-    end
+    
+    connection = self.match_connections.find_or_create_by(match: match)
+    connection.compatibility = compatibility_score
+    connection.save
   end
 
   ## calculate total mutual compatibility ##
