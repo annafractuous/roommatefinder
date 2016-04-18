@@ -153,7 +153,7 @@ class User < ActiveRecord::Base
 
   ## calculate total mutual compatibility ##
   def calculate_compatibility_score(category_scores)
-    if category_scores.size == 2
+    if category_scores.size <= 2
       score = Math.sqrt(category_scores.first * category_scores.last.to_f).to_i
       score == 0 ? 1 : score
     else
@@ -198,24 +198,26 @@ class User < ActiveRecord::Base
     points_earned = 0
 
     table = Object.const_get(category.classify) # e.g. Cleanliness table
-    question_columns = table.user_input_columns
-    # => ["kitchen", "bathroom", "common_space"]
+    
+   
 
-    question_columns.each do |attrb|
-      desired_cat = "desired_#{category}".singularize
-
-      if self.send(desired_cat).send(attrb)
-        desired_answers = self.send(desired_cat).send(attrb).split('') # "45" => ["4", "5"]
-        importance = self.send(desired_cat).send("#{attrb}_importance")
-        points = conversion_hash[importance]
-        total_possible_points += points
-
-        answer = match.send(category.singularize).send(attrb)
-        points_earned += points if desired_answers.include?(answer.to_s)
+      question_columns = table.user_input_columns
+      # => ["kitchen", "bathroom", "common_space"]
+      question_columns.each do |attrb|
+        desired_cat = "desired_#{category}".singularize
+  
+        if self.send(desired_cat).send(attrb)
+          desired_answers = self.send(desired_cat).send(attrb).split('') # "45" => ["4", "5"]
+          importance = self.send(desired_cat).send("#{attrb}_importance")
+          points = conversion_hash[importance]
+          total_possible_points += points
+  
+          answer = match.send(category.singularize).send(attrb)
+          points_earned += points if desired_answers.include?(answer.to_s)
+        end
       end
-    end
 
-    total_possible_points != 0 ? (points_earned / total_possible_points.to_f * 100).to_i : 1
+      total_possible_points != 0 ? (points_earned / total_possible_points.to_f * 100).to_i : 1
   end
 
   def reject_wrong_rent(set)
