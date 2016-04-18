@@ -15,12 +15,15 @@ $(function() {
 
   
 
-  app.desired_match_traits.controller.edit();
-  app.schedules.controller.edit();
-  app.cleanlinesses.controller.edit();
-  app.habits.controller.edit();
-  app.users.controller.edit();
+  app.desired_match_traits.controller.show();
 
   app.schedules.controller.show();
+    app.habits.controller.show();
+  //app.schedules.controller.edit();
+  app.cleanlinesses.controller.show();
+
+  app.users.controller.edit();
+
+  //app.schedules.controller.show();
 
 });

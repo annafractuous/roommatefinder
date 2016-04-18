@@ -21,6 +21,7 @@ class DesiredMatchTraitsController < ApplicationController
     @desired_match_trait = @user.desired_match_trait
     @action = user_desired_match_trait_path(@user, @user.desired_match_trait)
     @method = "PATCH"
+    render :edit, :layout => false
   end
 
   def update

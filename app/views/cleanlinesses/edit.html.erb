@@ -1,9 +1,4 @@
-<div class="container">
-  <div class="col-sm-8 col-sm-offset-1">
-    <%= render 'layouts/user_header_section', user: @user %>
-    <div class="row">
-      <%= render 'layouts/questions_navbar', user: @user %>
-    </div>
+  <div id="cleanlinessShow">
     <h1>Cleanliness</h1>
     <ul class="list-inline navigate-category-questions">
       <strong>You:</strong>
@@ -17,7 +12,5 @@
     </ul>
     <%= render "form", user: @user, method: @method, action: @action %>
   </div>
-  <div class="col-sm-3">
-    <%= render 'layouts/sidebar', desired_match_trait: @desired_match_trait %>
-  </div>
-</div>
+  
+

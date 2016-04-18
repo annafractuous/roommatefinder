@@ -15,11 +15,17 @@
 class SchedulesController < ApplicationController
   before_action :authorize
 
+
   def edit
     @user = User.find(params[:user_id])
     @desired_match_trait = @user.desired_match_trait
     @action = user_schedule_path(@user, @user.schedule)
     @method = "PATCH"
+   
+     render :edit, :layout => false
+
+# render json with jquer + rails
+# render view without layout
   end
 
   def update

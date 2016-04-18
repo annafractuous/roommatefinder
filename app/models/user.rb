@@ -78,6 +78,14 @@ class User < ActiveRecord::Base
     connections.map { |connection| User.find(connection.user_id) }
   end
 
+   def mutually_interested_match?(match)
+    your_interest = MatchConnection.where('match_id = ? AND user_id = ? AND interested = ?', self.id, match, true)
+    their_interest =MatchConnection.where('match_id = ? AND user_id = ? AND interested = ?',match, self.id, true)
+    your_interest && their_interest
+    #return true if both are interested
+   end
+
+
   ## build user's associated cleanliness, desired cleanliness, etc. on user initialization ##
   def create_category_objects
     User.question_tables.each { |table| self.send("create_#{table.singularize}") }

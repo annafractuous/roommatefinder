@@ -58,5 +58,19 @@ app.cleanlinesses.controller = {
         $('.current-question').delay(600).fadeIn(500);
       });
     });
+  },
+  show: function(){
+    $('a#cleanliness-section').on("click", function(event){
+      event.preventDefault();
+      var link = $('#cleanliness-section').attr('href');
+        $.ajax({
+          url: link,
+          method: 'GET',
+          success: function(data){
+            $('.revealSection').html(data);
+            app.cleanlinesses.controller.edit();
+          }
+        }); 
+    });
   }
 }

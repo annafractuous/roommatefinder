@@ -58,5 +58,20 @@ app.habits.controller = {
         $('.current-question').delay(600).fadeIn(500);
       });
     });
+  },
+  show: function(){
+    $('a#habit-section').on("click", function(event){
+      event.preventDefault();
+      var link = $('#habit-section').attr('href');
+       $.ajax({
+          url: link,
+          method: 'GET',
+          
+          success: function(data){ 
+            $('.revealSection').html(data);
+            app.habits.controller.edit();  
+          }
+       });
+    });
   }
 }
