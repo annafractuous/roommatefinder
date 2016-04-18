@@ -1,25 +1,29 @@
+
+
 <div class="container body">
   <div class="col-sm-8 ">
-    <%= render 'layouts/user_header_section', user: @user %>
-    <div class="row">
-      <%= render 'layouts/questions_navbar', user: @user %>
-    </div>
-    <h1>Schedule</h1>
-    <ul class="list-inline navigate-category-questions">
-      <strong>You:</strong>
-      <li id="go-to-work-schedule">Work</li> —
-      <li id="go-to-sleep-schedule">Sleep</li> —
-      <li id="go-to-bathroom-schedule">Bathroom</li> —
-      <li id="go-to-kitchen-schedule">Kitchen</li> <br>
-      <strong>Your Ideal Roommate:</strong>
-      <li id="go-to-roommate-work-schedule">Work</li> —
-      <li id="go-to-roommate-sleep-schedule">Sleep</li> —
-      <li id="go-to-roommate-bathroom-schedule">Bathroom</li> —
-      <li id="go-to-roommate-kitchen-schedule">Kitchen</li>
-    </ul>
-    <%= render "form", user: @user, method: @method, action: @action %>
-  </div>
-  <div class="col-sm-4">
-    <%= render 'layouts/sidebar', desired_match_trait: @desired_match_trait %>
+    <div id="scheduleShow">
+      <h1>Schedule</h1>
+      <ul class="list-inline navigate-category-questions">
+        <strong>You:</strong>
+        <li id="go-to-work-schedule">Work</li> —
+        <li id="go-to-sleep-schedule">Sleep</li> —
+        <li id="go-to-bathroom-schedule">Bathroom</li> —
+        <li id="go-to-kitchen-schedule">Kitchen</li> <br>
+        <strong>Your Ideal Roommate:</strong>
+        <li id="go-to-roommate-work-schedule">Work</li> —
+        <li id="go-to-roommate-sleep-schedule">Sleep</li> —
+        <li id="go-to-roommate-bathroom-schedule">Bathroom</li> —
+        <li id="go-to-roommate-kitchen-schedule">Kitchen</li>
+      </ul>
+      <%= render "form", user: @user, method: @method, action: @action %>
+   </div>
   </div>
 </div>
+ 
+
+  
+
+
+ 
+

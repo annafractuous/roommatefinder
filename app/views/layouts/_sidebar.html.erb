@@ -1,9 +1,9 @@
 <div id="container">
   <div class="row sidebar" id="looking-for">
     <h4>You're looking for someone:</h4>
-    <p><%= "in #{@desired_match_trait.city}" %></p>
-    <p><%= @desired_match_trait.print_desired_age %></p>
-    <p><%= @desired_match_trait.print_desired_gender %></p>
+    <p><%= @user.desired_match_trait.print_desired_city %></p>
+    <p><%= @user.desired_match_trait.print_desired_age %></p>
+    <p><%= @user.desired_match_trait.print_desired_gender %></p>
   </div>
   <% if @interested_matches %>
   <div class="row sidebar" id="potential-roommates">

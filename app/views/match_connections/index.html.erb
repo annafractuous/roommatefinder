@@ -1,13 +1,14 @@
 <div class="container body">
+
   <h2 class="page-header">Mutual Matches</h2>
-  <div class="container" id="mutual-matches-outer">
+  <div id="mutual-matches-outer">
     <div class="well" id="mutual-matches">
       <div class="row">
           <% @matches.pop(5).each do |match| %>
           <div class="col-lg-1 text-center">
-            <%= link_to user_match_path(@user, match) do %>
-              <%= image_tag match.photo.url(:small), class: "img-circle img-responsive img-center" %>
-            <% end %>
+              <%= link_to user_match_path(@user, match) do %>
+                <%= image_tag match.photo.url(:small), class: "img-circle img-responsive img-center" %>
+              <% end %>
               <h5><%= link_to match.display_name, user_match_path(@user, match) %>
                   <small><%= @user.compatibility_with(match) %>% match</small>
               </h5>
@@ -18,22 +19,46 @@
       </div>
     </div>
   </div>
-  <div class="row">
+
+  <div class="row" id="show-matches">
     <div class="col-lg-12">
       <h2 class="page-header">Your Matches</h2>
     </div>
-    <% @matches.each do |match| %>
-    <div class="col-lg-4 col-sm-6 text-center">
-      <%= link_to user_match_path(@user, match) do %>
-        <%= image_tag match.photo.url(:small), class: "img-circle img-responsive img-center" %>
-      <% end %>
-        <h3><%= link_to match.display_name, user_match_path(@user, match) %>
+
+    <% if @top_users%>
+      <div class="row">
+        <div class="no-matches">
+          <h3>Sorry, we couldn't find anyone we think would make a great match with you.</h3>
+          <h4>Try filling out more information on your profile. We can do a better job of finding someone right for you if you answer more questions.</h4>
+        </div><br><br>
+
+        <h3>Check out some of our most popular users </h3><br>
+        <% @top_users.each do |match| %>
+          <div class="col-lg-4 col-sm-6 text-center">
+            <%= link_to user_match_path(@user, match) do %>
+              <%= image_tag match.photo.url(:small), class: "img-circle img-responsive img-center" %>
+            <% end %>
+            <h3><%= link_to match.display_name, user_match_path(@user, match) %></h3>
+            <p>Age: <%= match.convert_age %></p>
+            <p>Gender: <%= match.gender %></p>
+            <p>Max Rent: $<%= match.max_rent %></p>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <% @matches.each do |match| %>
+        <div class="col-lg-4 col-sm-6 text-center">
+          <%= link_to user_match_path(@user, match) do %>
+            <%= image_tag match.photo.url(:small), class: "img-circle img-responsive img-center" %>
+          <% end %>
+          <h3><%= link_to match.display_name, user_match_path(@user, match) %>
             <small><%= @user.compatibility_with(match) %>% match</small>
-        </h3>
-        <p>Age: <%= match.convert_age %></p>
-        <p>Gender: <%= match.gender %></p>
-        <p>Max Rent: $<%= match.max_rent %></p>
-    </div>
+          </h3>
+          <p>Age: <%= match.convert_age %></p>
+          <p>Gender: <%= match.gender %></p>
+          <p>Max Rent: $<%= match.max_rent %></p>
+        </div>
+      <% end %>
     <% end %>
   </div> <!-- Your Matches row -->
 </div>

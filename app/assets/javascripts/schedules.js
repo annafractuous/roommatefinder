@@ -56,13 +56,46 @@ app.schedules.controller = {
           $('.questions-heading').text("Tell Us About Yourself");
         }
         $('.current-question').delay(600).fadeIn(500);
+
       });
+
     });
+     
   },
-  show: function(){
+
+   show: function(){
+
     $('a#schedule-section').on("click", function(event){
-      // event.preventDefault();
-      // alert('hi');
+
+       event.preventDefault();
+
+      var link = $('#schedule-section').attr('href');
+       $.ajax({
+     
+      
+         url: link,
+         method: 'GET',
+         //dataType: 'json',
+
+       success: function(data){
+      
+       
+         
+        $('.revealSection').html(data);
+         //find  the div subset with jquery 
+        //loads the html
+        //create class the encapsulates each section form 
+        //unhide the form 
+       app.schedules.controller.edit();
+       //hides the html
+        // $('#' + schedule_items[0]).addClass("current-question");
+        // $('#go-to-' + schedule_items[0]).addClass("current-question-nav");
+
+         
+          
+       }
+       });
+  
     });
-  }
+   }
 }

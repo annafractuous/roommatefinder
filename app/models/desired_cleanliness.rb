@@ -22,7 +22,7 @@ class DesiredCleanliness < ActiveRecord::Base
   include InputColumnable
   belongs_to :user
 
-  validate :preference_and_importance_entered?, :cannot_select_pick_one
+  validate :preference_and_importance_entered?
 end
 
 #  SQL (0.3ms)  INSERT INTO "match_connections" ("match_id", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["match_id", 63], ["user_id", 15], ["created_at", "2016-04-13 15:31:29.788107"], ["updated_at", "2016-04-13 15:31:29.788107"]]

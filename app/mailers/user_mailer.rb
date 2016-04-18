@@ -3,4 +3,8 @@ class UserMailer < ApplicationMailer
     @user = user
     mail(to: @user.email, subject: 'Welcome to Roomater')
   end
-end
+
+  def interest_email
+    @user = user
+    mail(to: @user.email, subject: "Looks like there's mutual interest in a Roominate match!")
+  end

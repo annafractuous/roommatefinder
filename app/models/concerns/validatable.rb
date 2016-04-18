@@ -12,12 +12,4 @@ module Validatable
     end
   end
 
-  def cannot_select_pick_one
-    self.class.user_input_columns.each do |col|
-      if self.send(col) == 0
-        errors.add(col.to_sym, "must be a real value, not 'pick one'")
-      end
-    end
-  end
-
 end

@@ -45,5 +45,22 @@ app.desired_match_traits.controller = {
         $('.current-question').delay(600).fadeIn(500);
       });
     });
+  },
+  show: function(){
+    $('a#basic-info-section').on("click", function(event){
+      event.preventDefault();
+      var link = $('#basic-info-section').attr('href');
+       $.ajax({
+         url: link,
+         method: 'GET',
+         
+          success: function(data){
+            $('.revealSection').html(data);
+            app.desired_match_traits.controller.edit();
+          }
+        });
+    });
   }
 }
+
+

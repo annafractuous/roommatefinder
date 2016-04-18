@@ -57,6 +57,7 @@ class User < ActiveRecord::Base
   ## assign a new user a blank profile picture ##
   def assign_blank_profile_pic
     self.photo = File.new("app/assets/images/blank_user.png")
+    self.save
   end
 
   ## display name as first name and 1st initial of last name ##
@@ -77,6 +78,14 @@ class User < ActiveRecord::Base
     connections = MatchConnection.where('match_id = ? AND interested = ?', self.id, true)
     connections.map { |connection| User.find(connection.user_id) }
   end
+
+   def mutually_interested_match?(match)
+    your_interest = MatchConnection.where('match_id = ? AND user_id = ? AND interested = ?', self.id, match, true)
+    their_interest =MatchConnection.where('match_id = ? AND user_id = ? AND interested = ?',match, self.id, true)
+    your_interest && their_interest
+    #return true if both are interested
+   end
+
 
   ## build user's associated cleanliness, desired cleanliness, etc. on user initialization ##
   def create_category_objects
@@ -136,11 +145,10 @@ class User < ActiveRecord::Base
   def run_match_calculations(match)
     category_compat_scores = all_category_compatibility_scores(match) # => [63, 45, 87]
     compatibility_score = self.calculate_compatibility_score(category_compat_scores)
-    if compatibility_score > 1
-      connection = self.match_connections.find_or_create_by(match: match)
-      connection.compatibility = compatibility_score
-      connection.save
-    end
+    
+    connection = self.match_connections.find_or_create_by(match: match)
+    connection.compatibility = compatibility_score
+    connection.save
   end
 
   ## calculate total mutual compatibility ##

@@ -8,20 +8,11 @@ app = {
 };
 
 $(function() {
-  // ************* will we be using this? *************
-  // $('div#emailReveal').click(function(event){
-  //   event.preventDefault();
-  //   $('.email').toggle();
-  // });
-
-
-
-  app.desired_match_traits.controller.edit();
-  app.schedules.controller.edit();
-  app.cleanlinesses.controller.edit();
-  app.habits.controller.edit();
-
+  app.desired_match_traits.controller.show();
   app.schedules.controller.show();
+  app.habits.controller.show();
+  app.cleanlinesses.controller.show();
   app.match_connections.controller.show();
 
+  // app.users.controller.edit();
 });
