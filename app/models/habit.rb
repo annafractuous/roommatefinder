@@ -23,9 +23,18 @@ class Habit < ActiveRecord::Base
 
   def convert_habit(match_habit)
     habit_hash = Habit.user_input_columns.each_with_object({}) do |col, hash|
-    hash[col] = Habit.send("#{col}_quantified")[match_habit.send(col)]
+      hash[col] = Habit.send("#{col}_quantified")[match_habit.send(col)]
     end
     habit_hash
+  end
+
+  def self.print_category_score(user, match)
+    score = user.mutual_compatibility_score_per_category(self.name.downcase, match)
+    if score == -1
+      "One of you hasn't answered any questions in this category"
+    else
+      "You are #{score}% compatible in this category!"
+    end
   end
 
 end
