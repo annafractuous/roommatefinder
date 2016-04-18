@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-sm-3">
     <h2><%= @match.display_name %></h2>
+    <h4><%= @match.username %></h4>
     <%= image_tag(@match.photo.url(:small)) %>
     <p> <%= @match.dealbreakers %> </p>
   </div>
@@ -28,7 +29,7 @@
       <%= image_tag 'cleanliness.svg', class: "icon" %><br>
     </div>
     <h2>Cleanliness</h2>
-    <h4>You are <%=@habit_compatibility%>% compatible in this category!</h4>
+    <h4>You are <%=@cleanliness_compatibility%>% compatible in this category!</h4>
     <%@match_cleanliness.each do |key, value| %>
       <%key = key.split('_').join(" ")%>
       <p> <%=key.capitalize%>: <%=value%></p>

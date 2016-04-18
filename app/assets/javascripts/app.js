@@ -19,7 +19,6 @@ $(function() {
   app.schedules.controller.edit();
   app.cleanlinesses.controller.edit();
   app.habits.controller.edit();
-  app.users.controller.edit();
 
   app.schedules.controller.show();
 

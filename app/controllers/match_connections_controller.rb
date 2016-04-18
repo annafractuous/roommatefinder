@@ -18,13 +18,10 @@ class MatchConnectionsController < ApplicationController
   def index
    
     @user = User.find(params[:user_id])
-    @matches = @user.find_matches
+    @user.find_matches
 
-    #@matchers.where("compatibility > 25").order("compatibility DESC")
-    #@matches = @matches.reject { |match| @user.compatibility_with(match) < 25 }.sort_by { |match| @user.compatibility_with(match)}.reverse
-
-    @matches = @matches.reject { |match| @user.compatibility_with(match) < 25 }.sort_by { |match| @user.compatibility_with(match) }.reverse
-
+    connections = MatchConnection.where("user_id = ? AND compatibility >= ?", @user.id, 25).order(compatibility: :desc)
+    @matches = connections.map { |connection| connection.match }
     render 'index'
   end
 
@@ -32,10 +29,13 @@ class MatchConnectionsController < ApplicationController
     @match = User.find(params[:match_id])
     @user = current_user
     @total_compatibility = @user.compatibility_with(@match)
+    binding.pry
     @match_cleanliness = @match.cleanliness.convert_cleanliness(@match.cleanliness)
     @cleanliness_compatibility = @user.mutual_compatibility_score_per_category("cleanliness", @match)
+    
     @match_schedule = @match.schedule.convert_schedule(@match.schedule)
     @schedule_compatibility = @user.mutual_compatibility_score_per_category("schedule", @match)
+    
     @match_habit = @match.habit.convert_habit(@match.habit)
     @habit_compatibility = @user.mutual_compatibility_score_per_category("habit", @match)
   
