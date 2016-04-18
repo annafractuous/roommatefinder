@@ -16,13 +16,10 @@ class MatchConnectionsController < ApplicationController
   end
 
   def index
-   
     @user = User.find(params[:user_id])
     @user.find_matches
-
     connections = MatchConnection.where("user_id = ? AND compatibility >= ?", @user.id, 25).order(compatibility: :desc)
     @matches = connections.map { |connection| connection.match }
-    
     if @matches.size == 0
       @top_users = MatchConnection.most_popular_users
       @top_users.each do |match|
@@ -30,7 +27,6 @@ class MatchConnectionsController < ApplicationController
         @user.run_match_calculations(match)
       end
     end
-    
     render 'index'
   end
 
@@ -52,6 +48,7 @@ class MatchConnectionsController < ApplicationController
 
 
   def update
+   
     @match = User.find(params[:match_id])
     @user = current_user
     @match_connection = @user.match_connection_object_for(@match)

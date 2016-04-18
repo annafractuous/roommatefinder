@@ -40,11 +40,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    binding.pry
+   
     @user = User.find(params[:id])
     @desired_match_trait = @user.desired_match_trait
 
     if @user.interested_matches.size > 0
+      binding.pry
       @interested_matches = @user.interested_matches
       # size = @interested_matches.size
       # flash.now[:message] = "#{pluralize(size, 'user')} think(s) you could make great roommates!"

@@ -75,12 +75,18 @@ class User < ActiveRecord::Base
 
   ## show user others who selected that they were interested in a potential roommate match with them ##
   def interested_matches
+    
+    # weed out mutually interested
     connections = MatchConnection.where('match_id = ? AND interested = ?', self.id, true)
-    connections.map { |connection| User.find(connection.user_id) }
+    
+    #reject mutually interested matches
+    connected_users = connections.map { |connection| User.find(connection.user_id) }
+    connected_users.reject{|user| self.mutually_interested_match?(user)}
+
   end
 
   def mutually_interested_matches
-    
+    self.interested_matches.select{|match| self.mutually_interested_match?(match)}
   end
 
   def mutually_interested_match?(match)
