@@ -1,17 +1,27 @@
-<div id="sidebar">
-  <h3>You're looking for someone:</h3>
-  <p><%= "in #{@desired_match_trait.city}" %></p>
-  <p><%= @desired_match_trait.print_desired_age %></p>
-  <p><%= @desired_match_trait.print_desired_gender %></p>
 
-  <div>
-      <% if @interested_matches%>
-        <h3>Roominaters who are interested in you:</h3>
-        <% @interested_matches.each do |match|%>
-          <%= image_tag(match.photo.url(:thumbnail)) %>
-          <%= link_to "#{match.display_name}", user_match_path(@user, match)%>
-          <p> Send them an email: <strong><%=match.email %></strong> </p>
-        <% end %>
-      <% end %>
-    </div>
+<div id="container">
+  <div class="row sidebar" id="looking-for">
+    <h4>You're looking for someone:</h4>
+    <p><%= "in #{@desired_match_trait.city}" %></p>
+    <p><%= @desired_match_trait.print_desired_age %></p>
+    <p><%= @desired_match_trait.print_desired_gender %></p>
+  </div>
+  <% if @interested_matches %>
+  <div class="row sidebar" id="potential-roommates">
+    <h4>You have interested matches! <span class="badge"><%= @interested_matches.size %></span></h4>
+    <% @interested_matches.each do |match| %>
+      <div class="col-lg-3">
+        <%= image_tag match.photo.url(:small), class: "potential-roommates-pic" %>
+      </div>
+      <div class="col-lg-9">
+        <%= link_to "#{match.display_name}", user_match_path(@user, match) %><br>
+        <%= match.convert_age %>, <%= match.gender %> <br>
+        $<%= match.max_rent %> max. rent <br><br>
+        <!-- <p> Send an email: <strong><%=match.email %></strong></p> -->
+        <%= link_to "No Thanks", '#', method: 'PATCH', class: "btn btn-sm btn-info" %>
+        <%= link_to "I'm Interested", user_match_path(@user, match), method: 'PATCH', class: "btn btn-sm btn-success" %>
+      </div>
+    <% end %>
+  </div>
+  <% end %>
 </div>

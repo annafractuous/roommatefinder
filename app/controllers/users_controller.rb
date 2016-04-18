@@ -45,9 +45,8 @@ class UsersController < ApplicationController
 
     if @user.interested_matches.size > 0
       @interested_matches = @user.interested_matches
-      size = @interested_matches.size
-      flash.now[:message] = "#{pluralize(size, 'user')} think(s) you could make great roommates!"
-      render :show
+      # size = @interested_matches.size
+      # flash.now[:message] = "#{pluralize(size, 'user')} think(s) you could make great roommates!"
     end
   end
 

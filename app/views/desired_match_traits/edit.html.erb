@@ -1,5 +1,5 @@
-<div class="container">
-  <div class="col-sm-8 col-sm-offset-1">
+<div class="container body">
+  <div class="col-sm-8 ">
     <%= render 'layouts/user_header_section', user: @user %>
     <div class="row">
       <%= render 'layouts/questions_navbar', user: @user %>
@@ -17,7 +17,7 @@
     </ul>
     <%= render "form", user: @user, method: @method, action: @action %>
   </div>
-  <div class="col-sm-3">
+  <div class="col-sm-4">
     <%= render 'layouts/sidebar', desired_match_trait: @desired_match_trait %>
   </div>
 </div>
