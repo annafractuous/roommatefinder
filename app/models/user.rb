@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
   ## get age from birthdate ##
   def convert_age
     now = Time.now.utc.to_date
-     now.year - self.birthdate.year - (self.birthdate.to_date.change(:year => now.year) > now ? 1 : 0)
+    now.year - self.birthdate.year - (self.birthdate.to_date.change(:year => now.year) > now ? 1 : 0)
   end
 
   ## show user others who selected that they were interested in a potential roommate match with them ##
@@ -80,12 +80,12 @@ class User < ActiveRecord::Base
   end
 
    def mutually_interested_match?(match)
-    your_interest = MatchConnection.where('match_id = ? AND user_id = ? AND interested = ?', self.id, match, true)
-    their_interest =MatchConnection.where('match_id = ? AND user_id = ? AND interested = ?',match, self.id, true)
-    your_interest && their_interest
-    #return true if both are interested
+    self.is_interested(match) && match.is_interested(self)
    end
 
+   def is_interested(match)
+    MatchConnection.where('match_id = ? AND user_id = ? AND interested = ?',match.id ,self.id, true).size > 0
+   end
 
   ## build user's associated cleanliness, desired cleanliness, etc. on user initialization ##
   def create_category_objects
@@ -153,7 +153,7 @@ class User < ActiveRecord::Base
 
   ## calculate total mutual compatibility ##
   def calculate_compatibility_score(category_scores)
-    if category_scores.size == 2
+    if category_scores.size <= 2
       score = Math.sqrt(category_scores.first * category_scores.last.to_f).to_i
       score == 0 ? 1 : score
     else
@@ -198,24 +198,26 @@ class User < ActiveRecord::Base
     points_earned = 0
 
     table = Object.const_get(category.classify) # e.g. Cleanliness table
-    question_columns = table.user_input_columns
-    # => ["kitchen", "bathroom", "common_space"]
+    
+   
 
-    question_columns.each do |attrb|
-      desired_cat = "desired_#{category}".singularize
-
-      if self.send(desired_cat).send(attrb)
-        desired_answers = self.send(desired_cat).send(attrb).split('') # "45" => ["4", "5"]
-        importance = self.send(desired_cat).send("#{attrb}_importance")
-        points = conversion_hash[importance]
-        total_possible_points += points
-
-        answer = match.send(category.singularize).send(attrb)
-        points_earned += points if desired_answers.include?(answer.to_s)
+      question_columns = table.user_input_columns
+      # => ["kitchen", "bathroom", "common_space"]
+      question_columns.each do |attrb|
+        desired_cat = "desired_#{category}".singularize
+  
+        if self.send(desired_cat).send(attrb)
+          desired_answers = self.send(desired_cat).send(attrb).split('') # "45" => ["4", "5"]
+          importance = self.send(desired_cat).send("#{attrb}_importance")
+          points = conversion_hash[importance]
+          total_possible_points += points
+  
+          answer = match.send(category.singularize).send(attrb)
+          points_earned += points if desired_answers.include?(answer.to_s)
+        end
       end
-    end
 
-    total_possible_points != 0 ? (points_earned / total_possible_points.to_f * 100).to_i : 1
+      total_possible_points != 0 ? (points_earned / total_possible_points.to_f * 100).to_i : 1
   end
 
   def reject_wrong_rent(set)
