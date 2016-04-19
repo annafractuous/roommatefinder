@@ -22,6 +22,7 @@
     <%= f.fields_for :desired_match_trait do |trait| %>
     <div class="question-div" id="city-and-move-in">
         <label>Where and when do you want to move?</label><br>
+        <em>All our seed users are moving within 6 months and looking in 'New York'</em><br>
         <%= trait.text_field :city, placeholder: "City" %><br>
         
          <%= trait.select :move_in_date, ['As soon as possible', 'Within the Month', "Within Two Months", "Within Three Months", "Within Six Months", "Not Actively Seeking Roommate"]%><br>
