@@ -5,7 +5,7 @@
     <p><%= @user.desired_match_trait.print_desired_age %></p>
     <p><%= @user.desired_match_trait.print_desired_gender %></p>
   </div>
-  <% if @interested_matches %>
+  <% if @interested_matches.any? %>
   <div class="row sidebar" id="potential-roommates">
     <h4>You have interested matches! <span class="badge"><%= @interested_matches.size %></span></h4>
     <% @interested_matches.each do |match| %>
@@ -17,15 +17,21 @@
         <%= match.convert_age %>, <%= match.gender %> <br>
         $<%= match.max_rent %> max. rent <br><br>
         <!-- <p> Send an email: <strong><%=match.email %></strong></p> -->
-        <%= form_for @user.match_connection_object_for(match), url: user_match_path(@user, match), method: 'PATCH' do |f| %>
-          <%= f.hidden_field :interested, value: false %>
-          <%= f.submit "No Thanks", class: "btn btn-sm btn-info" %>
-        <% end %>
-        <%= form_for @user.match_connection_object_for(match), url: user_match_path(@user, match), method: 'PATCH' do |f| %>
-          <%= f.hidden_field :interested, value: true %>
-          <%= f.submit "I'm Interested", class: "btn btn-sm btn-success" %>
-        <% end %>
-
+        <table class="match-buttons">
+          <td>
+            <%= form_for @user.match_connection_object_for(match), url: user_match_path(@user, match), method: 'PATCH' do |f| %>
+              <%= f.hidden_field :interested, value: false %>
+              <%= f.submit "No Thanks", class: "btn btn-sm btn-info" %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "Show Me More", user_match_path(@user, match), class: "btn btn-sm btn-success" %>
+            <!-- <%= form_for @user.match_connection_object_for(match), url: user_match_path(@user, match), method: 'PATCH' do |f| %>
+              <%= f.hidden_field :interested, value: true %>
+              <%= f.submit "I'm Interested", class: "btn btn-sm btn-success" %>
+            <% end %> -->
+          </td>
+        </table>
       </div>
     <% end %>
   </div>
