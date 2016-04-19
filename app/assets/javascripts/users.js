@@ -1,8 +1,3 @@
-app.users.controller = {
-  init: {
-  }
-}
-
 app.users.model = {
   new: (function(){
     function User(name, username, email, birthdate, gender, dealbreakers, has_apartment, max_rent, photo){

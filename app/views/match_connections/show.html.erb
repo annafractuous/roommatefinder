@@ -1,13 +1,13 @@
 <div class="container body">
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-3 col-lg-3">
       <h2><%= @match.display_name %></h2>
       <h4><%= @match.username %></h4>
       <%= image_tag(@match.photo.url(:small)) %>
       <p> <%= @match.dealbreakers %> </p>
     </div>
 
-    <div class="col-md-9" id="overall-match-compatibility">
+    <div class="col-md-9 col-lg-9" id="overall-match-compatibility">
     <h3>You and <%=@match.display_name%> are <%=@total_compatibility%>% compatible overall! </h3>
     <% if @user_to_match_conn %>
       <% if @user_to_match_conn.interested && @match_to_user_conn.interested %>
@@ -43,7 +43,7 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-4 col-lg-4">
       <div class="category-compatibility" id="cleanliness">
       <div class="centerBlock">
         <%= image_tag 'cleanliness.svg', class: "icon" %><br>
@@ -57,7 +57,7 @@
       </div>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-4 col-lg-4">
       <div class="category-compatibility" id="schedule">
       <div class="centerBlock">
         <%= image_tag 'schedule.svg', class: "icon" %><br>
@@ -70,7 +70,7 @@
       </div>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-4 col-lg-4">
       <div class="category-compatibility" id="habits">
       <div class="centerBlock">
         <%= image_tag 'habit.svg', class: "icon" %><br>

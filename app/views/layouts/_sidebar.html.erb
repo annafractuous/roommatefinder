@@ -13,25 +13,27 @@
         <%= image_tag match.photo.url(:small), class: "potential-roommates-pic" %>
       </div>
       <div class="col-lg-9">
-        <%= link_to "#{match.display_name}", user_match_path(@user, match) %><br>
-        <%= match.convert_age %>, <%= match.gender %> <br>
-        $<%= match.max_rent %> max. rent <br><br>
-        <!-- <p> Send an email: <strong><%=match.email %></strong></p> -->
-        <table class="match-buttons">
-          <tr>
-            <%= form_for @user.match_connection_object_for(match), url: user_match_path(@user, match), method: 'PATCH' do |f| %>
-              <%= f.hidden_field :interested, value: false %>
-              <%= f.submit "No Thanks", class: "btn btn-sm btn-info" %>
-            <% end %>
-          </tr>
-          <tr>
-            <%= link_to "Show Me More", user_match_path(@user, match), class: "btn btn-sm btn-success" %>
-            <!-- <%= form_for @user.match_connection_object_for(match), url: user_match_path(@user, match), method: 'PATCH' do |f| %>
-              <%= f.hidden_field :interested, value: true %>
-              <%= f.submit "I'm Interested", class: "btn btn-sm btn-success" %>
-            <% end %> -->
-          </tr>
-        </table>
+        <div class="interested-match">
+          <%= link_to "#{match.display_name}", user_match_path(@user, match) %><br>
+          <%= match.convert_age %>, <%= match.gender %> <br>
+          $<%= match.max_rent %> max. rent <br><br>
+          <!-- <p> Send an email: <strong><%=match.email %></strong></p> -->
+          <table class="match-buttons">
+            <tr>
+              <%= form_for @user.match_connection_object_for(match), url: user_match_path(@user, match), method: 'PATCH' do |f| %>
+                <%= f.hidden_field :interested, value: false %>
+                <%= f.submit "No Thanks", class: "btn btn-sm btn-info not-interested" %>
+              <% end %>
+            </tr>
+            <tr>
+              <%= link_to "Show Me More", user_match_path(@user, match), class: "btn btn-sm btn-success" %>
+              <!-- <%= form_for @user.match_connection_object_for(match), url: user_match_path(@user, match), method: 'PATCH' do |f| %>
+                <%= f.hidden_field :interested, value: true %>
+                <%= f.submit "I'm Interested", class: "btn btn-sm btn-success" %>
+              <% end %> -->
+            </tr>
+          </table>
+        </div>
       </div>
     <% end %>
   </div>

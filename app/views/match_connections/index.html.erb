@@ -56,6 +56,9 @@
           <%= link_to user_match_path(@user, match) do %>
             <%= image_tag match.photo.url(:small), class: "img-circle img-responsive img-center" %>
           <% end %>
+          <% if @user.match_connection_object_for(match).interested == true %>
+            <%= image_tag 'single-key.svg', class: 'small-icon' %>
+          <% end %>
           <h3><%= link_to match.display_name, user_match_path(@user, match) %>
             <small><%= @user.compatibility_with(match) %>% match</small>
           </h3>
