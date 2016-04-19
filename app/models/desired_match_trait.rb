@@ -35,6 +35,48 @@ class DesiredMatchTrait < ActiveRecord::Base
     end
   end
 
+  def move_in_date=(move_in_date)
+    converted_date = case move_in_date
+    when 'As soon as possible'
+      DateTime.now + 14.days
+    when 'Within the Month'
+      DateTime.now + 30.days
+    when "Within Two Months"
+      DateTime.now + 2.Months
+    when "Within Three Months"
+      DateTime.now + 3.Months
+    when "Within Six Months"
+      DateTime.now + 6.Months
+    else
+      DateTime.now + 1.year
+    end
+    self[:move_in_date] = converted_date
+  end
+
+  def print_move_in_date
+    if self.move_in_date > (DateTime.now + 6.months)
+      "Not currently seeking a roommate!"
+    else
+      self.convert_datetime_to_months
+    end
+  end
+
+  def convert_datetime_to_months
+    diff = ((self.move_in_date - DateTime.now)/1.month).round
+      if diff < 1
+        diff = ((self.move_in_date - DateTime.now)/1.week).round
+        "Looking to move in #{diff} weeks"
+      elsif diff < 7
+        "Looking to move in #{diff} weeks"
+      else
+        "Not currently seeking a roommate."
+      end
+  end
+        
+
+    
+
+
   def print_desired_age
     if !(min_age && max_age)
       "You haven't entered a preferred age range"
@@ -54,4 +96,5 @@ class DesiredMatchTrait < ActiveRecord::Base
       "You haven't entered a city you are looking in"
     end
   end
+
 end
