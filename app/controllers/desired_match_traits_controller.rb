@@ -17,6 +17,7 @@ class DesiredMatchTraitsController < ApplicationController
   before_action :authorize, only: [:edit, :update]
 
   def edit
+
     @user = User.find(params[:user_id])
     @desired_match_trait = @user.desired_match_trait
     @interested_matches = @user.interested_matches if @user.interested_matches.size > 0
@@ -26,9 +27,10 @@ class DesiredMatchTraitsController < ApplicationController
   end
 
   def update
+  
     @user = User.find(params[:user_id])
     desired_match_trait = @user.desired_match_trait
-
+   # updated
     if @user.update(extra_params) && desired_match_trait.update(desired_match_params)
       redirect_to user_path(@user)
     else
@@ -37,9 +39,13 @@ class DesiredMatchTraitsController < ApplicationController
       @method = "PATCH"
       render :edit
     end
+
   end
 
   def show
+ 
+    @user = User.find(params[:user_id])
+    @move_in_date = @user.desired_match_trait.print_move_in_date
   end
 
 private

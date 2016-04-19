@@ -33,7 +33,7 @@ class MatchConnectionsController < ApplicationController
 
   def show
     @match = User.find(params[:match_id])
-    @move_in_date = @match.desired_match_trait.print_move_in_date
+    
     @user = current_user
     @total_compatibility = @user.compatibility_with(@match)
 
