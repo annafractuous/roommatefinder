@@ -23,7 +23,8 @@
     <div class="question-div" id="city-and-move-in">
         <label>Where and when do you want to move?</label><br>
         <%= trait.text_field :city, placeholder: "City" %><br>
-        <%= trait.date_select :move_in_date, {order: [:month, :day, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: Date.today.year, end_year: Date.today.year + 1} %><br>
+        
+         <%= trait.select :move_in_date, ['As soon as possible', 'Within the Month', "Within Two Months", "Within Three Months", "Within Six Months", "Not Actively Seeking Roommate"]%><br>
         <center><button role="button" class="btn btn-md btn-info" id="back-city-and-move-in">Back</button>
         <button role="button" class="btn btn-md btn-primary" id="submit-city-and-move-in">Continue</button></center>
     </div>
