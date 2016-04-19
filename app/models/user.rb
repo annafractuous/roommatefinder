@@ -79,6 +79,10 @@ class User < ActiveRecord::Base
     connections = MatchConnection.where('match_id = ? AND interested = ?', self.id, true)
     #reject mutually interested matches
     connected_users = connections.map { |connection| User.find(connection.user_id) }
+  end
+
+  def one_way_interested_matches 
+    connected_users = self.interested_matches
     connected_users.reject{|user| self.mutually_interested_match?(user)}
   end
 

@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @desired_match_trait = @user.desired_match_trait
-    @interested_matches = (@user.interested_matches - @user.not_interested)
+    @interested_matches = (@user.one_way_interested_matches - @user.not_interested)
   end
 
   def edit
