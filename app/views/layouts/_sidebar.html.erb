@@ -18,19 +18,19 @@
         $<%= match.max_rent %> max. rent <br><br>
         <!-- <p> Send an email: <strong><%=match.email %></strong></p> -->
         <table class="match-buttons">
-          <td>
+          <tr>
             <%= form_for @user.match_connection_object_for(match), url: user_match_path(@user, match), method: 'PATCH' do |f| %>
               <%= f.hidden_field :interested, value: false %>
               <%= f.submit "No Thanks", class: "btn btn-sm btn-info" %>
             <% end %>
-          </td>
-          <td>
+          </tr>
+          <tr>
             <%= link_to "Show Me More", user_match_path(@user, match), class: "btn btn-sm btn-success" %>
             <!-- <%= form_for @user.match_connection_object_for(match), url: user_match_path(@user, match), method: 'PATCH' do |f| %>
               <%= f.hidden_field :interested, value: true %>
               <%= f.submit "I'm Interested", class: "btn btn-sm btn-success" %>
             <% end %> -->
-          </td>
+          </tr>
         </table>
       </div>
     <% end %>
