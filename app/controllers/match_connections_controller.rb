@@ -33,7 +33,7 @@ class MatchConnectionsController < ApplicationController
 
   def show
     @match = User.find(params[:match_id])
-    
+
     @user = current_user
     @total_compatibility = @user.compatibility_with(@match)
 
@@ -60,7 +60,7 @@ class MatchConnectionsController < ApplicationController
     if @user_to_match_connection.update(match_connection_params)
       if params[:match_connection][:interested] == "true"
         @match.run_match_calculations(@user)
-        redirect_to user_match_path(@user, @match), notice: "You've sent a notification to #{@match.display_name}."
+        redirect_to user_match_path(@user, @match), notice: "You've sent a notification to #{@match.display_name}"
       else
         redirect_to user_path(@user), notice: "You've removed this person from your potential matches sidebar."
       end
