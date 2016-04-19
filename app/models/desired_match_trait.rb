@@ -74,11 +74,6 @@ class DesiredMatchTrait < ActiveRecord::Base
   end
         
 
-
-
-    
-
-  
     
 
 
