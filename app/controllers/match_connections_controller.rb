@@ -53,7 +53,6 @@ class MatchConnectionsController < ApplicationController
 
 
   def update
-    binding.pry
     @match = User.find(params[:match_id])
     @user = current_user
     @match_connection = @user.match_connection_object_for(@match)
