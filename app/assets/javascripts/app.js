@@ -14,5 +14,6 @@ $(function() {
   app.cleanlinesses.controller.show();
   app.match_connections.controller.show();
 
+  app.match_connections.controller.edit();
   // app.users.controller.edit();
 });

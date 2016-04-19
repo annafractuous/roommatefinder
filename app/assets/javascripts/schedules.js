@@ -60,42 +60,28 @@ app.schedules.controller = {
       });
 
     });
-     
+
   },
 
    show: function(){
-
     $('a#schedule-section').on("click", function(event){
-
-       event.preventDefault();
-
+      event.preventDefault();
       var link = $('#schedule-section').attr('href');
        $.ajax({
-     
-      
-         url: link,
-         method: 'GET',
-         //dataType: 'json',
-
-       success: function(data){
-      
-       
-         
-        $('.revealSection').html(data);
-         //find  the div subset with jquery 
-        //loads the html
-        //create class the encapsulates each section form 
-        //unhide the form 
-       app.schedules.controller.edit();
-       //hides the html
-        // $('#' + schedule_items[0]).addClass("current-question");
-        // $('#go-to-' + schedule_items[0]).addClass("current-question-nav");
-
-         
-          
+        url: link,
+        method: 'GET',
+        success: function(data){
+          $('.revealSection').html(data);
+          //find  the div subset with jquery
+          //loads the html
+          //create class the encapsulates each section form
+          //unhide the form
+          app.schedules.controller.edit();
+         //hides the html
+         // $('#' + schedule_items[0]).addClass("current-question");
+         // $('#go-to-' + schedule_items[0]).addClass("current-question-nav");
        }
        });
-  
     });
    }
 }

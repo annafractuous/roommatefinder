@@ -75,10 +75,10 @@ class User < ActiveRecord::Base
 
   ## show user others who selected that they were interested in a potential roommate match with them ##
   def interested_matches
-    
+
     # weed out mutually interested
     connections = MatchConnection.where('match_id = ? AND interested = ?', self.id, true)
-    
+
     #reject mutually interested matches
     connected_users = connections.map { |connection| User.find(connection.user_id) }
     connected_users.reject{|user| self.mutually_interested_match?(user)}
@@ -86,9 +86,7 @@ class User < ActiveRecord::Base
   end
 
   def mutually_interested_matches
-
-    self.interested_matches.select{|match| self.mutually_interested_match?(match)}
-
+    self.interested_matches.select{ |match| self.mutually_interested_match?(match) }
   end
 
   def mutually_interested_match?(match)
@@ -212,7 +210,7 @@ class User < ActiveRecord::Base
     points_earned = 0
 
     table = Object.const_get(category.classify) # e.g. Cleanliness table
-    
+
     if self.send(category.singularize).all_input_columns_nil?
       # -1 is a flag that the category has not been filled out at all
       return -1

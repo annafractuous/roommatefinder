@@ -9,13 +9,32 @@
 
     <div class="col-md-9" id="overall-match-compatibility">
     <h3>You and <%=@match.display_name%> are <%=@total_compatibility%>% compatible overall! </h3>
-    <% connection = @user.match_connection_object_for(@match) %>
-    <% if connection %>
-      <% if connection.interested %>
+    <% if @user_to_match_conn %>
+      <% if @user_to_match_conn.interested && @match_to_user_conn.interested %>
+        <h4>You and <%=@match.display_name%> have selected each other as good potential roommates!</h4>
+      <% elsif @user_to_match_conn.interested %>
         <h4>You've selected <%=@match.display_name%> as a good potential roommate.</h4>
+      <% elsif @match_to_user_conn.interested %>
+        <h4><%=@match.display_name%> has selected you as a good potential roommate.</h4>
+        <h4>Do you think you would be a good match?</h4><br>
+        <table>
+          <td>
+            <%= form_for @user_to_match_conn, url: user_match_path(@user, @match), method: 'PATCH' do |f| %>
+              <%= f.hidden_field :interested, value: false %>
+              <%= f.submit "No Thanks", class: "btn btn-lg btn-info deny-interested" %>
+            <% end %>
+          </td>
+          <td>
+            <%= form_for @user_to_match_conn, url: user_match_path(@user, @match), method: 'PATCH' do |f| %>
+              <%= f.hidden_field :interested, value: true %>
+              <%= f.submit "I'm Interested", class: "btn btn-lg btn-success confirm-interested" %>
+            <% end %>
+          </td>
+        </table>
       <% else %>
         <h4>Do you think they would be a good roommate?</h4>
-        <%=form_for @user, url: user_match_path(@user, @match), method: 'PATCH' do |f| %>
+        <%=form_for @user.match_connection_object_for(@match), url: user_match_path(@user, @match), method: 'PATCH', class: "confirm-interested" do |f| %>
+          <%= f.hidden_field :interested, value: true %>
           <%= f.submit "Let Them Know!", class: "btn btn-lg btn-success", role: "button" %>
         <% end %>
       <% end %>

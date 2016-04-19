@@ -1,7 +1,7 @@
 <div class="container body">
   <div class="col-sm-8">
     <%= render 'layouts/user_header_section', user: @user %>
-    
+
     <div class="row">
       <%= render 'layouts/questions_navbar', user: @user %>
     </div>
@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="col-sm-4">
-    <%= render 'layouts/sidebar', desired_match_trait: @desired_match_trait %>
+    <%= render 'layouts/sidebar', user: @user, desired_match_trait: @desired_match_trait, interested_matches: @interested_matches %>
   </div>
 </div>
 

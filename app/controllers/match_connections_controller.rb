@@ -16,11 +16,14 @@ class MatchConnectionsController < ApplicationController
   end
 
   def index
+
     @user = User.find(params[:user_id])
     @user.find_matches
+
     connections = MatchConnection.where("user_id = ? AND compatibility >= ?", @user.id, 25).order(compatibility: :desc)
     @matches = connections.map { |connection| connection.match }
     @mutually_interested_matches = @user.mutually_interested_matches
+
     if @matches.size == 0
       @top_users = MatchConnection.most_popular_users
       @top_users.each do |match|
@@ -28,6 +31,7 @@ class MatchConnectionsController < ApplicationController
         @user.run_match_calculations(match)
       end
     end
+
     render 'index'
   end
 
@@ -44,6 +48,9 @@ class MatchConnectionsController < ApplicationController
 
     @match_habit = @match.habit.convert_habit(@match.habit)
     @habit_compatibility = Habit.print_category_score(@user, @match)
+
+    @user_to_match_conn = MatchConnection.find_or_create_by(user_id: @user.id, match_id: @match.id)
+    @match_to_user_conn = MatchConnection.find_or_create_by(user_id: @match.id, match_id: @user.id)
   end
 
 
@@ -52,13 +59,15 @@ class MatchConnectionsController < ApplicationController
     @user = current_user
     @user_to_match_connection = @user.match_connection_object_for(@match)
     match_to_user_connection = MatchConnection.find_or_create_by(user_id: @match.id, match_id: @user.id)
+    @user_to_match_connection.update(match_connection_params)
+
+    # msg = render_to_string partial: 'flash_message', locals: { match: @match }
+    # render json: { data: msg }
 
     if @user_to_match_connection.update(match_connection_params)
       if params[:match_connection][:interested] == "true"
-        @match.run_match_calculations(@user)
-        render "users/show", notice: "You've sent a message to #{@match.display_name}. You can see this match now at the top of your matches page."
+        redirect_to user_match_path(@user, @match), notice: "You've sent a message to #{@match.display_name}."
       else
-        binding.pry
         redirect_to user_path(@user), notice: "You've removed this person from your potential matches sidebar."
       end
     end

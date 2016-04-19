@@ -1,29 +1,29 @@
 <div id="container">
   <div class="row sidebar" id="looking-for">
     <h4>You're looking for someone:</h4>
-    <p><%= @user.desired_match_trait.print_desired_city %></p>
-    <p><%= @user.desired_match_trait.print_desired_age %></p>
-    <p><%= @user.desired_match_trait.print_desired_gender %></p>
+    <p><%= desired_match_trait.print_desired_city %></p>
+    <p><%= desired_match_trait.print_desired_age %></p>
+    <p><%= desired_match_trait.print_desired_gender %></p>
   </div>
-  <% if @interested_matches %>
+  <% if @interested_matches.any? %>
   <div class="row sidebar" id="potential-roommates">
-    <h4>You have interested matches! <span class="badge"><%= @interested_matches.size %></span></h4>
-    <% @interested_matches.each do |match| %>
+    <h4>You have interested matches! <span class="badge"><%= interested_matches.size %></span></h4>
+    <% interested_matches.each do |match| %>
       <div class="col-lg-3">
         <%= image_tag match.photo.url(:small), class: "potential-roommates-pic" %>
       </div>
       <div class="col-lg-9">
-        <%= link_to "#{match.display_name}", user_match_path(@user, match) %><br>
+        <%= link_to "#{match.display_name}", user_match_path(user, match) %><br>
         <%= match.convert_age %>, <%= match.gender %> <br>
         $<%= match.max_rent %> max. rent <br><br>
         <!-- <p> Send an email: <strong><%=match.email %></strong></p> -->
-        <%= form_for @user.match_connection_object_for(match), url: user_match_path(@user, match), method: 'PATCH' do |f| %>
+        <%= form_for user.match_connection_object_for(match), url: user_match_path(user, match), method: 'PATCH' do |f| %>
           <%= f.hidden_field :interested, value: false %>
-          <%= f.submit "No Thanks", class: "btn btn-sm btn-info" %>
+          <%= f.submit "No Thanks", class: "btn btn-sm btn-info deny-interested" %>
         <% end %>
-        <%= form_for @user.match_connection_object_for(match), url: user_match_path(@user, match), method: 'PATCH' do |f| %>
+        <%= form_for user.match_connection_object_for(match), url: user_match_path(user, match), method: 'PATCH' do |f| %>
           <%= f.hidden_field :interested, value: true %>
-          <%= f.submit "I'm Interested", class: "btn btn-sm btn-success" %>
+          <%= f.submit "I'm Interested", class: "btn btn-sm btn-success confirm-interested" %>
         <% end %>
 
       </div>
