@@ -12,6 +12,7 @@
     <% if @user_to_match_conn %>
       <% if @user_to_match_conn.interested && @match_to_user_conn.interested %>
         <h4>You and <%=@match.display_name%> have selected each other as good potential roommates!</h4>
+        <h4>Send <%=@match.name%> an email: <%=@match.email%></h3>
       <% elsif @user_to_match_conn.interested %>
         <h4>You've selected <%=@match.display_name%> as a good potential roommate.</h4>
       <% elsif @match_to_user_conn.interested %>

@@ -35,6 +35,7 @@ class MatchConnectionsController < ApplicationController
     @match = User.find(params[:match_id])
 
     @user = current_user
+    
     @total_compatibility = @user.compatibility_with(@match)
 
     @match_cleanliness = @match.cleanliness.convert_cleanliness(@match.cleanliness)
