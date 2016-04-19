@@ -56,6 +56,18 @@ app.habits.controller = {
           $('.questions-heading').text("Tell Us About Yourself");
         }
         $('.current-question').delay(600).fadeIn(500);
+  
+        var musicValue = $('#user_habit_attributes_music option:selected').text(); 
+        $("#submit-habit-questions .self").prepend("<strong>Music:</strong><text> "+ musicValue  + "</text><br>")
+        var overnightValue = $('#user_habit_attributes_overnight_visitors option:selected').text();
+        $("#submit-habit-questions .self").prepend("<strong>Overight Visitors:</strong><text> "+ overnightValue  + "</text><br>")
+        var fourTwentyValue = $('#user_habit_attributes_four_twenty option:selected').text();
+        $("#submit-habit-questions .self").prepend("<strong>Four Twenty:</strong><text> "+ fourTwentyValue  + "</text><br>")
+        var drinkingValue = $('#user_habit_attributes_drinking option:selected').text();
+        $("#submit-habit-questions .self").prepend("<strong>Drinking:</strong><text> "+ drinkingValue  + "</text><br>")
+        var partyingValue = $('#user_habit_attributes_drinking option:selected').text();
+        $("#submit-habit-questions ").prepend("<strong>Partying:</strong><text> "+ partyingValue  + "</text><br>")
+        $("#submit-habit-questions .self").prepend("<strong>Partying:</strong><text> "+ partyingValue  + "</text><br>")
       });
     });
   },
@@ -66,7 +78,7 @@ app.habits.controller = {
        $.ajax({
           url: link,
           method: 'GET',
-          
+    
           success: function(data){ 
             $('.revealSection').html(data);
             app.habits.controller.edit();  
@@ -75,3 +87,4 @@ app.habits.controller = {
     });
   }
 }
+
