@@ -19,6 +19,7 @@ class DesiredMatchTrait < ActiveRecord::Base
   include Validatable
   extend InputColumnable::ClassMethods
   include InputColumnable
+  include ActionView::Helpers::TextHelper
 
   def print_desired_gender
     case self.gender
@@ -42,11 +43,11 @@ class DesiredMatchTrait < ActiveRecord::Base
     when 'Within the Month'
       DateTime.now + 30.days
     when "Within Two Months"
-      DateTime.now + 2.Months
+      DateTime.now + 2.months
     when "Within Three Months"
-      DateTime.now + 3.Months
+      DateTime.now + 3.months
     when "Within Six Months"
-      DateTime.now + 6.Months
+      DateTime.now + 6.months
     else
       DateTime.now + 1.year
     end
@@ -54,10 +55,14 @@ class DesiredMatchTrait < ActiveRecord::Base
   end
 
   def print_move_in_date
-    if self.move_in_date > (DateTime.now + 6.months)
+    if self.move_in_date
+      if self.move_in_date > (DateTime.now + 6.months)
       "Not currently seeking a roommate!"
+      else
+        self.convert_datetime_to_months
+      end
     else
-      self.convert_datetime_to_months
+      "Not currently seeking a roommate!"
     end
   end
 
@@ -65,9 +70,9 @@ class DesiredMatchTrait < ActiveRecord::Base
     diff = ((self.move_in_date - DateTime.now)/1.month).round
       if diff < 1
         diff = ((self.move_in_date - DateTime.now)/1.week).round
-        "Looking to move in #{diff} weeks"
+        "Looking to move in #{pluralize(diff, "week")}"
       elsif diff < 7
-        "Looking to move in #{diff} weeks"
+        "Looking to move in #{pluralize(diff, "month")}"
       else
         "Not currently seeking a roommate."
       end
