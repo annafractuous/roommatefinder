@@ -1,5 +1,5 @@
 class ChangeAgeFormatInUsers < ActiveRecord::Migration
   def change
-    change_column :users, :age, :datetime
+    change_column :users, :age, :timestamp
   end
 end
