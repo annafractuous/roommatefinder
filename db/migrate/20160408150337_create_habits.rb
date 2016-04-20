@@ -1,7 +1,7 @@
 class CreateHabits < ActiveRecord::Migration
   def change
     create_table :habits do |t|
-      t.integer :profile_id
+      t.integer :user_id
       t.string :question
       t.string :answer
 
