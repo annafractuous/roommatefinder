@@ -25,7 +25,7 @@
         <em>All our seed users are moving within 6 months and looking in 'New York'</em><br>
         <%= trait.text_field :city, placeholder: "City" %><br>
         
-         <%= trait.select :move_in_date, ['As soon as possible', 'Within the Month', "Within Two Months", "Within Three Months", "Within Six Months", "Not Actively Seeking Roommate"]%><br>
+         <%= trait.select :move_in_date, [['As soon as possible', 1], ['Within the Month', 2], ["Within Two Months", 3], ["Within Three Months", 4], ["Within Six Months", 5], ["Not Actively Seeking Roommate",6]], :selected => user.desired_match_trait.move_in_date%><br>
         <center><button role="button" class="btn btn-md btn-info" id="back-city-and-move-in">Back</button>
         <button role="button" class="btn btn-md btn-primary" id="submit-city-and-move-in">Continue</button></center>
     </div>

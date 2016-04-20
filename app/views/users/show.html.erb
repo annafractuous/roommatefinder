@@ -36,7 +36,6 @@
           </div>
           <div class="modal-footer">
               <%= form_for @user, html: { multipart: true } do |f| %>
-
                 <%= f.file_field :photo %>
                 <%= f.submit "Update Photo", class: "btn btn-success"%>
               <% end %>

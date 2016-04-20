@@ -27,10 +27,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      # TEMPORARY FOR DEVELOPMENT, only send email to gmail users
-      if @user.email =~ /gmail\.com\b/
-        UserMailer.welcome_email(@user).deliver_now
-      end
+      
+      # UserMailer.welcome_email(@user).deliver_now
+
       session[:user_id] = @user.id
       redirect_to @user, notice: "Welcome to Roominate!"
     else
@@ -51,12 +50,17 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
-      redirect_to @user
-    else
-      flash.now[:error] = @user.errors.to_a
-      render :edit
+    
+    # guard against not choosing a file when updating photo 
+    if params[:user]
+      if @user.update(user_params)
+        redirect_to @user
+      else
+        flash.now[:error] = @user.errors.to_a
+        render :edit
+      end
     end
+    redirect_to user_path(@user)
   end
 
   private

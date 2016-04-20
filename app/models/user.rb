@@ -146,7 +146,7 @@ class User < ActiveRecord::Base
     set = self.reject_wrong_rent(set) if self.max_rent
     set = self.reject_wrong_age(set) if self.desired_match_trait.min_age && self.desired_match_trait.max_age
     set = self.reject_wrong_city(set) if self.desired_match_trait.city
-    set = self.reject_wrong_move_in_date(set) if self.desired_match_trait.move_in_date
+    set = self.reject_wrong_move_in_date(set) if self.desired_match_trait[:move_in_date]
 
     set.each do |match|
       run_match_calculations(match)
@@ -277,8 +277,8 @@ class User < ActiveRecord::Base
   end
 
   def reject_wrong_move_in_date(set)
-    min_date = desired_match_trait.move_in_date - 61.days
-    max_date = desired_match_trait.move_in_date + 61.days
+    min_date = desired_match_trait[:move_in_date] - 61.days
+    max_date = desired_match_trait[:move_in_date] + 61.days
     set.joins(:desired_match_trait).where("desired_match_traits.move_in_date > ? AND desired_match_traits.move_in_date < ?", min_date, max_date)
   end
 
