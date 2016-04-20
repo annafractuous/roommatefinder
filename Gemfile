@@ -3,8 +3,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5.2'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass'
@@ -35,15 +34,17 @@ gem 'bcrypt', '~> 3.1.7'
 # gem 'capistrano-rails', group: :development
 
 gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
+gem 'factory_girl_rails'
+gem 'faker'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'sqlite3'
   gem 'byebug'
   gem 'pry-byebug'
   gem 'rspec'
   gem 'better_errors'
-  gem 'factory_girl_rails'
-  gem 'faker'
   gem 'annotate'
   gem 'database_cleaner'
 end
