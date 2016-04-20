@@ -56,14 +56,6 @@ app.cleanlinesses.controller = {
           $('.questions-heading').text("Tell Us About Yourself");
         }
         $('.current-question').delay(600).fadeIn(500);
-        $('.your-cleanliness').empty()
-        
-        var commonAreaValue = $('#user_cleanliness_attributes_common_space option:selected').text();
-        $('.your-cleanliness').prepend('<strong>Common Area:</strong><text> '+ commonAreaValue  + '</text><br>')
-        var bathroomValue = $('#user_cleanliness_attributes_bathroom option:selected').text();
-        $('.your-cleanliness').prepend('<strong>Bathroom:</strong><text> '+ bathroomValue  + '</text><br>')
-        var kitchenValue = $('#user_cleanliness_attributes_kitchen option:selected').text(); 
-        $('.your-cleanliness').prepend('<strong>Kitchen:</strong><text> '+ kitchenValue  + '</text><br>')
       });
     });
   },
