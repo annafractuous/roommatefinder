@@ -7,14 +7,5 @@ class ChangeToUserIdOnAllModels < ActiveRecord::Migration
     add_column :habits, :user_id, :integer
     add_column :desired_habits, :user_id, :integer
 
-    remove_column :cleanlinesses, :profile_id
-    remove_column :desired_cleanlinesses, :profile_id
-    remove_column :schedules, :profile_id
-    remove_column :desired_schedules, :profile_id
-    remove_column :habits, :profile_id
-    remove_column :desired_habits, :profile_id
-
-    drop_table :profiles
-    drop_table :preferences
   end
 end
