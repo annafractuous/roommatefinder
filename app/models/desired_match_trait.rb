@@ -56,23 +56,23 @@ class DesiredMatchTrait < ActiveRecord::Base
 
   def move_in_date
     date = self[:move_in_date]
-    # binding.pry
     two_weeks_from_now = DateTime.now + 14.days
     one_month_from_now = DateTime.now + 1.month
     two_months_from_now = DateTime.now + 2.months
     three_months_from_now = DateTime.now + 3.months
     six_months_from_now = DateTime.now + 6.month
-    
-    if date <= two_weeks_from_now
-      '1'
-    elsif (date > two_weeks_from_now) && (date <= one_month_from_now)
-      '2'
-    elsif (date > one_month_from_now) && (date <= two_months_from_now)
-      '3'
-    elsif (date > two_months_from_now) && (date <= three_months_from_now)
-      '4'
-    elsif(date > three_months_from_now) && (date <= six_months_from_now)
-      '5'
+    if date
+      if date <= two_weeks_from_now
+        '1'
+      elsif (date > two_weeks_from_now) && (date <= one_month_from_now)
+        '2'
+      elsif (date > one_month_from_now) && (date <= two_months_from_now)
+        '3'
+      elsif (date > two_months_from_now) && (date <= three_months_from_now)
+        '4'
+      elsif(date > three_months_from_now) && (date <= six_months_from_now)
+        '5'
+      end
     else
       '6'
     end
