@@ -27,8 +27,9 @@ end
   profile_pics.push("db/profile_pics/blank_user.png")
 end
 
-User.all.each_with_index do |user, i|
-  user.photo = File.new(profile_pics[i % profile_pics.size])
+(1..200).to_a.each do |n|
+  user = User.find(n)
+  user.photo = File.new(profile_pics[n % profile_pics.size])
   user.save
 end
 
