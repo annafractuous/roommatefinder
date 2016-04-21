@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-# 220 users with default City of New York
+# 200 users with default City of New York
 200.times do
   FactoryGirl.create :user
 end
@@ -28,9 +28,8 @@ end
   profile_pics.push("db/profile_pics/blank_user.png")
 end
 
-all_users = User.all.shuffle
-all_users.each do |user|
-  user.photo = File.new(profile_pics.sample)
+User.all.each_with_index do |user, i|
+  user.photo = File.new(profile_pics[i % profile_pics.size])
   user.save
 end
 
