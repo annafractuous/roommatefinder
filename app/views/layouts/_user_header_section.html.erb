@@ -12,7 +12,7 @@
     <p><strong>Gender:</strong> <%= user.gender %></p>
     <p><strong>Max Rent: </strong> <%=@user.max_rent%> </p>
     <p><strong>DealBreakers</strong></p><p><%= @user.dealbreakers %></p>
-    <p><small><%= link_to "Edit Your User Info", edit_user_path(user) %></small></p>
+    <p><small><%= link_to "Edit Your User Info", edit_user_path(user), id: "edit-user"%></small></p>
   </div>
 </div>
 <div class="row">

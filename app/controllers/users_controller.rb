@@ -28,6 +28,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    render :edit, :layout => false
   end
 
   def update
@@ -42,7 +43,6 @@ class UsersController < ApplicationController
         render :edit
       end
     end
-    redirect_to user_path(@user)
   end
 
   private

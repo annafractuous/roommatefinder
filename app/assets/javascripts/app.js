@@ -13,6 +13,5 @@ $(function() {
   app.habits.controller.show();
   app.cleanlinesses.controller.show();
   app.match_connections.controller.show();
-
-  // app.users.controller.edit();
+  app.users.controller.show();
 });
