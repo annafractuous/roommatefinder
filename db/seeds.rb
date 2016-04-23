@@ -130,22 +130,22 @@ end
 
 # averagely clean seeking averagely clean
 averagely_clean_users.pop(60).each do |user|
-  user.desired_cleanliness.kitchen = ["234"]
+  user.desired_cleanliness.kitchen = "234"
   user.desired_cleanliness.kitchen_importance = importances.sample
-  user.desired_cleanliness.bathroom = ["234"]
+  user.desired_cleanliness.bathroom = "234"
   user.desired_cleanliness.bathroom_importance = importances.sample
-  user.desired_cleanliness.common_space = ["234"]
+  user.desired_cleanliness.common_space = "234"
   user.desired_cleanliness.common_space_importance = importances.sample
   user.save
 end
 
 # averagely clean seeking clean
 averagely_clean_users.pop(40).each do |user|
-  user.desired_cleanliness.kitchen = ["345"]
+  user.desired_cleanliness.kitchen = "345"
   user.desired_cleanliness.kitchen_importance = importances.sample
-  user.desired_cleanliness.bathroom = ["345"]
+  user.desired_cleanliness.bathroom = "345"
   user.desired_cleanliness.bathroom_importance = importances.sample
-  user.desired_cleanliness.common_space = ["345"]
+  user.desired_cleanliness.common_space = "345"
   user.desired_cleanliness.common_space_importance = importances.sample
   user.save
 end
@@ -197,7 +197,7 @@ subset = all_users.pop(30)
       user.schedule.work = [1,2].sample
       user.desired_schedule.work = "12"
       user.schedule.sleep = [3,4].sample
-      user.desired_schedule.sleep = ["125"]
+      user.desired_schedule.sleep = "125"
       user.desired_schedule.sleep_importance = importances.sample
       user.save
     end
@@ -207,7 +207,7 @@ subset = all_users.pop(30)
     # sleep responsible seeking responsible
     subset.pop(10).each do |user|
       user.schedule.work = [1,2].sample
-      user.desired_schedule.work = ["345"]
+      user.desired_schedule.work = "345"
       user.desired_schedule.work_importance = importances.sample
       user.schedule.sleep = 1
       user.desired_schedule.sleep = "1"
@@ -217,7 +217,7 @@ subset = all_users.pop(30)
     # sleep responsible seeking nocturnal or day
     subset.pop(5).each do |user|
       user.schedule.work = [1,2].sample
-      user.desired_schedule.work = ["345"]
+      user.desired_schedule.work = "345"
       user.desired_schedule.work_importance = importances.sample
       user.schedule.sleep = 1
       user.desired_schedule.sleep = "34"
@@ -227,7 +227,7 @@ subset = all_users.pop(30)
     # sleep late seeking responsible or late
     subset.pop(10).each do |user|
       user.schedule.work = [1,2].sample
-      user.desired_schedule.work = ["345"]
+      user.desired_schedule.work = "345"
       user.desired_schedule.work_importance = importances.sample
       user.schedule.sleep = 2
       user.desired_schedule.sleep = "12"
@@ -237,10 +237,10 @@ subset = all_users.pop(30)
     # sleep nocturnal or day seeking anything but nocturnal or day
     subset.pop(5).each do |user|
       user.schedule.work = [1,2].sample
-      user.desired_schedule.work = ["345"]
+      user.desired_schedule.work = "345"
       user.desired_schedule.work_importance = importances.sample
       user.schedule.sleep = [3,4].sample
-      user.desired_schedule.sleep = ["125"].sample(rand(2..3)).join
+      user.desired_schedule.sleep = ["1","2","5"].sample(rand(2..3)).join
       user.desired_schedule.sleep_importance = importances.sample
       user.save
     end
@@ -286,8 +286,8 @@ subset = all_users.pop(30)
       user.desired_schedule.work = "45"
       user.desired_schedule.work_importance = importances.sample
       user.schedule.sleep = 1
-      user.desired_schedule.sleep = ["12345"]
-      user.desired_schedule.sleep_importance = 1
+      user.desired_schedule.sleep = "12345"
+      user.desired_schedule.sleep_importance = 2
       user.save
     end
 
@@ -309,7 +309,7 @@ subset = all_users.pop(25)
       user.desired_schedule.work = "35"
       user.desired_schedule.work_importance = importances.sample
       user.schedule.sleep = [3,4].sample
-      user.desired_schedule.sleep = ["12345"]
+      user.desired_schedule.sleep = "12345"
       user.desired_schedule.sleep_importance = 1
       user.save
     end
@@ -347,22 +347,22 @@ all_users = User.all.shuffle
 # before 6 seeking anything else
 subset = all_users.pop(20).each do |user|
   user.schedule.bathroom = 1
-  user.desired_schedule.bathroom = ["2345"]
+  user.desired_schedule.bathroom = "2345"
   user.desired_schedule.bathroom_importance = importances.sample
   user.save
 end
 # before 6 doesnt care
 subset = all_users.pop(20).each do |user|
   user.schedule.bathroom = 1
-  user.desired_schedule.bathroom = ["12345"]
-  user.desired_schedule.bathroom_importance = 1
+  user.desired_schedule.bathroom = "12345"
+  user.desired_schedule.bathroom_importance = [1,2].sample
   user.save
 end
 
 # 6-7 seeking anything else
 subset = all_users.pop(20).each do |user|
   user.schedule.bathroom = 2
-  user.desired_schedule.bathroom = ["1345"]
+  user.desired_schedule.bathroom = "1345"
   user.desired_schedule.bathroom_importance = importances.sample
   user.save
 end
@@ -370,15 +370,15 @@ end
 # 6-7 doesnt care
 subset = all_users.pop(20).each do |user|
   user.schedule.bathroom = 2
-  user.desired_schedule.bathroom = ["12345"]
-  user.desired_schedule.bathroom_importance = [1,1,2].sample
+  user.desired_schedule.bathroom = "12345"
+  user.desired_schedule.bathroom_importance = [1,2].sample
   user.save
 end
 
 # 7-8 seeking anything else
 subset = all_users.pop(20).each do |user|
   user.schedule.bathroom = 3
-  user.desired_schedule.bathroom = ["1245"]
+  user.desired_schedule.bathroom = "1245"
   user.desired_schedule.bathroom_importance = importances.sample
   user.save
 end
@@ -386,15 +386,15 @@ end
 # 7-8 doesnt care
 subset = all_users.pop(20).each do |user|
   user.schedule.bathroom = 3
-  user.desired_schedule.bathroom = ["12345"]
-  user.desired_schedule.bathroom_importance = [1,1,2].sample
+  user.desired_schedule.bathroom = "12345"
+  user.desired_schedule.bathroom_importance = [1,2].sample
   user.save
 end
 
 # 8-10 seeking anything else
 subset = all_users.pop(20).each do |user|
   user.schedule.bathroom = 4
-  user.desired_schedule.bathroom = ["1235"]
+  user.desired_schedule.bathroom = "1235"
   user.desired_schedule.bathroom_importance = importances.sample
   user.save
 end
@@ -402,24 +402,24 @@ end
 # 8-10 doesnt care
 subset = all_users.pop(20).each do |user|
   user.schedule.bathroom = 4
-  user.desired_schedule.bathroom = ["12345"]
-  user.desired_schedule.bathroom_importance = [1,1,2].sample
+  user.desired_schedule.bathroom = "12345"
+  user.desired_schedule.bathroom_importance = [1,2].sample
   user.save
 end
 
 # later seeking anything else
 subset = all_users.pop(20).each do |user|
   user.schedule.bathroom = 5
-  user.desired_schedule.bathroom = ["1234"]
-  user.desired_schedule.bathroom_importance = [1,1,2].sample
+  user.desired_schedule.bathroom = "1234"
+  user.desired_schedule.bathroom_importance = [1,2].sample
   user.save
 end
 
 # later doesnt care
 subset = all_users.pop(20).each do |user|
   user.schedule.bathroom = 5
-  user.desired_schedule.bathroom = ["12345"]
-  user.desired_schedule.bathroom_importance = [1,1,2].sample
+  user.desired_schedule.bathroom = "12345"
+  user.desired_schedule.bathroom_importance = [1,2].sample
   user.save
 end
 
@@ -429,7 +429,7 @@ end
 all_users = User.all.shuffle
 all_users.each do |user|
   user.schedule.kitchen = [1,2,3,4,5].sample
-  user.desired_schedule.kitchen = ["12345"]
+  user.desired_schedule.kitchen = ["1","2","3","4","5"].sample(rand(1..4)).join
   user.desired_schedule.kitchen_importance = [1,2,3,4].sample
   user.save
 end
