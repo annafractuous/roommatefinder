@@ -124,7 +124,6 @@ FactoryGirl.define do
 
   factory :desired_match_trait do
     gender { ["Female", "Male", "Any"].sample }
-    move_in_date { Date.today + 6.months }
     min_age { rand(18..26) }
     max_age { rand(27..49) }
     city "New York"

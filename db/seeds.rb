@@ -30,6 +30,9 @@ end
 (1..200).to_a.each do |n|
   user = User.find(n)
   user.photo = File.new(profile_pics[n % profile_pics.size])
+  # set move_i_date manually like this since the #move_in_date= method
+  # has been overwritten for the form_for
+  user.desired_match_trait[:move_in_date] = DateTime.now + 6.months
   user.save
 end
 

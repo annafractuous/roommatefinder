@@ -81,7 +81,7 @@ class DesiredMatchTrait < ActiveRecord::Base
   def print_move_in_date
     if self[:move_in_date]
       if self[:move_in_date] > (DateTime.now + 6.months)
-      "Not currently seeking a roommate!"
+        "Not currently seeking a roommate!"
       else
         self.convert_datetime_to_months
       end
@@ -102,10 +102,6 @@ class DesiredMatchTrait < ActiveRecord::Base
       end
   end
         
-
-    
-
-
   def print_desired_age
     if !(min_age && max_age)
       "You haven't entered a preferred age range"
