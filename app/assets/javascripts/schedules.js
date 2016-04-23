@@ -57,15 +57,6 @@ app.schedules.controller = {
         }
         $('.current-question').delay(600).fadeIn(500);
         $('.your-schedule').empty()
-
-        var kitchenValue = $('#user_schedule_attributes_kitchen option:selected').text();
-        $('.your-schedule').prepend('<strong>Kitchen:</strong><text> '+ kitchenValue  + '</text><br>')
-        var bathroomValue = $('#user_schedule_attributes_bathroom option:selected').text();
-        $('.your-schedule').prepend('<strong>Bathroom:</strong><text> '+ bathroomValue  + '</text><br>')
-        var sleepValue = $('#user_schedule_attributes_sleep option:selected').text();
-        $('.your-schedule').prepend('<strong>Sleep:</strong><text> '+ sleepValue  + '</text><br>')
-        var workValue = $('#user_schedule_attributes_work option:selected').text();
-        $('.your-schedule').prepend('<strong>Work:</strong><text> '+ workValue  + '</text><br>')
       });
 
     });
