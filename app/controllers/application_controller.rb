@@ -11,8 +11,8 @@ private
   helper_method :current_user
 
   def authorize
-    if !current_user
-      flash.now[:alert] = "You must be logged in."
+    if !current_user || current_user.id.to_s != params[:id].split('-').first
+      flash[:alert] = "You must be logged in."
       redirect_to login_path
     end
   end

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authorize, only: [:edit, :update]
+  before_action :authorize, only: [:edit, :update, :show]
   include ActionView::Helpers::TextHelper
 
   def new
