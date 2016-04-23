@@ -13,7 +13,6 @@
 #
 
 class SchedulesController < ApplicationController
-  before_action :authorize
 
 
   def edit

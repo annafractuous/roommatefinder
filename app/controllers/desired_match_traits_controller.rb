@@ -14,7 +14,6 @@
 #
 
 class DesiredMatchTraitsController < ApplicationController
-  before_action :authorize, only: [:edit, :update]
 
   def edit
 

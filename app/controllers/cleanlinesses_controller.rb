@@ -12,7 +12,6 @@
 #
 
 class CleanlinessesController < ApplicationController
-  before_action :authorize
 
 
   def edit

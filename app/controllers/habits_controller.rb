@@ -14,7 +14,6 @@
 #
 
 class HabitsController < ApplicationController
-  before_action :authorize
 
 
   def edit
