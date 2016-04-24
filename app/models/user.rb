@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
     "#{id}-#{username.downcase}"
   end
 
-  ## assign a new user a blank profile picture ##
+  ## assign new user a blank profile picture ##
   def assign_blank_profile_pic
     self.photo = File.new("app/assets/images/blank_user.png")
     self.save
@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
     connected_users = connections.map { |connection| User.find(connection.user_id) }
   end
 
-  def one_way_interested_matches 
+  def one_way_interested_matches
     connected_users = self.interested_matches
     connected_users.reject{|user| self.mutually_interested_match?(user)}
   end
