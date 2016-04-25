@@ -104,17 +104,17 @@ describe "User" do
       let!(:match_for_user) { create :user }
 
       it 'returns an AR associations collection proxy of users' do
-        expect(user.find_matches.first).to be_a(User)
+        expect(MatchCalculation.find_matches(user).first).to be_a(User)
       end
 
       it 'associates a user and match through a MatchConnection' do
-        user.find_matches
+        MatchCalculation.find_matches(user)
         expect(user.match_connections.last.user).to eq(user)
         expect(user.match_connections.last.match).to eq(match_for_user)
       end
 
       it 'adds the match to the user\'s matches' do
-        user.find_matches
+        MatchCalculation.find_matches(user)
         expect(user.matches).to include(match_for_user)
       end
 
@@ -129,19 +129,19 @@ describe "User" do
       let!(:slightly_over_limit) { create :user, max_rent: 900 }
 
       it 'doesnt match to users who are seeking a higher rent' do
-        user.find_matches
+        MatchCalculation.find_matches(user)
 
         expect(user.matches).not_to include(seeking_too_high_rent)
       end
 
       it 'does match to users who are seeking a rent below the limit' do
-        user.find_matches
+        MatchCalculation.find_matches(user)
 
         expect(user.matches).to include(seeking_acceptable_rent)
       end
 
       it 'allows a rent over the limit but within reasonable limit' do
-        user.find_matches
+        MatchCalculation.find_matches(user)
 
         expect(user.matches).to include(slightly_over_limit)
       end
@@ -158,7 +158,7 @@ describe "User" do
       it 'matches a female seeking female to females' do
         female_user.desired_match_trait.gender = "Female"
 
-        female_user.find_matches
+        MatchCalculation.find_matches(female_user)
 
         expect(female_user.matches).to include(female_match)
         expect(female_user.matches).to_not include(male_match)
@@ -167,7 +167,7 @@ describe "User" do
       it 'matches a female seeking a male to males' do
         female_user.desired_match_trait.gender = "Male"
 
-        female_user.find_matches
+        MatchCalculation.find_matches(female_user)
 
         expect(female_user.matches).to include(male_match)
         expect(female_user.matches).to_not include(female_match)
@@ -176,7 +176,7 @@ describe "User" do
       it 'matches a male seeking a female to females' do
         male_user.desired_match_trait.gender = "Female"
 
-        male_user.find_matches
+        MatchCalculation.find_matches(male_user)
 
         expect(male_user.matches).to include(female_match)
         expect(male_user.matches).to_not include(male_match)
@@ -186,7 +186,7 @@ describe "User" do
         female_match = create :user, gender: "Female"
         male_user.desired_match_trait.gender = "Male"
 
-        male_user.find_matches
+        MatchCalculation.find_matches(male_user)
 
         expect(male_user.matches).to include(male_match)
         expect(male_user.matches).to_not include(female_match)
@@ -196,8 +196,8 @@ describe "User" do
         male_user.desired_match_trait.gender = "Any"
         female_user.desired_match_trait.gender = "Any"
 
-        male_user.find_matches
-        female_user.find_matches
+        MatchCalculation.find_matches(male_user)
+        MatchCalculation.find_matches(female_user)
 
         expect(male_user.matches).to include(female_match, male_match)
         expect(female_user.matches).to include(female_match, male_match)
@@ -205,7 +205,7 @@ describe "User" do
 
       it 'matches an "other" gender user seeking "other" gender to "other" gender matches' do
         other_user.desired_match_trait.gender = "Other"
-        other_user.find_matches
+        MatchCalculation.find_matches(other_user)
 
         expect(other_user.matches).to include(other_match)
         expect(other_user.matches).to_not include(male_match)
@@ -223,12 +223,12 @@ describe "User" do
         younger_user.desired_match_trait.min_age = 18
         younger_user.desired_match_trait.max_age = 26
         younger_user.save
-        younger_user.find_matches
+        MatchCalculation.find_matches(younger_user)
 
         older_user.desired_match_trait.min_age = 35
         older_user.desired_match_trait.max_age = 45
         older_user.save
-        older_user.find_matches
+        MatchCalculation.find_matches(older_user)
 
         expect(younger_user.matches).to include(younger_match)
         expect(older_user.matches).to include(older_match)
@@ -238,12 +238,12 @@ describe "User" do
         younger_user.desired_match_trait.min_age = 18
         younger_user.desired_match_trait.max_age = 26
         younger_user.save
-        younger_user.find_matches
+        MatchCalculation.find_matches(younger_user)
 
         older_user.desired_match_trait.min_age = 35
         older_user.desired_match_trait.max_age = 45
         older_user.save
-        older_user.find_matches
+        MatchCalculation.find_matches(older_user)
 
         expect(younger_user.matches).to_not include(older_match)
         expect(older_user.matches).to_not include(younger_match)
@@ -276,8 +276,8 @@ describe "User" do
         rancho_cucamonga_match.save
         nebraska_match.save
 
-        new_york_user.find_matches
-        rancho_cucamonga_user.find_matches
+        MatchCalculation.find_matches(new_york_user)
+        MatchCalculation.find_matches(rancho_cucamonga_user)
         nebraska_match.find_matches
 
         expect(new_york_user.matches).to include(new_york_match)
@@ -310,9 +310,9 @@ describe "User" do
         taking_my_time_match.save
 
         in_a_hurry_match.find_matches
-        in_a_hurry_user.find_matches
+        MatchCalculation.find_matches(in_a_hurry_user)
 
-        taking_my_time_user.find_matches
+        MatchCalculation.find_matches(taking_my_time_user)
         taking_my_time_match.find_matches
 
         expect(in_a_hurry_user.matches).to include(in_a_hurry_match)
@@ -321,9 +321,6 @@ describe "User" do
         expect(taking_my_time_user.matches).to_not include(in_a_hurry_match)
 
       end
-
-
-
     end
   end
   end
