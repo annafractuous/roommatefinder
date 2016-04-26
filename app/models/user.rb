@@ -111,7 +111,7 @@ class User < ActiveRecord::Base
   ## calculate percentage of profile that's complete ##
   def profile_percent_complete
     ## questions completed on user model (e.g. max rent, etc.) ##
-    completion_hash = User.user_columns.each_with_object({completed: 0, total: 0}) do |col, num_questions|
+    completion_hash = MatchCalculation.user_columns.each_with_object({completed: 0, total: 0}) do |col, num_questions|
      num_questions[:total] += 1
      num_questions[:completed] += 1 if self.send(col)
     end
