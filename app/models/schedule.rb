@@ -29,7 +29,7 @@ class Schedule < ActiveRecord::Base
   end
 
   def self.print_category_score(user, match)
-    score = user.mutual_compatibility_score_per_category(self.name.downcase, match)
+    score = MatchCalculation.mutual_compatibility_score_per_category(user, match, self.name.downcase)
     if score == -1
       "One of you hasn't answered any questions in this category"
     else
