@@ -25,7 +25,7 @@ class MatchConnectionsController < ApplicationController
       @top_users = MatchConnection.most_popular_users
       @top_users.each do |match|
         MatchConnection.find_or_create_by(user_id: @user.id, match_id: match.id)
-        MatchConnection.run_match_calculations(@user, match)
+        MatchCalculation.run_match_calculations(@user, match)
       end
     end
     render 'index'
@@ -60,7 +60,7 @@ class MatchConnectionsController < ApplicationController
 
     if @user_to_match_connection.update(match_connection_params)
       if params[:match_connection][:interested] == "true"
-        MatchConnection.run_match_calculations(@user, @match)
+        MatchCalculation.run_match_calculations(@user, @match)
         redirect_to user_match_path(@user, @match), notice: "You've sent a notification to #{@match.display_name}"
       else
         redirect_to user_path(@user), notice: "You've removed this person from your potential matches sidebar."
