@@ -18,6 +18,8 @@
 @import "bootstrap-sprockets"
 @import "bootstrap"
 
+/******************** Universal ********************/
+
 html, body
   height: 100%
 
@@ -25,8 +27,23 @@ body
   margin-bottom: 100px
   font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif
 
-.body
+.content-body
   margin-top: 20px
+
+a:hover
+  text-decoration: none
+
+.btn-info
+  background-color: #a5cad1
+
+/* Main Nav */
+
+.navbar
+  background-color: #fff8f6
+  margin-bottom: 0 !important
+
+
+/******************** Landing Page ********************/
 
 /* Header */
 
@@ -42,13 +59,25 @@ body
   -moz-background-size: cover
   background-size: cover
   -o-background-size: cover
+  .text-vertical-center
+    display: table-cell
+    text-align: center
+    vertical-align: middle
+    h1
+      margin: 0
+      padding: 0
+      font-size: 4.5em
+      font-weight: 700
 
 /* About */
 
 .about
   padding: 25px 0
 
-/* Services */
+/* Match Compatibility On... */
+
+hr.small
+  max-width: 100px
 
 .services
   padding: 50px 0px 25px 0px
@@ -56,41 +85,8 @@ body
 .service-item
   margin-bottom: 10px
 
-/* Navigation (main, question categories, and questions for each form) */
 
-.navbar
-  background-color: #fff8f6
-  margin-bottom: 0 !important
-
-.nav-tabs
-  margin: 20px 10px
-
-.nav-tabs li
-  border-color: #e5e5e5 #eee #eee
-  border-style: solid
-  border-width: 1px 1px 0 1px
-  margin: 0 2px
-
-.navigate-category-questions li:hover
-  cursor: pointer
-
-.current-question-nav
-  color: rgb(51,122,183)
-
-.question-div
-  background-color: rgb(194,209,216)
-  border-radius: 15px
-  padding: 40px
-
-.question-div label
-  font-size: 20px
-  font-weight: normal
-
-.checkbox-option
-  font-size: 14px !important
-
-.question-div button
-  margin-top: 15px
+/******************** Sidebar ********************/
 
 .sidebar
   background-color: rgb(194,209,216)
@@ -98,74 +94,107 @@ body
   margin: 0 0 10px 10px
   padding: 10px 20px
 
-#mutual-matches
-  width: 2000px
+.potential-roommates-pic
+  border-radius: 20px
+  height: auto
+  width: 60px
+
+
+/******************** User Home Page ********************/
+
+/* Category Nav */
+
+.nav-tabs
+  margin: 20px 10px
+  .centerBlock
+    display: table
+    margin: 0 auto
+    #schedule-tab
+      background-color: rgb(249,138,95)
+    #additional-details-tab
+      background-color: rgb(146,220,224)
+    #habit-tab
+      background-color: rgb(119,91,163)
+    #cleanliness-tab
+      background-color: rgb(145,197,169)
+    .whiteText
+      color: white
+  li
+    border-color: #e5e5e5 #eee #eee
+    border-style: solid
+    border-width: 1px 1px 0 1px
+    margin: 0 2px
+
+/* Questions Nav */
+
+.navigate-category-questions li:hover
+  cursor: pointer
+
+.current-question-nav
+  color: rgb(51,122,183)
+
+/* Questions Forms */
+
+.question-div
+  background-color: rgb(194,209,216)
+  border-radius: 15px
+  padding: 40px
+  label
+    font-size: 20px
+    font-weight: normal
+  button
+    margin-top: 15px
+
+.checkbox-option
+  font-size: 14px !important
+
+.review
+  display: inline-block
+  padding: 5px 5px
+
+/******************** Matches Index Page ********************/
+
+/* Mutual Matches Section */
 
 #mutual-matches-outer
   overflow-x: scroll
   width: 100%
   height: 300px
 
-#show-matches img
-  margin-top: 20px
-  height: 200px
-  width: 200px
+#mutual-matches
+  width: 2000px
 
-#show-matches p
-  line-height: 1em
+/* All Matches */
 
-.small-icon
+#show-matches
+  img
+    margin-top: 20px
+    height: 200px
+    width: 200px
+    margin: 0 auto
+  p
+    line-height: 1em
+
+.key-icon
   position: absolute
   max-height: 40px
   max-width: 40px
-  margin-left: 60px
-  margin-top: -24px !important
+  margin: -24px 0 0 60px !important
 
-.potential-roommates-pic
-  border-radius: 20px
-  height: auto
-  width: 60px
+#no-matches
+  background-color: rgb(194,209,216)
+  border-radius: 10px
+  margin: 0 0 10px 10px
+  padding: 10px 20px 25px 20px
 
-.category-compatibility
-  min-height: 327px
 
-a:hover
-  text-decoration: none
-
-.btn-info
-  background-color: #a5cad1
-
-.icon
-  height: 38px
-  width: 38px
-  margin-top: 8px
-
-.white-icon
-  filter: invert (100%)
-  -webkit-filter: invert(100%)
-
-.centerBlock
-  display: table
-  margin: 0 auto
-
-#schedule-tab
-  background-color: rgb(249,138,95)
-
-#additional-details-tab
-  background-color: rgb(146,220,224)
-
-#habit-tab
-  background-color: rgb(119,91,163)
-
-#cleanliness-tab
-  background-color: rgb(145,197,169)
+/******************** Matches Show Page ********************/
 
 #overall-match-compatibility
   margin-top: 4em
 
-
-.overall-compatibilty
-  padding-top: 200px
+.category-compatibility
+  min-height: 327px
 
 #cleanliness
   background-color: rgba(145,197,169,0.6)
@@ -179,37 +208,10 @@ a:hover
   background-color: rgba(119,91,163,0.6)
   padding: 10px 20px
 
-
-.whiteText
-  color: white
-
-.img-center
-  margin: 0 auto
-
-.text-vertical-center
-  display: table-cell
-  text-align: center
-  vertical-align: middle
-
-.text-vertical-center h1
-  margin: 0
-  padding: 0
-  font-size: 4.5em
-  font-weight: 700
-
-.no-matches
-  background-color: rgb(194,209,216)
-  border-radius: 10px
-  margin: 0 0 10px 10px
-  padding: 10px 20px 25px 20px
-
-.review
-  display: inline-block
-  padding: 5px 5px
-
-
-
-/* Custom Horizontal Rule */
-
-hr.small
-  max-width: 100px
+.icon
+  height: 38px
+  width: 38px
+  margin-top: 8px
+  &.white-icon
+    filter: invert (100%)
+    -webkit-filter: invert(100%)

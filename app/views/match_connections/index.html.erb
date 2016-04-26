@@ -1,4 +1,4 @@
-<div class="container body">
+<div class="container content-body">
 
   <h2 class="page-header">Mutual Matches</h2>
   <% if @mutually_interested_matches.any? %>
@@ -32,7 +32,7 @@
 
     <% if @top_users%>
       <div class="row">
-        <div class="no-matches">
+        <div id="no-matches">
           <h3>Sorry, we couldn't find anyone we think would make a great match with you.</h3>
           <h4>Try filling out more information on your profile. We can do a better job of finding someone right for you if you answer more questions.</h4>
         </div><br><br>
@@ -57,7 +57,7 @@
             <%= image_tag match.photo.url(:small), class: "img-circle img-responsive img-center" %>
           <% end %>
           <% if @user.match_connection_object_for(match).interested == true %>
-            <%= image_tag 'single-key.svg', class: 'small-icon' %>
+            <%= image_tag 'single-key.svg', class: 'key-icon' %>
           <% end %>
           <h3><%= link_to match.display_name, user_match_path(@user, match) %>
             <small><%= @user.compatibility_with(match) %>% match</small>
