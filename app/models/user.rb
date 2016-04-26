@@ -136,5 +136,4 @@ class User < ActiveRecord::Base
   def compatibility_with(match)
     self.match_connection_object_for(match).compatibility
   end
-
 end

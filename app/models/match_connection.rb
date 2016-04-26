@@ -19,8 +19,10 @@ class MatchConnection < ActiveRecord::Base
   def self.most_popular_users
     # edge case for first ever user to click find_matches
     if MatchConnection.all.size > 0  && self.where(interested: true).any?
-      self.where(interested: true).group(:match_id).first(3).map { |connection| connection.match}
+      # most 'popular'
+      self.where(interested: true).select(:match_id).group(:match_id).limit(3).map { |connection| connection.match}
     else
+      # any users if no connections in db
       User.all.sample(3)
     end
   end
