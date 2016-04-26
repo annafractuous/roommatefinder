@@ -240,7 +240,8 @@ class User < ActiveRecord::Base
     end
   end
 
-
+  # give scores a penalty if no questions are filled out in a category.
+  # resolves issue of a blank score dragging down all other scores
   def blank_category_sanitizer(scores_array)
     scores_array.reject! { |score| score == -1 }
     if scores_array.size == 0
