@@ -120,7 +120,6 @@ class MatchCalculation < ActiveRecord::Base
     your_gender == "Any" ? set : set.where("users.gender = ?", your_gender)
   end
 
-
   def self.reject_wrong_age(user, set)
     min_birth_year = DateTime.now - (user.desired_match_trait.min_age.years - 1.years)
     max_birth_year =  DateTime.now - (user.desired_match_trait.max_age.years + 1.years)
