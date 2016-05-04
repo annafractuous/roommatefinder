@@ -67,6 +67,7 @@ class User < ActiveRecord::Base
     User.joins(:match_connections).where('match_id = ? AND interested = ?', self.id, true)
   end
 
+
   def mutually_interested_matches
     # PREVIOUS
     # ---------
