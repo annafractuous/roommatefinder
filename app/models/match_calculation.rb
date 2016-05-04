@@ -56,6 +56,7 @@ class MatchCalculation < ActiveRecord::Base
 
     total_possible_points = 0
     points_earned = 0
+
     ## get table from category name ##
     table = Object.const_get(category.classify) # e.g. Cleanliness table
 
@@ -82,6 +83,7 @@ class MatchCalculation < ActiveRecord::Base
     end
   end
 
+
   def self.blank_category_sanitizer(scores_array)
     # scores_array => [87, 63, -1]
     scores_array.reject! { |score| score == -1 }
@@ -95,8 +97,9 @@ class MatchCalculation < ActiveRecord::Base
       scores_array
     end
   end
+
   ## calculate total mutual compatibility ##
-  def self.calculate_compatibility_score(category_scores) 
+  def self.calculate_compatibility_score(category_scores)
     if category_scores.size <= 2
       score = Math.sqrt(category_scores.first * category_scores.last.to_f).to_i
       score == 0 ? 1 : score
@@ -112,6 +115,8 @@ class MatchCalculation < ActiveRecord::Base
     end
   end
 
+
+
   def self.reject_wrong_rent(user, set)
     max_rent_with_cushion = user.max_rent + 200
     set.where("max_rent <= ?", max_rent_with_cushion)
@@ -121,6 +126,7 @@ class MatchCalculation < ActiveRecord::Base
     your_gender = user.desired_match_trait.gender
     your_gender == "Any" ? set : set.where("users.gender = ?", your_gender)
   end
+
 
   def self.reject_wrong_age(user, set)
     min_birth_year = DateTime.now - (user.desired_match_trait.min_age.years - 1.years)
@@ -141,11 +147,8 @@ class MatchCalculation < ActiveRecord::Base
   def self.question_tables
     ActiveRecord::Base.connection.tables.reject { |t| ["users", "match_connections", "schema_migrations"].include?(t) }
   end
-  
+
   def self.user_columns
     User.column_names.reject { |col| ["id", "name", "username", "email", "password_digest", "created_at", "updated_at"].include?(col) }
   end
 end
-
-
-  
