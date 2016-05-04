@@ -14,9 +14,6 @@ class MatchCalculation < ActiveRecord::Base
     user.matches
   end
 
-  ## had to break this into another method because needs to be run
-  ## on a single match in match_connections_controller when one
-  ## user selects interest in another
   def self.run_match_calculations(user, match)
     category_compat_scores = all_category_compatibility_scores(user, match) # => [63, 45, 87]
     category_compat_scores = blank_category_sanitizer(category_compat_scores)
