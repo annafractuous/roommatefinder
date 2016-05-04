@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      
+
       # UserMailer.welcome_email(@user).deliver_now
 
       session[:user_id] = @user.id
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @desired_match_trait = @user.desired_match_trait
-    @interested_matches = (@user.one_way_interested_matches - @user.not_interested)
+    @interested_matches = @user.one_way_interested_matches
   end
 
   def edit
@@ -33,8 +33,8 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    
-    # guard against not choosing a file when updating photo 
+
+    # guard against not choosing a file when updating photo
     if params[:user]
       if @user.update(user_params)
         redirect_to @user

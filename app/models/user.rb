@@ -1,21 +1,3 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  id              :integer          not null, primary key
-#  name            :string
-#  email           :string
-#  birthdate       :datetime
-#  gender          :string
-#  dealbreakers    :text
-#  has_apartment   :boolean
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  password_digest :string
-#  username        :string
-#  max_rent        :integer
-#
-
 class User < ActiveRecord::Base
 
   has_secure_password
@@ -75,33 +57,63 @@ class User < ActiveRecord::Base
 
   ## show user others who selected that they were interested in a potential roommate match with them ##
   def interested_matches
-    # weed out mutually interested
-    connections = MatchConnection.where('match_id = ? AND interested = ?', self.id, true)
-    #reject mutually interested matches
-    connected_users = connections.map { |connection| User.find(connection.user_id) }
-  end
+    # PREVIOUS
+    # ---------
+    # connections = MatchConnection.where('match_id = ? AND interested = ?', self.id, true)
+    # connected_users = connections.map { |connection| User.find(connection.user_id) }
+    # ---------
 
-  def one_way_interested_matches
-    connected_users = self.interested_matches
-    connected_users.reject{|user| self.mutually_interested_match?(user)}
-  end
-
-  def not_interested
-    no_thanks = MatchConnection.where('user_id = ? AND interested = ?', self.id, false)
-    no_thanks.map { |conn| User.find(conn.match_id) }
+    # match_connections where current user id is match_id
+    User.joins(:match_connections).where('match_id = ? AND interested = ?', self.id, true)
   end
 
   def mutually_interested_matches
-    self.interested_matches.select { |m| self.mutually_interested_match?(m) }
+    # PREVIOUS
+    # ---------
+    # self.interested_matches.select { |m| self.mutually_interested_match?(m) }
+    # ---------
+
+    # The default .joins ('ON match_connections.user_id = users.id')
+    # would return an array of n copies of the current user where
+    # n is the number of mutual matches.  Have to overwrite the default to
+    # join on the match_id so it returns the Users who are the Matches
+    User.joins("INNER JOIN match_connections ON match_connections.match_id = users.id").where('(match_id IN (?)) AND (user_id = ? AND interested = ?)', self.interested_matches.pluck(:id), self.id, true)
   end
 
-  def mutually_interested_match?(match)
-    self.is_interested(match) && match.is_interested(self)
+  def one_way_interested_matches
+    # PREVIOUS
+    # ---------
+    # connected_users = self.interested_matches
+    # connected_users.reject{|user| self.mutually_interested_match?(user)}
+    # ---------
+
+    # In english: Give me back the users who are interested in me
+    # as a match, excluding the ones who are mutual matches and
+    # excluding the ones I have specifically rejected
+    User.joins(:match_connections).where("(match_id = ? AND interested = ?) AND NOT EXISTS(#{self.mutually_interested_matches.to_sql}) AND NOT EXISTS (#{self.not_interested.to_sql})", self.id, true)
   end
 
-  def is_interested(match)
-    self.match_connection_object_for(match).interested == true
+  def not_interested
+    # PREVIOUS
+    # ---------
+    # no_thanks = MatchConnection.where('user_id = ? AND interested = ?', self.id, false)
+    # no_thanks.map { |conn| User.find(conn.match_id) }
+    # ---------
+
+    User.joins("INNER JOIN match_connections ON match_connections.match_id = users.id").where('user_id = ? AND interested = ?', self.id, false)
   end
+
+  # PREVIOUSLY used helper methods no longer needed
+  # ---------
+  # def mutually_interested_match?(match)
+  #   self.is_interested(match) && match.is_interested(self)
+  # end
+  #
+  # def is_interested(match)
+  #   self.match_connection_object_for(match).interested == true
+  # end
+  # ---------
+
 
   ## build user's associated cleanliness, desired cleanliness, etc. on user initialization ##
   def create_category_objects
