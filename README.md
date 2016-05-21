@@ -7,3 +7,5 @@ To demo the app, you can sign up or log in as a seed user, using the username "u
 
 
 ![Roominate demo](http://g.recordit.co/yx36io2RQW.gif)
+
+![Roominate demo](http://g.recordit.co/WxHFOTTCAs.gif)
